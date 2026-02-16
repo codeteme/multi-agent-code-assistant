@@ -30,6 +30,14 @@ Inputs:
 
 Known Bugs:
 
+### Instructions
+Create and activate virtual environment as below:
+```
+python3 -m venv <venv-name-here>
+source <venv-name-here>/bin/activate # macOS/Linux
+pip install -r requirements.txt
+```
+
 
 ### Notes/Assumptions
 
