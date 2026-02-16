@@ -22,11 +22,11 @@ Hours Spent:
 
 ### Running the Program
 
-Main class:
+Main class: `main.py`
 
-Data files needed: 
+Data files needed: any file you wish to inspect using our AI agents
 
-Inputs:
+Inputs: file path to reference the file, choice of agent (optional)
 
 Known Bugs:
 
@@ -38,6 +38,12 @@ source <venv-name-here>/bin/activate # macOS/Linux
 pip install -r requirements.txt
 ```
 
+To run our application, you may choose between 4 agents: `CODE_STYLE`, `IDIOMS`, `TESTS`, `DESIGN`.
+
+```
+python3 src/main.py <file_name> --agent <agent_name>
+python3 src/main.py data/sample_bad_code_style.py
+```
 
 ### Notes/Assumptions
 
