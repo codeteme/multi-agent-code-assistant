@@ -13,6 +13,9 @@ Finish Date:
 
 Hours Spent:
 
+Phase 1 Deadline: Feb 21
+Phase 2 Deadline: Feb 28
+Phase 3 Deadline: Mar 6
 
 ### Tutorial, LLMs, and other Code used
 - GPT-5.3 Codex - suggestions about how to use Ruff
