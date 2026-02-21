@@ -47,7 +47,10 @@ python -m src.main data/sample_bad_code_style.py --agent CODE_STYLE --apply
 ```
 
 ### Notes/Assumptions
-
+- To test the program, run
+```python
+python -m pytest -q
+```
 
 ### Impressions
 
