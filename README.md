@@ -7,7 +7,7 @@ Name:
 
 ### Timeline
 
-Start Date: 
+Start Date: Feb 18
 
 Finish Date: 
 
@@ -15,6 +15,7 @@ Hours Spent:
 
 
 ### Tutorial, LLMs, and other Code used
+- GPT-5.3 Codex - suggestions about how to use Ruff
 
 
 ### Resource Attributions
@@ -41,12 +42,15 @@ pip install -r requirements.txt
 To run our application, you may choose between 4 agents: `CODE_STYLE`, `IDIOMS`, `TESTS`, `DESIGN`.
 
 ```
-python3 src/main.py <file_name> --agent <agent_name>
-python3 src/main.py data/sample_bad_code_style.py
+python -m src.main <path_to_your_file> --agent <agent_chosen> <include or exclude --apply flag>
+python -m src.main data/sample_bad_code_style.py --agent CODE_STYLE --apply
 ```
 
 ### Notes/Assumptions
-
+- To test the program, run
+```python
+python -m pytest -q
+```
 
 ### Impressions
 
