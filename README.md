@@ -31,6 +31,11 @@ Inputs: file path to reference the file, choice of agent (optional)
 
 Known Bugs:
 
+### VCM IDs of servers
+
+- Main: http://vcm-52418.vm.duke.edu/
+- Dev: http://vcm-52527.vm.duke.edu/
+
 ### Instructions
 Create and activate virtual environment as below:
 ```
