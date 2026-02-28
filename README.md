@@ -59,6 +59,10 @@ python -m src.main data/sample_bad_code_style.py --agent CODE_STYLE --apply
 ```python
 python -m pytest -q
 ```
+- To check if program meets the project's style and quality standards before pushing run the local pipeline:
+```bash
+# Requires Docker to be running
+gitlab-ci-local
 
 ### Impressions
 
