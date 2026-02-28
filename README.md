@@ -48,6 +48,7 @@ pip install -r requirements.txt
 ```
 
 To run our application, you may choose between 4 agents: `CODE_STYLE`, `IDIOMS`, `TESTS`, `DESIGN`.
+If you run the application without specifying an agent, the system will run all four agents.
 
 ```
 python -m src.main <path_to_your_file> --agent <agent_chosen> <include or exclude --apply flag>
