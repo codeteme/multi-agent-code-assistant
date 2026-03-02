@@ -1,0 +1,8 @@
+Log on my side:
+INFO:api_caller:issues: 8
+
+Log on the server side:
+agents-backend  | INFO:     10.198.174.151:57419 - "GET /health HTTP/1.1" 200 OK
+agents-backend  | WARNING:  Invalid HTTP request received.
+agents-backend  | WARNING:  Invalid HTTP request received.
+agents-backend  | INFO:     10.198.174.151:57431 - "POST /agents/IDIOMS/scan HTTP/1.1" 200 OK
