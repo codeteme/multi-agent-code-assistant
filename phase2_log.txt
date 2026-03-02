@@ -1,3 +1,12 @@
+INFO:api_caller:issues: 8
+
+Log on the server side:
+agents-backend  | INFO:     10.198.174.151:57419 - "GET /health HTTP/1.1" 200 OK
+agents-backend  | WARNING:  Invalid HTTP request received.
+agents-backend  | WARNING:  Invalid HTTP request received.
+agents-backend  | INFO:     10.198.174.151:57431 - "POST /agents/IDIOMS/scan HTTP/1.1" 200 OK
+
+Logs from IDIOMS and TESTS agent
 2026-03-02 11:14:04,639 - __main__ - INFO - Loaded environment variables from /Users/temesmacbookair/Development/compsci590_sw_dev_studio/ai_assistant_team02/.env
 2026-03-02 11:14:05,001 - src.model.input - INFO - Read file: /Users/temesmacbookair/Development/compsci590_sw_dev_studio/ai_assistant_team02/data/processor.py (703 chars)
 2026-03-02 11:14:05,001 - src.controller - INFO - Parsed input: agent=TESTS, file=/Users/temesmacbookair/Development/compsci590_sw_dev_studio/ai_assistant_team02/data/processor.py, apply=True
@@ -164,3 +173,49 @@ ssor.py
 2026-03-02 11:14:17,332 - src.controller - INFO - - line 10:0 [error] test-no-assert - test_get_user_status_basic() lacks an assertion; the function is called, but no output is checked.
 2026-03-02 11:14:17,332 - src.controller - INFO - - line 10:0 [warning] weak-test - get_user_status is not tested with non-integer, null, or float input for age; only integer edge cases and happy-path adult covered.
 2026-03-02 11:14:17,332 - src.controller - INFO - - line 18:0 [info] weak-test - parse_config does not have tests for malformed key-value pairs beyond missing colon (e.g., extra colon, empty key or value parts, repeated or unusual whitespace, non-string input).
+
+
+VSCode Extension Logs:
+AI Assistant extension activated.
+[2026-03-02T18:37:30.556Z] Analyzing: sample_bad_code_style.py (279 chars) → http://localhost:8000 [agent: CODE_STYLE]
+Received 5 issue(s), 5 suggestion(s).
+
+--- Issues ---
+  [error] Line 6:1 (E401): Multiple imports on one line
+  [info] Line 6:1 (I001): Import block is un-sorted or un-formatted
+  [error] Line 6:8 (F401): `os` imported but unused
+  [error] Line 6:11 (F401): `sys` imported but unused
+  [warning] Line 18:29 (W292): No newline at end of file
+
+--- Suggestions ---
+
+  Rule: E401 (Line 6)
+  Rationale: Fix E401: Multiple imports on one line
+  Confidence: 100%
+
+  Rule: I001 (Line 6)
+  Rationale: Fix I001: Import block is un-sorted or un-formatted
+  Confidence: 100%
+
+  Rule: F401 (Line 6)
+  Rationale: Fix F401: `os` imported but unused
+  Confidence: 100%
+
+  Rule: F401 (Line 6)
+  Rationale: Fix F401: `sys` imported but unused
+  Confidence: 100%
+
+  Rule: W292 (Line 18)
+  Rationale: Fix W292: No newline at end of file
+  Confidence: 100%
+
+Local Server Logs while running VSCode extension
+
+(venv) shinchangmin@Mac ai_assistant_team02 % uvicorn src.api:app --reload --port 8000
+INFO:     Will watch for changes in these directories: ['/Users/shinchangmin/Desktop/Spring_2026/COMPSCI590/ai_assistant_team02']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [64593] using StatReload
+INFO:     Started server process [64595]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:63242 - "POST /analyze HTTP/1.1" 200 OK

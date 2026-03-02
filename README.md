@@ -15,7 +15,7 @@ Hours Spent:
 
 Phase 1 Deadline: Feb 21
 
-Phase 2 Deadline: Mar 1
+Phase 2 Deadline: Mar 2
 
 Phase 3 Deadline: Mar 6
 
