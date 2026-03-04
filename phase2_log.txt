@@ -1,0 +1,221 @@
+INFO:api_caller:issues: 8
+
+Log on the server side:
+agents-backend  | INFO:     10.198.174.151:57419 - "GET /health HTTP/1.1" 200 OK
+agents-backend  | WARNING:  Invalid HTTP request received.
+agents-backend  | WARNING:  Invalid HTTP request received.
+agents-backend  | INFO:     10.198.174.151:57431 - "POST /agents/IDIOMS/scan HTTP/1.1" 200 OK
+
+Logs from IDIOMS and TESTS agent
+2026-03-02 11:14:04,639 - __main__ - INFO - Loaded environment variables from /Users/temesmacbookair/Development/compsci590_sw_dev_studio/ai_assistant_team02/.env
+2026-03-02 11:14:05,001 - src.model.input - INFO - Read file: /Users/temesmacbookair/Development/compsci590_sw_dev_studio/ai_assistant_team02/data/processor.py (703 chars)
+2026-03-02 11:14:05,001 - src.controller - INFO - Parsed input: agent=TESTS, file=/Users/temesmacbookair/Development/compsci590_sw_dev_studio/ai_assistant_team02/data/processor.py, apply=True
+2026-03-02 11:14:05,001 - src.model.planner - INFO - User selected agent: TESTS
+2026-03-02 11:14:05,001 - src.controller - INFO - Planner selected agent: TESTS
+2026-03-02 11:14:05,001 - src.agents.testing_agent - INFO - File successfully read: /Users/temesmacbookair/Development/compsci590_sw_dev_studio/ai_assistant_team02/data/processor.py
+2026-03-02 11:14:05,001 - src.agents.testing_agent - INFO - File successfully read: tests/data/test_processor.py
+2026-03-02 11:14:08,234 - httpx - INFO - HTTP Request: POST https://litellm.oit.duke.edu/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-02 11:14:08,239 - src.agents.testing_agent - INFO - raw: [
+    {
+        "line": 1,
+        "message": "No test covers the case where calculate_average is called with an empty list, which would raise a ZeroDivisionError. Edge case and error handling tests are missing.",
+        "severity": "error",
+        "rule_id": "missing-test",
+        "column": 0
+    },
+    {
+        "line": 7,
+        "message": "test_get_user_status_basic contains no assertions and does not test any branch of get_user_status. Tests for edge cases like age = 0, age = 18, and age < 0 (invalid input) are missing.",
+        "severity": "error",
+        "rule_id": "weak-test",
+        "column": 0
+    },
+    {
+        "line": 16,
+        "message": "parse_config is never tested at all, despite having complex parsing logic that requires tests for malformed strings, missing colons, extra spaces, empty input, and duplicate keys.",
+        "severity": "error",
+        "rule_id": "missing-test",
+        "column": 0
+    }
+]
+2026-03-02 11:14:08,239 - src.agents.testing_agent - INFO - Parsed 3 issues from LLM response
+2026-03-02 11:14:08,239 - src.controller - INFO - Found 3 issue(s).
+2026-03-02 11:14:08,239 - src.controller - INFO - - line 1:0 [error] missing-test - No test covers the case where calculate_average is called with an empty list, which would raise a ZeroDivisionError. Edge case and error handling tests are missing.
+2026-03-02 11:14:08,239 - src.controller - INFO - - line 7:0 [error] weak-test - test_get_user_status_basic contains no assertions and does not test any branch of get_user_status. Tests for edge cases like age = 0, age = 18, and age < 0 (invalid input) are missing.
+2026-03-02 11:14:08,240 - src.controller - INFO - - line 16:0 [error] missing-test - parse_config is never tested at all, despite having complex parsing logic that requires tests for malformed strings, missing colons, extra spaces, empty input, and duplicate keys.
+2026-03-02 11:14:13,380 - httpx - INFO - HTTP Request: POST https://litellm.oit.duke.edu/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-02 11:14:13,381 - src.agents.testing_agent - INFO - raw: [
+  {
+    "issue": {
+      "line": 1,
+      "message": "No test covers the case where calculate_average is called with an empty list, which would raise a ZeroDivisionError. Edge case and error handling tests are missing.",
+      "severity": "error",
+      "rule_id": "missing-test",
+      "column": 0
+    },
+    "original_code": "",
+    "fixed_code": "import pytest\n\ndef test_calculate_average_with_empty_list():\n    with pytest.raises(ZeroDivisionError):\n        calculate_average([])",
+    "rationale": "This test checks that calling calculate_average with an empty list raises ZeroDivisionError, explicitly covering the edge case as described in the issue.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 7,
+      "message": "test_get_user_status_basic contains no assertions and does not test any branch of get_user_status. Tests for edge cases like age = 0, age = 18, and age < 0 (invalid input) are missing.",
+      "severity": "error",
+      "rule_id": "weak-test",
+      "column": 0
+    },
+    "original_code": "",
+    "fixed_code": "def test_get_user_status_cases():\n    assert get_user_status(-1) == \"Invalid\"\n    assert get_user_status(0) == \"Minor\"\n    assert get_user_status(17) == \"Minor\"\n    assert get_user_status(18) == \"Adult\"\n    assert get_user_status(64) == \"Adult\"\n    assert get_user_status(65) == \"Senior\"",
+    "rationale": "The added test case verifies all the important boundaries and edge cases, ensuring correct behavior for invalid input, lower bound, transitions between Minor, Adult, and Senior.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 16,
+      "message": "parse_config is never tested at all, despite having complex parsing logic that requires tests for malformed strings, missing colons, extra spaces, empty input, and duplicate keys.",
+      "severity": "error",
+      "rule_id": "missing-test",
+      "column": 0
+    },
+    "original_code": "",
+    "fixed_code": "import pytest\n\ndef test_parse_config_basic():\n    assert parse_config(\"a:1,b:2\") == {\"a\": \"1\", \"b\": \"2\"}\n\ndef test_parse_config_extra_spaces():\n    assert parse_config(\" a : 1 , b : 2 \") == {\"a\": \"1\", \"b\": \"2\"}\n\ndef test_parse_config_empty_input():\n    with pytest.raises(ValueError):\n        parse_config(\"\")\n\ndef test_parse_config_missing_colon():\n    with pytest.raises(ValueError):\n        parse_config(\"a1,b:2\")\n\ndef test_parse_config_duplicate_keys():\n    result = parse_config(\"a:1,a:2\")\n    assert result == {\"a\": \"2\"}",
+    "rationale": "Multiple tests are provided to cover nominal cases, extra whitespace handling, empty input, missing colon (malformed string), and duplicate keys. Each test targets a unique edge condition as identified.",
+    "confidence": 1.0
+  }
+]
+2026-03-02 11:14:13,381 - src.agents.testing_agent - INFO - Parsed 3 suggestions from LLM response
+2026-03-02 11:14:13,381 - src.controller - INFO - Generated 3 suggestion(s).
+2026-03-02 11:14:13,381 - src.controller - INFO - - line 16:0 [error] missing-test - parse_config is never tested at all, despite having complex parsing logic that requires tests for malformed strings, missing colons, extra spaces, empty input, and duplicate keys.
+2026-03-02 11:14:13,381 - src.controller - INFO - - line 7:0 [error] weak-test - test_get_user_status_basic contains no assertions and does not test any branch of get_user_status. Tests for edge cases like age = 0, age = 18, and age < 0 (invalid input) are missing.
+2026-03-02 11:14:13,381 - src.controller - INFO - - line 16:0 [error] missing-test - parse_config is never tested at all, despite having complex parsing logic that requires tests for malformed strings, missing colons, extra spaces, empty input, and duplicate keys.
+2026-03-02 11:14:13,381 - src.controller - INFO - Applying auto-fixes
+2026-03-02 11:14:13,382 - src.agents.testing_agent - INFO - Appended 3 suggestions to tests/data/test_processor.py
+2026-03-02 11:14:13,382 - src.agents.testing_agent - INFO - File successfully read: /Users/temesmacbookair/Development/compsci590_sw_dev_studio/ai_assistant_team02/data/processor.py
+2026-03-02 11:14:13,382 - src.agents.testing_agent - INFO - File successfully read: tests/data/test_processor.py
+2026-03-02 11:14:17,331 - httpx - INFO - HTTP Request: POST https://litellm.oit.duke.edu/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-02 11:14:17,332 - src.agents.testing_agent - INFO - raw: [
+    {
+        "line": 1,
+        "message": "calculate_average is not tested with non-numeric or invalid input (e.g., [None], strings), which could cause TypeError; only standard and empty-list cases are covered.",
+        "severity": "warning",
+        "rule_id": "weak-test",
+        "column": 0
+    },
+    {
+        "line": 10,
+        "message": "test_get_user_status_basic() lacks an assertion; the function is called, but no output is checked.",
+        "severity": "error",
+        "rule_id": "test-no-assert",
+        "column": 0
+    },
+    {
+        "line": 10,
+        "message": "get_user_status is not tested with non-integer, null, or float input for age; only integer edge cases and happy-path adult covered.",
+        "severity": "warning",
+        "rule_id": "weak-test",
+        "column": 0
+    },
+    {
+        "line": 18,
+        "message": "parse_config does not have tests for malformed key-value pairs beyond missing colon (e.g., extra colon, empty key or value parts, repeated or unusual whitespace, non-string input).",
+        "severity": "info",
+        "rule_id": "weak-test",
+        "column": 0
+    }
+]
+2026-03-02 11:14:17,332 - src.agents.testing_agent - INFO - Parsed 4 issues from LLM response
+2026-03-02 11:14:17,332 - src.agents.testing_agent - WARNING - validate() called with a list, skipping validation.
+2026-03-02 11:14:17,332 - src.controller - INFO - Validation result: valid=True remaining_issues=4
+2026-03-02 11:14:17,332 - src.controller - INFO - - line 1:0 [warning] weak-test - calculate_average is not tested with non-numeric or invalid input (e.g., [None], strings), which could cause TypeError; only standard and empty-list cases are covered.
+2026-03-02 11:14:17,332 - src.controller - INFO - - line 10:0 [error] test-no-assert - test_get_user_status_basic() lacks an assertion; the function is called, but no output is checked.
+2026-03-02 11:14:17,332 - src.controller - INFO - - line 10:0 [warning] weak-test - get_user_status is not tested with non-integer, null, or float input for age; only integer edge cases and happy-path adult covered.
+2026-03-02 11:14:17,332 - src.controller - INFO - - line 18:0 [info] weak-test - parse_config does not have tests for malformed key-value pairs beyond missing colon (e.g., extra colon, empty key or value parts, repeated or unusual whitespace, non-string input).
+ssor.py
+2026-03-02 11:14:13,382 - src.agents.testing_agent - INFO - File successfully read: /Users/temesmacbookair/Development/compsci590_sw_dev_studio/ai_assistant_team02/data/processor.py
+2026-03-02 11:14:13,382 - src.agents.testing_agent - INFO - File successfully read: tests/data/test_processor.py
+2026-03-02 11:14:17,331 - httpx - INFO - HTTP Request: POST https://litellm.oit.duke.edu/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-02 11:14:17,332 - src.agents.testing_agent - INFO - raw: [
+    {
+        "line": 1,
+        "message": "calculate_average is not tested with non-numeric or invalid input (e.g., [None], strings), which could cause TypeError; only standard and empty-list cases are covered.",
+        "severity": "warning",
+        "rule_id": "weak-test",
+        "column": 0
+    },
+    {
+        "line": 10,
+        "message": "test_get_user_status_basic() lacks an assertion; the function is called, but no output is checked.",
+        "severity": "error",
+        "rule_id": "test-no-assert",
+        "column": 0
+    },
+    {
+        "line": 10,
+        "message": "get_user_status is not tested with non-integer, null, or float input for age; only integer edge cases and happy-path adult covered.",
+        "severity": "warning",
+        "rule_id": "weak-test",
+        "column": 0
+    },
+    {
+        "line": 18,
+        "message": "parse_config does not have tests for malformed key-value pairs beyond missing colon (e.g., extra colon, empty key or value parts, repeated or unusual whitespace, non-string input).",
+        "severity": "info",
+        "rule_id": "weak-test",
+        "column": 0
+    }
+]
+2026-03-02 11:14:17,332 - src.agents.testing_agent - INFO - Parsed 4 issues from LLM response
+2026-03-02 11:14:17,332 - src.agents.testing_agent - WARNING - validate() called with a list, skipping validation.
+2026-03-02 11:14:17,332 - src.controller - INFO - Validation result: valid=True remaining_issues=4
+2026-03-02 11:14:17,332 - src.controller - INFO - - line 1:0 [warning] weak-test - calculate_average is not tested with non-numeric or invalid input (e.g., [None], strings), which could cause TypeError; only standard and empty-list cases are covered.
+2026-03-02 11:14:17,332 - src.controller - INFO - - line 10:0 [error] test-no-assert - test_get_user_status_basic() lacks an assertion; the function is called, but no output is checked.
+2026-03-02 11:14:17,332 - src.controller - INFO - - line 10:0 [warning] weak-test - get_user_status is not tested with non-integer, null, or float input for age; only integer edge cases and happy-path adult covered.
+2026-03-02 11:14:17,332 - src.controller - INFO - - line 18:0 [info] weak-test - parse_config does not have tests for malformed key-value pairs beyond missing colon (e.g., extra colon, empty key or value parts, repeated or unusual whitespace, non-string input).
+
+
+VSCode Extension Logs:
+AI Assistant extension activated.
+[2026-03-02T18:37:30.556Z] Analyzing: sample_bad_code_style.py (279 chars) → http://localhost:8000 [agent: CODE_STYLE]
+Received 5 issue(s), 5 suggestion(s).
+
+--- Issues ---
+  [error] Line 6:1 (E401): Multiple imports on one line
+  [info] Line 6:1 (I001): Import block is un-sorted or un-formatted
+  [error] Line 6:8 (F401): `os` imported but unused
+  [error] Line 6:11 (F401): `sys` imported but unused
+  [warning] Line 18:29 (W292): No newline at end of file
+
+--- Suggestions ---
+
+  Rule: E401 (Line 6)
+  Rationale: Fix E401: Multiple imports on one line
+  Confidence: 100%
+
+  Rule: I001 (Line 6)
+  Rationale: Fix I001: Import block is un-sorted or un-formatted
+  Confidence: 100%
+
+  Rule: F401 (Line 6)
+  Rationale: Fix F401: `os` imported but unused
+  Confidence: 100%
+
+  Rule: F401 (Line 6)
+  Rationale: Fix F401: `sys` imported but unused
+  Confidence: 100%
+
+  Rule: W292 (Line 18)
+  Rationale: Fix W292: No newline at end of file
+  Confidence: 100%
+
+Local Server Logs while running VSCode extension
+
+(venv) shinchangmin@Mac ai_assistant_team02 % uvicorn src.api:app --reload --port 8000
+INFO:     Will watch for changes in these directories: ['/Users/shinchangmin/Desktop/Spring_2026/COMPSCI590/ai_assistant_team02']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [64593] using StatReload
+INFO:     Started server process [64595]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:63242 - "POST /analyze HTTP/1.1" 200 OK
