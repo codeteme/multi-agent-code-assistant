@@ -1,71 +1,27 @@
-# agent-extension README
+# AI Assistant Extension
 
-This is the README for your extension "agent-extension". After writing up a brief description, we recommend including the following sections.
+A VS Code extension that connects to an AI-powered code analysis backend to scan for issues, suggest fixes, and apply them directly in your editor.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+- **Scan**: Detect code style, idiom, or test issues in the active file
+- **Scan + Suggest**: Get issues and AI-generated fix suggestions with inline diff preview
+- **Analyze All**: Run all agents at once
+- **Quick Fixes**: Hover over squiggly underlines to apply a single fix or all fixes via lightbulb actions
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+- `aiAssistant.backendUrl`: Backend server URL (currently: `http://vcm-52409.vm.duke.edu:4003`)
 
-For example:
+## Installation
 
-This extension contributes the following settings:
+1. Download the `agent-extension-0.0.1.vsix` file.
+2. Open VS Code.
+3. Open the Extensions panel (`Cmd+Shift+X`).
+4. Click the `...` menu (top-right of the panel) and select **Install from VSIX...**.
+5. Select the downloaded `.vsix` file.
+6. Reload VS Code when prompted.
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+## Usage
 
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Open a Python file, then run **AI Code Analysis: Analyze Current File** from the Command Palette (`Cmd+Shift+P`).
