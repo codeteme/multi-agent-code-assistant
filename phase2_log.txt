@@ -218,4 +218,363 @@ INFO:     Started reloader process [64593] using StatReload
 INFO:     Started server process [64595]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
-INFO:     127.0.0.1:63242 - "POST /analyze HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63242 - "POST /analyze HTTP/1.1" 200 OK2026-03-03 20:45:44,011 - __main__ - INFO - Loaded environment variables from /Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/.env
+2026-03-03 20:45:44,532 - src.model.input - INFO - Read file: /Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/data/sample_bad_idioms.py (939 chars)
+2026-03-03 20:45:44,533 - src.controller - INFO - Parsed input: agent=IDIOMS, file=/Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/data/sample_bad_idioms.py, apply=True
+2026-03-03 20:45:44,533 - src.model.planner - INFO - User selected agent: IDIOMS
+2026-03-03 20:45:44,533 - src.controller - INFO - Planner selected agent: IDIOMS
+2026-03-03 20:45:44,533 - src.agents.idioms_agent - INFO - File Successfully Read
+2026-03-03 20:45:47,036 - httpx - INFO - HTTP Request: POST https://litellm.oit.duke.edu/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-03 20:45:47,041 - src.agents.idioms_agent - INFO - raw: [
+    {
+        "line": 5,
+        "message": "Using range(len(names)) instead of enumerate(names) for iteration.",
+        "severity": "warning",
+        "rule_id": "use-enumerate",
+        "column": 6
+    },
+    {
+        "line": 9,
+        "message": "Building a list using a loop instead of a list comprehension.",
+        "severity": "warning",
+        "rule_id": "use-list-comprehension",
+        "column": 0
+    },
+    {
+        "line": 15,
+        "message": "Using range(len(first)) to iterate over two lists instead of zip(first, second).",
+        "severity": "warning",
+        "rule_id": "use-zip",
+        "column": 6
+    },
+    {
+        "line": 20,
+        "message": "Comparing to True using == instead of relying on truthiness.",
+        "severity": "warning",
+        "rule_id": "compare-true",
+        "column": 7
+    },
+    {
+        "line": 25,
+        "message": "Comparing to None using == instead of 'is None'.",
+        "severity": "warning",
+        "rule_id": "compare-none",
+        "column": 7
+    },
+    {
+        "line": 29,
+        "message": "Not using a context manager (with statement) for file handling.",
+        "severity": "warning",
+        "rule_id": "context-manager",
+        "column": 0
+    },
+    {
+        "line": 34,
+        "message": "Using mutable default argument (items=[]) in function definition.",
+        "severity": "warning",
+        "rule_id": "mutable-default-arg",
+        "column": 19
+    },
+    {
+        "line": 39,
+        "message": "Using a loop to check existence in a list instead of any().",
+        "severity": "warning",
+        "rule_id": "use-any",
+        "column": 0
+    }
+]
+2026-03-03 20:45:47,042 - src.agents.idioms_agent - INFO - Parsed 8 issues from LLM response
+2026-03-03 20:45:47,042 - src.controller - INFO - Found 8 issue(s).
+2026-03-03 20:45:47,042 - src.controller - INFO - - line 5:6 [warning] use-enumerate - Using range(len(names)) instead of enumerate(names) for iteration.
+2026-03-03 20:45:47,042 - src.controller - INFO - - line 9:0 [warning] use-list-comprehension - Building a list using a loop instead of a list comprehension.
+2026-03-03 20:45:47,042 - src.controller - INFO - - line 15:6 [warning] use-zip - Using range(len(first)) to iterate over two lists instead of zip(first, second).
+2026-03-03 20:45:47,042 - src.controller - INFO - - line 20:7 [warning] compare-true - Comparing to True using == instead of relying on truthiness.
+2026-03-03 20:45:47,042 - src.controller - INFO - - line 25:7 [warning] compare-none - Comparing to None using == instead of 'is None'.
+2026-03-03 20:45:47,042 - src.controller - INFO - - line 29:0 [warning] context-manager - Not using a context manager (with statement) for file handling.
+2026-03-03 20:45:47,042 - src.controller - INFO - - line 34:19 [warning] mutable-default-arg - Using mutable default argument (items=[]) in function definition.
+2026-03-03 20:45:47,042 - src.controller - INFO - - line 39:0 [warning] use-any - Using a loop to check existence in a list instead of any().
+2026-03-03 20:45:52,490 - httpx - INFO - HTTP Request: POST https://litellm.oit.duke.edu/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-03 20:45:52,491 - src.model.llm_generator - INFO - raw: [
+  {
+    "issue": {
+      "line": 5,
+      "message": "Using range(len(names)) instead of enumerate(names) for iteration.",
+      "severity": "warning",
+      "rule_id": "use-enumerate",
+      "column": 6
+    },
+    "original_code": "for i in range(len(names)):\n    print(i, names[i])",
+    "fixed_code": "for i, name in enumerate(names):\n    print(i, name)",
+    "rationale": "enumerate() is more Pythonic, clearer, prevents index errors, and directly yields each index and value.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 9,
+      "message": "Building a list using a loop instead of a list comprehension.",
+      "severity": "warning",
+      "rule_id": "use-list-comprehension",
+      "column": 0
+    },
+    "original_code": "squares = []\nfor i in range(10):\n    squares.append(i * i)",
+    "fixed_code": "squares = [i * i for i in range(10)]",
+    "rationale": "List comprehensions are more concise, idiomatic, and slightly more performant for building lists.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 15,
+      "message": "Using range(len(first)) to iterate over two lists instead of zip(first, second).",
+      "severity": "warning",
+      "rule_id": "use-zip",
+      "column": 6
+    },
+    "original_code": "for i in range(len(first)):\n    print(first[i], second[i])",
+    "fixed_code": "for a, b in zip(first, second):\n    print(a, b)",
+    "rationale": "zip() lets you iterate over multiple sequences in parallel in a readable and safe way.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 20,
+      "message": "Comparing to True using == instead of relying on truthiness.",
+      "severity": "warning",
+      "rule_id": "compare-true",
+      "column": 7
+    },
+    "original_code": "if flag == True:\n    print(\"flag is true\")",
+    "fixed_code": "if flag:\n    print(\"flag is true\")",
+    "rationale": "Directly using the variable is more Pythonic and reliable than comparing to True with ==.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 25,
+      "message": "Comparing to None using == instead of 'is None'.",
+      "severity": "warning",
+      "rule_id": "compare-none",
+      "column": 7
+    },
+    "original_code": "if value == None:\n    print(\"value is none\")",
+    "fixed_code": "if value is None:\n    print(\"value is none\")",
+    "rationale": "is None is the preferred way to check for None because it checks identity, not equality.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 29,
+      "message": "Not using a context manager (with statement) for file handling.",
+      "severity": "warning",
+      "rule_id": "context-manager",
+      "column": 0
+    },
+    "original_code": "f = open(\"README.md\", \"r\")\ncontent = f.read()\nf.close()",
+    "fixed_code": "with open(\"README.md\", \"r\") as f:\n    content = f.read()",
+    "rationale": "A context manager ensures the file is properly closed even if an exception occurs.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 34,
+      "message": "Using mutable default argument (items=[]) in function definition.",
+      "severity": "warning",
+      "rule_id": "mutable-default-arg",
+      "column": 19
+    },
+    "original_code": "def add_item(item, items=[]):\n    items.append(item)\n    return items",
+    "fixed_code": "def add_item(item, items=None):\n    if items is None:\n        items = []\n    items.append(item)\n    return items",
+    "rationale": "Using None as a default avoids shared state between multiple calls due to mutable default arguments.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 39,
+      "message": "Using a loop to check existence in a list instead of any().",
+      "severity": "warning",
+      "rule_id": "use-any",
+      "column": 0
+    },
+    "original_code": "found = False\nfor n in numbers:\n    if n > 3:\n        found = True\n        break",
+    "fixed_code": "found = any(n > 3 for n in numbers)",
+    "rationale": "any() is specifically designed for this common pattern, making code more declarative and concise.",
+    "confidence": 1.0
+  }
+]
+2026-03-03 20:45:52,492 - src.model.llm_generator - INFO - Parsed 8 suggestions from LLM response
+2026-03-03 20:45:52,492 - src.controller - INFO - Generated 8 suggestion(s).
+2026-03-03 20:45:52,492 - src.controller - INFO - - line 5:6 [warning] use-enumerate - Using range(len(names)) instead of enumerate(names) for iteration.
+2026-03-03 20:45:52,492 - src.controller - INFO - - line 9:0 [warning] use-list-comprehension - Building a list using a loop instead of a list comprehension.
+2026-03-03 20:45:52,492 - src.controller - INFO - - line 15:6 [warning] use-zip - Using range(len(first)) to iterate over two lists instead of zip(first, second).
+2026-03-03 20:45:52,492 - src.controller - INFO - - line 20:7 [warning] compare-true - Comparing to True using == instead of relying on truthiness.
+2026-03-03 20:45:52,492 - src.controller - INFO - - line 25:7 [warning] compare-none - Comparing to None using == instead of 'is None'.
+2026-03-03 20:45:52,492 - src.controller - INFO - - line 29:0 [warning] context-manager - Not using a context manager (with statement) for file handling.
+2026-03-03 20:45:52,492 - src.controller - INFO - - line 34:19 [warning] mutable-default-arg - Using mutable default argument (items=[]) in function definition.
+2026-03-03 20:45:52,492 - src.controller - INFO - - line 39:0 [warning] use-any - Using a loop to check existence in a list instead of any().
+2026-03-03 20:45:52,492 - src.controller - INFO - Applying auto-fixes
+2026-03-03 20:45:52,516 - src.agents.idioms_agent - INFO - File Successfully Read
+2026-03-03 20:45:56,292 - httpx - INFO - HTTP Request: POST https://litellm.oit.duke.edu/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-03 20:45:56,296 - src.agents.idioms_agent - INFO - raw: # ruff: noqa
+
+# Good: using enumerate instead of range(len())
+names = ["Alice", "Bob", "Charlie"]
+for i, name in enumerate(names):
+    print(i, name)
+
+# Good: building list with list comprehension
+squares = [i * i for i in range(10)]
+
+# Good: using zip() to iterate over two lists
+first = [1, 2, 3]
+second = [4, 5, 6]
+for a, b in zip(first, second):
+    print(a, b)
+
+# Good: relying on truthiness
+flag = True
+if flag:
+    print("flag is true")
+
+# Good: comparing to None with is None
+value = None
+if value is None:
+    print("value is none")
+
+# Good: using context manager for file handling
+with open("README.md", "r") as f:
+    content = f.read()
+
+# Good: avoiding mutable default argument
+def add_item(item, items=None):
+    if items is None:
+        items = []
+    items.append(item)
+    return items
+
+# Good: using any()
+numbers = [1, 2, 3, 4, 5]
+found = any(n > 3 for n in numbers)
+
+2026-03-03 20:45:56,299 - src.agents.idioms_agent - INFO - Applied suggestions to /Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/data/sample_bad_idioms.py
+2026-03-03 20:45:56,300 - src.agents.idioms_agent - INFO - File Successfully Read
+2026-03-03 20:45:57,388 - httpx - INFO - HTTP Request: POST https://litellm.oit.duke.edu/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-03 20:45:57,388 - src.agents.idioms_agent - INFO - raw: []
+2026-03-03 20:45:57,388 - src.agents.idioms_agent - INFO - Parsed 0 issues from LLM response
+2026-03-03 20:45:57,388 - src.controller - INFO - Validation result: valid=None remaining_issues=0
+2026-03-06 01:05:41,678 - __main__ - INFO - Loaded environment variables from /Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/.env
+2026-03-06 01:05:42,527 - src.model.input - INFO - Read file: /Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/data/sample_bad_code_style.py (279 chars)
+2026-03-06 01:05:42,528 - src.controller - INFO - Parsed input: agent=CODE_STYLE, file=/Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/data/sample_bad_code_style.py, apply=True
+2026-03-06 01:05:42,528 - src.model.planner - INFO - User selected agent: CODE_STYLE
+2026-03-06 01:05:42,528 - src.controller - INFO - Planner selected agent: CODE_STYLE
+2026-03-06 01:05:42,827 - src.controller - INFO - Found 0 issue(s).
+2026-03-06 01:05:42,827 - src.controller - INFO - Generated 0 suggestion(s).
+2026-03-06 01:05:42,828 - src.controller - INFO - Applying auto-fixes
+2026-03-06 01:05:42,872 - src.controller - INFO - Validation result: valid=True remaining_issues=0
+2026-03-06 01:08:22,985 - __main__ - INFO - Loaded environment variables from /Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/.env
+2026-03-06 01:08:23,493 - src.model.input - INFO - Read file: /Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/data/processor.py (703 chars)
+2026-03-06 01:08:23,494 - src.controller - INFO - Parsed input: agent=TESTS, file=/Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/data/processor.py, apply=True
+2026-03-06 01:08:23,494 - src.model.planner - INFO - User selected agent: TESTS
+2026-03-06 01:08:23,494 - src.controller - INFO - Planner selected agent: TESTS
+2026-03-06 01:08:23,494 - src.agents.testing_agent - INFO - File successfully read: /Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/data/processor.py
+2026-03-06 01:08:23,494 - src.agents.testing_agent - INFO - File successfully read: tests/data/test_processor.py
+2026-03-06 01:08:25,566 - httpx - INFO - HTTP Request: POST https://litellm.oit.duke.edu/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-06 01:08:25,575 - src.agents.testing_agent - INFO - raw: [
+    {
+        "line": 1,
+        "message": "Function 'calculate_average' is tested only for standard input; lacks tests for empty lists, negative numbers, or non-integer inputs.",
+        "severity": "warning",
+        "rule_id": "weak-test",
+        "column": 0
+    },
+    {
+        "line": 5,
+        "message": "Function 'get_user_status' lacks a proper test: existing test has no assertions and does not check edge cases such as age == 0, age < 0, age == 18, and age >= 65.",
+        "severity": "error",
+        "rule_id": "missing-test",
+        "column": 0
+    },
+    {
+        "line": 13,
+        "message": "Function 'parse_config' is not tested at all; complex parsing logic needs extensive tests including malformed input, missing colon, extra spaces, empty string.",
+        "severity": "error",
+        "rule_id": "missing-test",
+        "column": 0
+    }
+]
+2026-03-06 01:08:25,575 - src.agents.testing_agent - INFO - Parsed 3 issues from LLM response
+2026-03-06 01:08:25,575 - src.controller - INFO - Found 3 issue(s).
+2026-03-06 01:08:25,575 - src.controller - INFO - - line 1:0 [warning] weak-test - Function 'calculate_average' is tested only for standard input; lacks tests for empty lists, negative numbers, or non-integer inputs.
+2026-03-06 01:08:25,575 - src.controller - INFO - - line 5:0 [error] missing-test - Function 'get_user_status' lacks a proper test: existing test has no assertions and does not check edge cases such as age == 0, age < 0, age == 18, and age >= 65.
+2026-03-06 01:08:25,575 - src.controller - INFO - - line 13:0 [error] missing-test - Function 'parse_config' is not tested at all; complex parsing logic needs extensive tests including malformed input, missing colon, extra spaces, empty string.
+2026-03-06 01:08:37,974 - httpx - INFO - HTTP Request: POST https://litellm.oit.duke.edu/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-06 01:08:37,976 - src.agents.testing_agent - INFO - raw: [
+  {
+    "issue": {
+      "line": 1,
+      "message": "Function 'calculate_average' is tested only for standard input; lacks tests for empty lists, negative numbers, or non-integer inputs.",
+      "severity": "warning",
+      "rule_id": "weak-test",
+      "column": 0
+    },
+    "original_code": "",
+    "fixed_code": "import pytest\n\ndef test_calculate_average_standard():\n    assert calculate_average([1,2,3,4]) == 2.5\n\ndef test_calculate_average_empty_list():\n    with pytest.raises(ZeroDivisionError):\n        calculate_average([])\n\ndef test_calculate_average_negative_numbers():\n    assert calculate_average([-1,-2]) == -1.5\n\ndef test_calculate_average_non_integer_inputs():\n    assert calculate_average([1.5, 2.5, 3.5]) == 2.5\n",
+    "rationale": "Add test cases to cover standard input, empty list (expecting exception), negative numbers, and non-integer (float) inputs for comprehensive coverage.",
+    "confidence": 0.95
+  },
+  {
+    "issue": {
+      "line": 5,
+      "message": "Function 'get_user_status' lacks a proper test: existing test has no assertions and does not check edge cases such as age == 0, age < 0, age == 18, and age >= 65.",
+      "severity": "error",
+      "rule_id": "missing-test",
+      "column": 0
+    },
+    "original_code": "",
+    "fixed_code": "def test_get_user_status():\n    assert get_user_status(-1) == \"Invalid\"\n    assert get_user_status(0) == \"Minor\"\n    assert get_user_status(17) == \"Minor\"\n    assert get_user_status(18) == \"Adult\"\n    assert get_user_status(64) == \"Adult\"\n    assert get_user_status(65) == \"Senior\"\n    assert get_user_status(100) == \"Senior\"\n",
+    "rationale": "Provides assertions checking all relevant edge cases and validates proper matching of statuses based on age.",
+    "confidence": 0.98
+  },
+  {
+    "issue": {
+      "line": 13,
+      "message": "Function 'parse_config' is not tested at all; complex parsing logic needs extensive tests including malformed input, missing colon, extra spaces, empty string.",
+      "severity": "error",
+      "rule_id": "missing-test",
+      "column": 0
+    },
+    "original_code": "",
+    "fixed_code": "import pytest\n\ndef test_parse_config_standard():\n    config_str = \"key1:val1,key2:val2\"\n    assert parse_config(config_str) == {\"key1\": \"val1\", \"key2\": \"val2\"}\n\ndef test_parse_config_extra_spaces():\n    config_str = \" key1 : val1 , key2: val2 \"\n    assert parse_config(config_str) == {\"key1\": \"val1\", \"key2\": \"val2\"}\n\ndef test_parse_config_empty_string():\n    with pytest.raises(ValueError):\n        parse_config(\"\")\n\ndef test_parse_config_missing_colon():\n    with pytest.raises(ValueError):\n        parse_config(\"key1val1,key2:val2\")\n",
+    "rationale": "Adds comprehensive tests to parse_config covering normal parsing, extra spaces, empty string, and malformed input (missing colon), with expected failures for invalid cases.",
+    "confidence": 0.99
+  }
+]
+2026-03-06 01:08:37,977 - src.agents.testing_agent - INFO - Parsed 3 suggestions from LLM response
+2026-03-06 01:08:37,977 - src.controller - INFO - Generated 3 suggestion(s).
+2026-03-06 01:08:37,977 - src.controller - INFO - - line 1:0 [warning] weak-test - Function 'calculate_average' is tested only for standard input; lacks tests for empty lists, negative numbers, or non-integer inputs.
+2026-03-06 01:08:37,977 - src.controller - INFO - - line 13:0 [error] missing-test - Function 'parse_config' is not tested at all; complex parsing logic needs extensive tests including malformed input, missing colon, extra spaces, empty string.
+2026-03-06 01:08:37,977 - src.controller - INFO - - line 13:0 [error] missing-test - Function 'parse_config' is not tested at all; complex parsing logic needs extensive tests including malformed input, missing colon, extra spaces, empty string.
+2026-03-06 01:08:37,977 - src.controller - INFO - Applying auto-fixes
+2026-03-06 01:08:37,978 - src.agents.testing_agent - INFO - Appended 3 suggestions to tests/data/test_processor.py
+2026-03-06 01:08:37,979 - src.agents.testing_agent - INFO - File successfully read: /Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/data/processor.py
+2026-03-06 01:08:37,979 - src.agents.testing_agent - INFO - File successfully read: tests/data/test_processor.py
+2026-03-06 01:08:39,817 - httpx - INFO - HTTP Request: POST https://litellm.oit.duke.edu/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-06 01:08:39,819 - src.agents.testing_agent - INFO - raw: [
+    {
+        "line": 12,
+        "message": "parse_config function has moderately complex logic including iteration and string splitting; tests are present for standard, extra spaces, empty string, and missing colon cases, but there are no tests for duplicate keys, spaces only, or malformed cases with multiple colons. More exhaustive covering of edge cases is warranted.",
+        "severity": "warning",
+        "rule_id": "weak-test",
+        "column": 0
+    },
+    {
+        "line": 2,
+        "message": "calculate_average has no test for inputs containing None, strings, or invalid types; also, there are no tests for lists with a single element or very large lists.",
+        "severity": "info",
+        "rule_id": "weak-test",
+        "column": 0
+    }
+]
+2026-03-06 01:08:39,819 - src.agents.testing_agent - INFO - Parsed 2 issues from LLM response
+2026-03-06 01:08:39,819 - src.agents.testing_agent - WARNING - validate() called with a list, skipping validation.
+2026-03-06 01:08:39,819 - src.controller - INFO - Validation result: valid=True remaining_issues=2
+2026-03-06 01:08:39,819 - src.controller - INFO - - line 12:0 [warning] weak-test - parse_config function has moderately complex logic including iteration and string splitting; tests are present for standard, extra spaces, empty string, and missing colon cases, but there are no tests for duplicate keys, spaces only, or malformed cases with multiple colons. More exhaustive covering of edge cases is warranted.
+2026-03-06 01:08:39,819 - src.controller - INFO - - line 2:0 [info] weak-test - calculate_average has no test for inputs containing None, strings, or invalid types; also, there are no tests for lists with a single element or very large lists.
