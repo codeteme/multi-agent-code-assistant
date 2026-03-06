@@ -11,7 +11,7 @@ A VS Code extension that connects to an AI-powered code analysis backend to scan
 
 ## Extension Settings
 
-- `aiAssistant.backendUrl`: Backend server URL (currently: `http://vcm-52409.vm.duke.edu:4003`)
+- `aiAssistant.backendUrl`: Backend server URL (default: `http://vcm-52418.vm.duke.edu:4003`)
 
 ## Installation
 
