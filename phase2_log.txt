@@ -578,3 +578,953 @@ found = any(n > 3 for n in numbers)
 2026-03-06 01:08:39,819 - src.controller - INFO - Validation result: valid=True remaining_issues=2
 2026-03-06 01:08:39,819 - src.controller - INFO - - line 12:0 [warning] weak-test - parse_config function has moderately complex logic including iteration and string splitting; tests are present for standard, extra spaces, empty string, and missing colon cases, but there are no tests for duplicate keys, spaces only, or malformed cases with multiple colons. More exhaustive covering of edge cases is warranted.
 2026-03-06 01:08:39,819 - src.controller - INFO - - line 2:0 [info] weak-test - calculate_average has no test for inputs containing None, strings, or invalid types; also, there are no tests for lists with a single element or very large lists.
+2026-03-06 13:40:47,331 - __main__ - INFO - Loaded environment variables from /Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/.env
+2026-03-06 13:40:47,925 - src.util.input - INFO - Read file: /Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/data/sample_bad_code_style.py (279 chars)
+2026-03-06 13:40:47,925 - src.controller - INFO - Parsed input: agent=CODE_STYLE, file=/Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/data/sample_bad_code_style.py, apply=True
+2026-03-06 13:40:47,925 - src.util.planner - INFO - User selected agent: CODE_STYLE
+2026-03-06 13:40:47,925 - src.controller - INFO - Planner selected agent: CODE_STYLE
+2026-03-06 13:40:47,992 - src.controller - INFO - Found 0 issue(s).
+2026-03-06 13:40:47,992 - src.controller - INFO - Generated 0 suggestion(s).
+2026-03-06 13:40:47,993 - src.controller - INFO - Applying auto-fixes
+2026-03-06 13:40:48,038 - src.controller - INFO - Validation result: valid=True remaining_issues=0
+2026-03-06 13:41:00,646 - __main__ - INFO - Loaded environment variables from /Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/.env
+2026-03-06 13:41:12,150 - __main__ - INFO - Loaded environment variables from /Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/.env
+2026-03-06 13:41:12,710 - src.util.input - INFO - Read file: /Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/data/sample_bad_code_style.py (279 chars)
+2026-03-06 13:41:12,711 - src.controller - INFO - Parsed input: agent=TESTS, file=/Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/data/sample_bad_code_style.py, apply=True
+2026-03-06 13:41:12,711 - src.util.planner - INFO - User selected agent: TESTS
+2026-03-06 13:41:12,711 - src.controller - INFO - Planner selected agent: TESTS
+2026-03-06 13:41:12,711 - src.agents.testing_agent - INFO - File successfully read: /Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/data/sample_bad_code_style.py
+2026-03-06 13:41:12,711 - src.agents.testing_agent - WARNING - Could not read file tests/data/test_sample_bad_code_style.py: [Errno 2] No such file or directory: 'tests/data/test_sample_bad_code_style.py'
+2026-03-06 13:41:12,765 - src.agents.testing_agent - INFO - No existing test file found at tests/data/test_sample_bad_code_style.py
+2026-03-06 13:41:15,467 - httpx - INFO - HTTP Request: POST https://litellm.oit.duke.edu/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-06 13:41:15,478 - src.util.llm_scanner - INFO - raw: [
+    {
+        "line": 9,
+        "message": "Function '__init__' in 'myClass' is not tested at all.",
+        "severity": "error",
+        "rule_id": "missing-test",
+        "column": 0
+    },
+    {
+        "line": 11,
+        "message": "Function 'getName' in 'myClass' is not tested. No verification for returning the correct name or handling of the empty name edge case.",
+        "severity": "error",
+        "rule_id": "missing-test",
+        "column": 0
+    }
+]
+2026-03-06 13:41:15,478 - src.util.llm_scanner - INFO - Parsed 2 issues from LLM response
+2026-03-06 13:41:15,479 - src.controller - INFO - Found 2 issue(s).
+2026-03-06 13:41:15,479 - src.controller - INFO - - line 9:0 [error] missing-test - Function '__init__' in 'myClass' is not tested at all.
+2026-03-06 13:41:15,479 - src.controller - INFO - - line 11:0 [error] missing-test - Function 'getName' in 'myClass' is not tested. No verification for returning the correct name or handling of the empty name edge case.
+2026-03-06 13:41:25,999 - httpx - INFO - HTTP Request: POST https://litellm.oit.duke.edu/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-06 13:41:26,000 - src.util.llm_generator - INFO - raw: [
+  {
+    "issue": {
+      "line": 9,
+      "message": "Function '__init__' in 'myClass' is not tested at all.",
+      "severity": "error",
+      "rule_id": "missing-test",
+      "column": 0
+    },
+    "original_code": "",
+    "fixed_code": "def test_myClass_init():\n    obj = myClass(\"Alice\")\n    assert obj.name == \"Alice\"\n",
+    "rationale": "Adds a unit test to instantiate myClass and verify the name attribute is correctly initialized, covering the constructor.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 11,
+      "message": "Function 'getName' in 'myClass' is not tested. No verification for returning the correct name or handling of the empty name edge case.",
+      "severity": "error",
+      "rule_id": "missing-test",
+      "column": 0
+    },
+    "original_code": "",
+    "fixed_code": "def test_myClass_getName():\n    obj1 = myClass(\"\")\n    assert obj1.getName() == \"no name\"\n    obj2 = myClass(\"Bob\")\n    assert obj2.getName() == \"Bob\"\n",
+    "rationale": "Adds a test that verifies getName correctly returns the stored name and the 'no name' string when name is empty.",
+    "confidence": 1.0
+  }
+]
+2026-03-06 13:41:26,000 - src.util.llm_generator - INFO - Parsed 2 suggestions from LLM response
+2026-03-06 13:41:26,001 - src.controller - INFO - Generated 2 suggestion(s).
+2026-03-06 13:41:26,001 - src.controller - INFO - - line 11:0 [error] missing-test - Function 'getName' in 'myClass' is not tested. No verification for returning the correct name or handling of the empty name edge case.
+2026-03-06 13:41:26,001 - src.controller - INFO - - line 11:0 [error] missing-test - Function 'getName' in 'myClass' is not tested. No verification for returning the correct name or handling of the empty name edge case.
+2026-03-06 13:41:26,001 - src.controller - INFO - Applying auto-fixes
+2026-03-06 13:41:26,001 - src.util.testing_applier - INFO - Appended 2 suggestions to tests/data/test_sample_bad_code_style.py
+2026-03-06 13:41:26,001 - src.agents.testing_agent - INFO - File successfully read: /Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/data/sample_bad_code_style.py
+2026-03-06 13:41:26,002 - src.agents.testing_agent - INFO - File successfully read: tests/data/test_sample_bad_code_style.py
+2026-03-06 13:41:29,169 - httpx - INFO - HTTP Request: POST https://litellm.oit.duke.edu/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-06 13:41:29,170 - src.util.llm_scanner - INFO - raw: [
+  {
+    "line": 7,
+    "message": "Global variables 'x' and 'y' are defined but have no direct test coverage.",
+    "severity": "info",
+    "rule_id": "missing-test",
+    "column": 0
+  },
+  {
+    "line": 13,
+    "message": "Function '__init__' is only tested on the normal path; missing tests for edge cases, such as when 'name' is None or a non-string type.",
+    "severity": "warning",
+    "rule_id": "weak-test",
+    "column": 0
+  },
+  {
+    "line": 15,
+    "message": "Method 'getName' is only tested for empty string and one non-empty string; edge cases like None, non-string types, whitespace-only strings, or very long strings are not tested.",
+    "severity": "warning",
+    "rule_id": "weak-test",
+    "column": 0
+  }
+]
+2026-03-06 13:41:29,170 - src.util.llm_scanner - INFO - Parsed 3 issues from LLM response
+2026-03-06 13:41:29,171 - src.util.testing_validator - WARNING - validate() called with a list, skipping validation.
+2026-03-06 13:41:29,171 - src.controller - INFO - Validation result: valid=True remaining_issues=3
+2026-03-06 13:41:29,171 - src.controller - INFO - - line 7:0 [info] missing-test - Global variables 'x' and 'y' are defined but have no direct test coverage.
+2026-03-06 13:41:29,171 - src.controller - INFO - - line 13:0 [warning] weak-test - Function '__init__' is only tested on the normal path; missing tests for edge cases, such as when 'name' is None or a non-string type.
+2026-03-06 13:41:29,171 - src.controller - INFO - - line 15:0 [warning] weak-test - Method 'getName' is only tested for empty string and one non-empty string; edge cases like None, non-string types, whitespace-only strings, or very long strings are not tested.
+2026-03-06 21:39:55,012 - __main__ - INFO - Loaded environment variables from /Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/.env
+2026-03-06 21:39:56,039 - src.util.input - INFO - Read file: /Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/data/sample_bad_clean_code.py (2908 chars)
+2026-03-06 21:39:56,039 - src.controller - INFO - Parsed input: agent=CLEAN_CODE, file=/Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/data/sample_bad_clean_code.py, apply=True
+2026-03-06 21:39:56,039 - src.util.planner - INFO - User selected agent: CLEAN_CODE
+2026-03-06 21:39:56,039 - src.controller - INFO - Planner selected agent: CLEAN_CODE
+2026-03-06 21:39:56,039 - src.agents.clean_code_agent - INFO - File Successfully Read
+2026-03-06 21:40:18,250 - httpx - INFO - HTTP Request: POST https://litellm.oit.duke.edu/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-06 21:40:18,262 - src.util.llm_scanner - INFO - raw: [
+  {
+    "line": 1,
+    "message": "Unused imports: 'os', 'sys', 'math' are imported but not used.",
+    "severity": "warning",
+    "rule_id": "unused-import",
+    "column": 1
+  },
+  {
+    "line": 6,
+    "message": "Variable names 'x', 'y', 'z' are not descriptive and lack domain context.",
+    "severity": "warning",
+    "rule_id": "non-descriptive-variable",
+    "column": 1
+  },
+  {
+    "line": 8,
+    "message": "Parameter name 'items' is generic; should be more descriptive if possible.",
+    "severity": "info",
+    "rule_id": "non-descriptive-variable",
+    "column": 23
+  },
+  {
+    "line": 8,
+    "message": "Parameter name 'tax' is generic; should be more descriptive if possible.",
+    "severity": "info",
+    "rule_id": "non-descriptive-variable",
+    "column": 36
+  },
+  {
+    "line": 9,
+    "message": "Variable name 'total' is generic; consider more descriptive naming if within domain context.",
+    "severity": "info",
+    "rule_id": "non-descriptive-variable",
+    "column": 5
+  },
+  {
+    "line": 10,
+    "message": "Loop variable 'i' is not descriptive.",
+    "severity": "info",
+    "rule_id": "non-descriptive-variable",
+    "column": 9
+  },
+  {
+    "line": 14,
+    "message": "Duplicate function body with 'calculate_total', 'calculate_total_v2', 'calculate_total_v3'. Extract and reuse common function.",
+    "severity": "warning",
+    "rule_id": "duplicate-code",
+    "column": 1
+  },
+  {
+    "line": 33,
+    "message": "Function 'get_user_name' uses parameter 'u', which is not a descriptive name.",
+    "severity": "info",
+    "rule_id": "non-descriptive-variable",
+    "column": 21
+  },
+  {
+    "line": 33,
+    "message": "Function name 'get_user_name' does not indicate if the return could be defaulted to 'unknown'. Consider explicit naming or documentation.",
+    "severity": "info",
+    "rule_id": "naming-readability",
+    "column": 5
+  },
+  {
+    "line": 41,
+    "message": "Function 'get_user_email' uses parameter 'u', which is not a descriptive name.",
+    "severity": "info",
+    "rule_id": "non-descriptive-variable",
+    "column": 22
+  },
+  {
+    "line": 49,
+    "message": "Function 'get_user_age' uses parameter 'u', which is not a descriptive name.",
+    "severity": "info",
+    "rule_id": "non-descriptive-variable",
+    "column": 20
+  },
+  {
+    "line": 57,
+    "message": "Class name 'userManager' does not follow CapitalizedWords convention and mixes naming styles.",
+    "severity": "warning",
+    "rule_id": "naming-readability",
+    "column": 7
+  },
+  {
+    "line": 58,
+    "message": "Instance variable names 'data', 'temp', and 'result' are non-descriptive. Prefer descriptive/contextual names.",
+    "severity": "info",
+    "rule_id": "non-descriptive-variable",
+    "column": 9
+  },
+  {
+    "line": 61,
+    "message": "Method name 'getUsers' is not descriptive. Consider 'get_all_users'. Also, method mixes case formatting.",
+    "severity": "info",
+    "rule_id": "naming-readability",
+    "column": 9
+  },
+  {
+    "line": 62,
+    "message": "Loop variable 'i' is not descriptive.",
+    "severity": "info",
+    "rule_id": "non-descriptive-variable",
+    "column": 21
+  },
+  {
+    "line": 67,
+    "message": "Method name 'getActiveUsers' is not descriptive. Consider 'get_active_users'. Also, method mixes case formatting.",
+    "severity": "info",
+    "rule_id": "naming-readability",
+    "column": 9
+  },
+  {
+    "line": 73,
+    "message": "Method name 'getInactiveUsers' is not descriptive. Consider 'get_inactive_users'. Also, method mixes case formatting.",
+    "severity": "info",
+    "rule_id": "naming-readability",
+    "column": 9
+  },
+  {
+    "line": 79,
+    "message": "Method name 'processUser' uses vague verb 'process'. Provide more specificity.",
+    "severity": "warning",
+    "rule_id": "vague-verb",
+    "column": 9
+  },
+  {
+    "line": 79,
+    "message": "Parameter name 'u' is not descriptive.",
+    "severity": "info",
+    "rule_id": "non-descriptive-variable",
+    "column": 20
+  },
+  {
+    "line": 90,
+    "message": "Method name 'processUsers' uses vague verb 'process'. Provide more specificity.",
+    "severity": "warning",
+    "rule_id": "vague-verb",
+    "column": 9
+  },
+  {
+    "line": 90,
+    "message": "Parameter name 'users' is a duplicate of class attribute 'self.users'; possible confusion.",
+    "severity": "info",
+    "rule_id": "naming-readability",
+    "column": 22
+  },
+  {
+    "line": 108,
+    "message": "Function 'load_config' uses variable names 'f' and 'data' which are not descriptive.",
+    "severity": "info",
+    "rule_id": "non-descriptive-variable",
+    "column": 17
+  },
+  {
+    "line": 115,
+    "message": "Function 'load_config_v2' duplicates code of 'load_config'. Extract common logic.",
+    "severity": "warning",
+    "rule_id": "duplicate-code",
+    "column": 1
+  },
+  {
+    "line": 122,
+    "message": "Function 'save_config' uses variable names 'f' and 'data' which are not descriptive.",
+    "severity": "info",
+    "rule_id": "non-descriptive-variable",
+    "column": 21
+  },
+  {
+    "line": 127,
+    "message": "Function 'save_config_v2' duplicates code of 'save_config'. Extract common logic.",
+    "severity": "warning",
+    "rule_id": "duplicate-code",
+    "column": 1
+  },
+  {
+    "line": 132,
+    "message": "Lambda variable names 'l', 'm', 'n' are not descriptive and lack domain context.",
+    "severity": "info",
+    "rule_id": "non-descriptive-variable",
+    "column": 1
+  },
+  {
+    "line": 132,
+    "message": "Lambda parameter names 'x', 'y' are not descriptive and lack domain context.",
+    "severity": "info",
+    "rule_id": "non-descriptive-variable",
+    "column": 11
+  }
+]
+2026-03-06 21:40:18,263 - src.util.llm_scanner - INFO - Parsed 27 issues from LLM response
+2026-03-06 21:40:18,263 - src.controller - INFO - Found 27 issue(s).
+2026-03-06 21:40:18,263 - src.controller - INFO - - line 1:1 [warning] unused-import - Unused imports: 'os', 'sys', 'math' are imported but not used.
+2026-03-06 21:40:18,263 - src.controller - INFO - - line 6:1 [warning] non-descriptive-variable - Variable names 'x', 'y', 'z' are not descriptive and lack domain context.
+2026-03-06 21:40:18,263 - src.controller - INFO - - line 8:23 [info] non-descriptive-variable - Parameter name 'items' is generic; should be more descriptive if possible.
+2026-03-06 21:40:18,263 - src.controller - INFO - - line 8:36 [info] non-descriptive-variable - Parameter name 'tax' is generic; should be more descriptive if possible.
+2026-03-06 21:40:18,263 - src.controller - INFO - - line 9:5 [info] non-descriptive-variable - Variable name 'total' is generic; consider more descriptive naming if within domain context.
+2026-03-06 21:40:18,263 - src.controller - INFO - - line 10:9 [info] non-descriptive-variable - Loop variable 'i' is not descriptive.
+2026-03-06 21:40:18,263 - src.controller - INFO - - line 14:1 [warning] duplicate-code - Duplicate function body with 'calculate_total', 'calculate_total_v2', 'calculate_total_v3'. Extract and reuse common function.
+2026-03-06 21:40:18,263 - src.controller - INFO - - line 33:21 [info] non-descriptive-variable - Function 'get_user_name' uses parameter 'u', which is not a descriptive name.
+2026-03-06 21:40:18,263 - src.controller - INFO - - line 33:5 [info] naming-readability - Function name 'get_user_name' does not indicate if the return could be defaulted to 'unknown'. Consider explicit naming or documentation.
+2026-03-06 21:40:18,263 - src.controller - INFO - - line 41:22 [info] non-descriptive-variable - Function 'get_user_email' uses parameter 'u', which is not a descriptive name.
+2026-03-06 21:40:18,263 - src.controller - INFO - - line 49:20 [info] non-descriptive-variable - Function 'get_user_age' uses parameter 'u', which is not a descriptive name.
+2026-03-06 21:40:18,263 - src.controller - INFO - - line 57:7 [warning] naming-readability - Class name 'userManager' does not follow CapitalizedWords convention and mixes naming styles.
+2026-03-06 21:40:18,263 - src.controller - INFO - - line 58:9 [info] non-descriptive-variable - Instance variable names 'data', 'temp', and 'result' are non-descriptive. Prefer descriptive/contextual names.
+2026-03-06 21:40:18,263 - src.controller - INFO - - line 61:9 [info] naming-readability - Method name 'getUsers' is not descriptive. Consider 'get_all_users'. Also, method mixes case formatting.
+2026-03-06 21:40:18,263 - src.controller - INFO - - line 62:21 [info] non-descriptive-variable - Loop variable 'i' is not descriptive.
+2026-03-06 21:40:18,263 - src.controller - INFO - - line 67:9 [info] naming-readability - Method name 'getActiveUsers' is not descriptive. Consider 'get_active_users'. Also, method mixes case formatting.
+2026-03-06 21:40:18,263 - src.controller - INFO - - line 73:9 [info] naming-readability - Method name 'getInactiveUsers' is not descriptive. Consider 'get_inactive_users'. Also, method mixes case formatting.
+2026-03-06 21:40:18,263 - src.controller - INFO - - line 79:9 [warning] vague-verb - Method name 'processUser' uses vague verb 'process'. Provide more specificity.
+2026-03-06 21:40:18,263 - src.controller - INFO - - line 79:20 [info] non-descriptive-variable - Parameter name 'u' is not descriptive.
+2026-03-06 21:40:18,263 - src.controller - INFO - - line 90:9 [warning] vague-verb - Method name 'processUsers' uses vague verb 'process'. Provide more specificity.
+2026-03-06 21:40:18,263 - src.controller - INFO - - line 90:22 [info] naming-readability - Parameter name 'users' is a duplicate of class attribute 'self.users'; possible confusion.
+2026-03-06 21:40:18,263 - src.controller - INFO - - line 108:17 [info] non-descriptive-variable - Function 'load_config' uses variable names 'f' and 'data' which are not descriptive.
+2026-03-06 21:40:18,264 - src.controller - INFO - - line 115:1 [warning] duplicate-code - Function 'load_config_v2' duplicates code of 'load_config'. Extract common logic.
+2026-03-06 21:40:18,264 - src.controller - INFO - - line 122:21 [info] non-descriptive-variable - Function 'save_config' uses variable names 'f' and 'data' which are not descriptive.
+2026-03-06 21:40:18,264 - src.controller - INFO - - line 127:1 [warning] duplicate-code - Function 'save_config_v2' duplicates code of 'save_config'. Extract common logic.
+2026-03-06 21:40:18,264 - src.controller - INFO - - line 132:1 [info] non-descriptive-variable - Lambda variable names 'l', 'm', 'n' are not descriptive and lack domain context.
+2026-03-06 21:40:18,264 - src.controller - INFO - - line 132:11 [info] non-descriptive-variable - Lambda parameter names 'x', 'y' are not descriptive and lack domain context.
+2026-03-06 21:41:16,308 - httpx - INFO - HTTP Request: POST https://litellm.oit.duke.edu/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-06 21:41:16,314 - src.util.llm_generator - INFO - raw: [
+  {
+    "issue": {
+      "line": 1,
+      "message": "Unused imports: 'os', 'sys', 'math' are imported but not used.",
+      "severity": "warning",
+      "rule_id": "unused-import",
+      "column": 1
+    },
+    "original_code": "import os, sys, json\nimport os\nimport math",
+    "fixed_code": "import json",
+    "rationale": "Removes unnecessary imports to reduce clutter and potential confusion. Only keep modules used in the code.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 6,
+      "message": "Variable names 'x', 'y', 'z' are not descriptive and lack domain context.",
+      "severity": "warning",
+      "rule_id": "non-descriptive-variable",
+      "column": 1
+    },
+    "original_code": "x=1\ny =2\nz= 3",
+    "fixed_code": "item_count = 1\nuser_count = 2\nconfig_version = 3",
+    "rationale": "Replaces non-descriptive single character variable names with descriptive names that indicate their likely purpose.",
+    "confidence": 0.8
+  },
+  {
+    "issue": {
+      "line": 8,
+      "message": "Parameter name 'items' is generic; should be more descriptive if possible.",
+      "severity": "info",
+      "rule_id": "non-descriptive-variable",
+      "column": 23
+    },
+    "original_code": "def calculate_total( items,tax ):",
+    "fixed_code": "def calculate_total(item_prices, tax_rate):",
+    "rationale": "Provide clearer parameter names to indicate the expected contents and semantics.",
+    "confidence": 0.9
+  },
+  {
+    "issue": {
+      "line": 8,
+      "message": "Parameter name 'tax' is generic; should be more descriptive if possible.",
+      "severity": "info",
+      "rule_id": "non-descriptive-variable",
+      "column": 36
+    },
+    "original_code": "def calculate_total( items,tax ):",
+    "fixed_code": "def calculate_total(item_prices, tax_rate):",
+    "rationale": "Clearer parameter names strengthen self-documenting code. Combined with the previous fix, they reflect purpose.",
+    "confidence": 0.9
+  },
+  {
+    "issue": {
+      "line": 9,
+      "message": "Variable name 'total' is generic; consider more descriptive naming if within domain context.",
+      "severity": "info",
+      "rule_id": "non-descriptive-variable",
+      "column": 5
+    },
+    "original_code": "    total=0",
+    "fixed_code": "    total_price = 0",
+    "rationale": "A more descriptive variable name helps clarify what is being computed.",
+    "confidence": 0.9
+  },
+  {
+    "issue": {
+      "line": 10,
+      "message": "Loop variable 'i' is not descriptive.",
+      "severity": "info",
+      "rule_id": "non-descriptive-variable",
+      "column": 9
+    },
+    "original_code": "    for i in range(len(items)):\n        total=total+items[i]",
+    "fixed_code": "    for item_price in item_prices:\n        total_price += item_price",
+    "rationale": "Uses direct iteration over collection elements instead of indexing, giving a well-named loop variable.",
+    "confidence": 0.95
+  },
+  {
+    "issue": {
+      "line": 14,
+      "message": "Duplicate function body with 'calculate_total', 'calculate_total_v2', 'calculate_total_v3'. Extract and reuse common function.",
+      "severity": "warning",
+      "rule_id": "duplicate-code",
+      "column": 1
+    },
+    "original_code": "def calculate_total_v2( items,tax ):\n    total=0\n    for i in range(len(items)):\n        total=total+items[i]\n    total=total+(total*tax)\n    return total\n\ndef calculate_total_v3( items,tax ):\n    total=0\n    for i in range(len(items)):\n        total=total+items[i]\n    total=total+(total*tax)\n    return total",
+    "fixed_code": "calculate_total_v2 = calculate_total\ncalculate_total_v3 = calculate_total",
+    "rationale": "Removes duplicate implementations and aliases duplicate functions to a single implementation.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 33,
+      "message": "Function 'get_user_name' uses parameter 'u', which is not a descriptive name.",
+      "severity": "info",
+      "rule_id": "non-descriptive-variable",
+      "column": 21
+    },
+    "original_code": "def get_user_name(u):",
+    "fixed_code": "def get_user_name(user):",
+    "rationale": "Improves parameter naming for better readability and clarity.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 33,
+      "message": "Function name 'get_user_name' does not indicate if the return could be defaulted to 'unknown'. Consider explicit naming or documentation.",
+      "severity": "info",
+      "rule_id": "naming-readability",
+      "column": 5
+    },
+    "original_code": "def get_user_name(user):\n    if user['name']==\"\":\n        return \"unknown\"\n    else:\n        return user['name']",
+    "fixed_code": "def get_user_name_or_unknown(user):\n    if user['name'] == \"\":\n        return \"unknown\"\n    else:\n        return user['name']",
+    "rationale": "Clarifies the function’s fallback return value in its name.",
+    "confidence": 0.95
+  },
+  {
+    "issue": {
+      "line": 41,
+      "message": "Function 'get_user_email' uses parameter 'u', which is not a descriptive name.",
+      "severity": "info",
+      "rule_id": "non-descriptive-variable",
+      "column": 22
+    },
+    "original_code": "def get_user_email(u):",
+    "fixed_code": "def get_user_email(user):",
+    "rationale": "Improves parameter naming for clarity and consistency.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 49,
+      "message": "Function 'get_user_age' uses parameter 'u', which is not a descriptive name.",
+      "severity": "info",
+      "rule_id": "non-descriptive-variable",
+      "column": 20
+    },
+    "original_code": "def get_user_age(u):",
+    "fixed_code": "def get_user_age(user):",
+    "rationale": "Renames parameter to provide more context.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 57,
+      "message": "Class name 'userManager' does not follow CapitalizedWords convention and mixes naming styles.",
+      "severity": "warning",
+      "rule_id": "naming-readability",
+      "column": 7
+    },
+    "original_code": "class   userManager:",
+    "fixed_code": "class UserManager:",
+    "rationale": "Updates the class name to match PEP8 naming conventions for class names.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 58,
+      "message": "Instance variable names 'data', 'temp', and 'result' are non-descriptive. Prefer descriptive/contextual names.",
+      "severity": "info",
+      "rule_id": "non-descriptive-variable",
+      "column": 9
+    },
+    "original_code": "        self.data=[]\n        self.temp=[]\n        self.result=[]",
+    "fixed_code": "        self.main_data = []\n        self.temporary_storage = []\n        self.processed_results = []",
+    "rationale": "Gives instance variables names that reflect their content and usage.",
+    "confidence": 0.9
+  },
+  {
+    "issue": {
+      "line": 61,
+      "message": "Method name 'getUsers' is not descriptive. Consider 'get_all_users'. Also, method mixes case formatting.",
+      "severity": "info",
+      "rule_id": "naming-readability",
+      "column": 9
+    },
+    "original_code": "    def getUsers( self ):",
+    "fixed_code": "    def get_all_users(self):",
+    "rationale": "Uses snake_case and clarifies the method’s return value.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 62,
+      "message": "Loop variable 'i' is not descriptive.",
+      "severity": "info",
+      "rule_id": "non-descriptive-variable",
+      "column": 21
+    },
+    "original_code": "        for i in range(len(self.users)):\n            result.append(self.users[i])",
+    "fixed_code": "        for user in self.users:\n            result.append(user)",
+    "rationale": "Iterating over the collection directly is more Pythonic and descriptive.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 67,
+      "message": "Method name 'getActiveUsers' is not descriptive. Consider 'get_active_users'. Also, method mixes case formatting.",
+      "severity": "info",
+      "rule_id": "naming-readability",
+      "column": 9
+    },
+    "original_code": "    def getActiveUsers( self ):",
+    "fixed_code": "    def get_active_users(self):",
+    "rationale": "Improves naming consistency and descriptiveness per Python standards.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 73,
+      "message": "Method name 'getInactiveUsers' is not descriptive. Consider 'get_inactive_users'. Also, method mixes case formatting.",
+      "severity": "info",
+      "rule_id": "naming-readability",
+      "column": 9
+    },
+    "original_code": "    def getInactiveUsers( self ):",
+    "fixed_code": "    def get_inactive_users(self):",
+    "rationale": "Improves class method naming by following Python conventions.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 79,
+      "message": "Method name 'processUser' uses vague verb 'process'. Provide more specificity.",
+      "severity": "warning",
+      "rule_id": "vague-verb",
+      "column": 9
+    },
+    "original_code": "    def processUser(self,u):",
+    "fixed_code": "    def normalize_user_fields(self, user):",
+    "rationale": "Renaming to describe what the method does (normalizing/extracting user fields).",
+    "confidence": 0.95
+  },
+  {
+    "issue": {
+      "line": 79,
+      "message": "Parameter name 'u' is not descriptive.",
+      "severity": "info",
+      "rule_id": "non-descriptive-variable",
+      "column": 20
+    },
+    "original_code": "    def processUser(self,u):",
+    "fixed_code": "    def processUser(self, user):",
+    "rationale": "Changes parameter to a descriptive name, maintaining clarity.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 90,
+      "message": "Method name 'processUsers' uses vague verb 'process'. Provide more specificity.",
+      "severity": "warning",
+      "rule_id": "vague-verb",
+      "column": 9
+    },
+    "original_code": "    def processUsers(self,users):",
+    "fixed_code": "    def normalize_users_fields(self, users):",
+    "rationale": "Renames method to clarify its purpose.",
+    "confidence": 0.95
+  },
+  {
+    "issue": {
+      "line": 90,
+      "message": "Parameter name 'users' is a duplicate of class attribute 'self.users'; possible confusion.",
+      "severity": "info",
+      "rule_id": "naming-readability",
+      "column": 22
+    },
+    "original_code": "    def processUsers(self,users):",
+    "fixed_code": "    def processUsers(self, user_list):",
+    "rationale": "Clarifies that argument is not the same as the class attribute.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 108,
+      "message": "Function 'load_config' uses variable names 'f' and 'data' which are not descriptive.",
+      "severity": "info",
+      "rule_id": "non-descriptive-variable",
+      "column": 17
+    },
+    "original_code": "def load_config(path):\n    f=open(path)\n    data=json.load(f)\n    f.close()\n    return data",
+    "fixed_code": "def load_config(path):\n    with open(path, 'r') as config_file:\n        configuration = json.load(config_file)\n    return configuration",
+    "rationale": "Uses descriptive variable names and a context manager for resource handling.",
+    "confidence": 0.95
+  },
+  {
+    "issue": {
+      "line": 115,
+      "message": "Function 'load_config_v2' duplicates code of 'load_config'. Extract common logic.",
+      "severity": "warning",
+      "rule_id": "duplicate-code",
+      "column": 1
+    },
+    "original_code": "def load_config_v2(path):\n    f=open(path)\n    data=json.load(f)\n    f.close()\n    return data",
+    "fixed_code": "load_config_v2 = load_config",
+    "rationale": "Removes duplicate code by aliasing to the main implementation.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 122,
+      "message": "Function 'save_config' uses variable names 'f' and 'data' which are not descriptive.",
+      "severity": "info",
+      "rule_id": "non-descriptive-variable",
+      "column": 21
+    },
+    "original_code": "def save_config(path,data):\n    f=open(path,'w')\n    json.dump(data,f)\n    f.close()",
+    "fixed_code": "def save_config(path, config_data):\n    with open(path, 'w') as config_file:\n        json.dump(config_data, config_file)",
+    "rationale": "Uses context managers for file I/O and descriptive argument/variable names.",
+    "confidence": 0.95
+  },
+  {
+    "issue": {
+      "line": 127,
+      "message": "Function 'save_config_v2' duplicates code of 'save_config'. Extract common logic.",
+      "severity": "warning",
+      "rule_id": "duplicate-code",
+      "column": 1
+    },
+    "original_code": "def save_config_v2(path,data):\n    f=open(path,'w')\n    json.dump(data,f)\n    f.close()",
+    "fixed_code": "save_config_v2 = save_config",
+    "rationale": "Removes duplication by aliasing.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 132,
+      "message": "Lambda variable names 'l', 'm', 'n' are not descriptive and lack domain context.",
+      "severity": "info",
+      "rule_id": "non-descriptive-variable",
+      "column": 1
+    },
+    "original_code": "l = lambda x,y: x+y\nm = lambda x,y: x*y\nn = lambda x,y: x-y",
+    "fixed_code": "add = lambda a, b: a + b\nmultiply = lambda a, b: a * b\nsubtract = lambda a, b: a - b",
+    "rationale": "Renamed lambdas and their arguments for meaning and to match common functional names.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 132,
+      "message": "Lambda parameter names 'x', 'y' are not descriptive and lack domain context.",
+      "severity": "info",
+      "rule_id": "non-descriptive-variable",
+      "column": 11
+    },
+    "original_code": "l = lambda x,y: x+y\nm = lambda x,y: x*y\nn = lambda x,y: x-y",
+    "fixed_code": "add = lambda a, b: a + b\nmultiply = lambda a, b: a * b\nsubtract = lambda a, b: a - b",
+    "rationale": "Same improvement as above: argument names should be meaningful, even as function signatures.",
+    "confidence": 1.0
+  }
+]
+2026-03-06 21:41:16,316 - src.util.llm_generator - INFO - Parsed 27 suggestions from LLM response
+2026-03-06 21:41:16,316 - src.controller - INFO - Generated 27 suggestion(s).
+2026-03-06 21:41:16,316 - src.controller - INFO - - line 1:1 [warning] unused-import - Unused imports: 'os', 'sys', 'math' are imported but not used.
+2026-03-06 21:41:16,316 - src.controller - INFO - - line 132:11 [info] non-descriptive-variable - Lambda parameter names 'x', 'y' are not descriptive and lack domain context.
+2026-03-06 21:41:16,316 - src.controller - INFO - - line 132:11 [info] non-descriptive-variable - Lambda parameter names 'x', 'y' are not descriptive and lack domain context.
+2026-03-06 21:41:16,316 - src.controller - INFO - - line 132:11 [info] non-descriptive-variable - Lambda parameter names 'x', 'y' are not descriptive and lack domain context.
+2026-03-06 21:41:16,316 - src.controller - INFO - - line 132:11 [info] non-descriptive-variable - Lambda parameter names 'x', 'y' are not descriptive and lack domain context.
+2026-03-06 21:41:16,316 - src.controller - INFO - - line 132:11 [info] non-descriptive-variable - Lambda parameter names 'x', 'y' are not descriptive and lack domain context.
+2026-03-06 21:41:16,316 - src.controller - INFO - - line 127:1 [warning] duplicate-code - Function 'save_config_v2' duplicates code of 'save_config'. Extract common logic.
+2026-03-06 21:41:16,316 - src.controller - INFO - - line 132:11 [info] non-descriptive-variable - Lambda parameter names 'x', 'y' are not descriptive and lack domain context.
+2026-03-06 21:41:16,316 - src.controller - INFO - - line 90:22 [info] naming-readability - Parameter name 'users' is a duplicate of class attribute 'self.users'; possible confusion.
+2026-03-06 21:41:16,316 - src.controller - INFO - - line 132:11 [info] non-descriptive-variable - Lambda parameter names 'x', 'y' are not descriptive and lack domain context.
+2026-03-06 21:41:16,316 - src.controller - INFO - - line 132:11 [info] non-descriptive-variable - Lambda parameter names 'x', 'y' are not descriptive and lack domain context.
+2026-03-06 21:41:16,316 - src.controller - INFO - - line 90:22 [info] naming-readability - Parameter name 'users' is a duplicate of class attribute 'self.users'; possible confusion.
+2026-03-06 21:41:16,316 - src.controller - INFO - - line 132:11 [info] non-descriptive-variable - Lambda parameter names 'x', 'y' are not descriptive and lack domain context.
+2026-03-06 21:41:16,317 - src.controller - INFO - - line 90:22 [info] naming-readability - Parameter name 'users' is a duplicate of class attribute 'self.users'; possible confusion.
+2026-03-06 21:41:16,317 - src.controller - INFO - - line 132:11 [info] non-descriptive-variable - Lambda parameter names 'x', 'y' are not descriptive and lack domain context.
+2026-03-06 21:41:16,317 - src.controller - INFO - - line 90:22 [info] naming-readability - Parameter name 'users' is a duplicate of class attribute 'self.users'; possible confusion.
+2026-03-06 21:41:16,317 - src.controller - INFO - - line 90:22 [info] naming-readability - Parameter name 'users' is a duplicate of class attribute 'self.users'; possible confusion.
+2026-03-06 21:41:16,317 - src.controller - INFO - - line 90:9 [warning] vague-verb - Method name 'processUsers' uses vague verb 'process'. Provide more specificity.
+2026-03-06 21:41:16,317 - src.controller - INFO - - line 132:11 [info] non-descriptive-variable - Lambda parameter names 'x', 'y' are not descriptive and lack domain context.
+2026-03-06 21:41:16,317 - src.controller - INFO - - line 90:9 [warning] vague-verb - Method name 'processUsers' uses vague verb 'process'. Provide more specificity.
+2026-03-06 21:41:16,317 - src.controller - INFO - - line 90:22 [info] naming-readability - Parameter name 'users' is a duplicate of class attribute 'self.users'; possible confusion.
+2026-03-06 21:41:16,317 - src.controller - INFO - - line 132:11 [info] non-descriptive-variable - Lambda parameter names 'x', 'y' are not descriptive and lack domain context.
+2026-03-06 21:41:16,317 - src.controller - INFO - - line 127:1 [warning] duplicate-code - Function 'save_config_v2' duplicates code of 'save_config'. Extract common logic.
+2026-03-06 21:41:16,317 - src.controller - INFO - - line 132:11 [info] non-descriptive-variable - Lambda parameter names 'x', 'y' are not descriptive and lack domain context.
+2026-03-06 21:41:16,317 - src.controller - INFO - - line 127:1 [warning] duplicate-code - Function 'save_config_v2' duplicates code of 'save_config'. Extract common logic.
+2026-03-06 21:41:16,317 - src.controller - INFO - - line 132:11 [info] non-descriptive-variable - Lambda parameter names 'x', 'y' are not descriptive and lack domain context.
+2026-03-06 21:41:16,317 - src.controller - INFO - - line 132:11 [info] non-descriptive-variable - Lambda parameter names 'x', 'y' are not descriptive and lack domain context.
+2026-03-06 21:41:16,317 - src.controller - INFO - Applying auto-fixes
+2026-03-06 21:41:16,357 - src.agents.clean_code_agent - INFO - File Successfully Read
+2026-03-06 21:41:26,343 - httpx - INFO - HTTP Request: POST https://litellm.oit.duke.edu/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-06 21:41:26,345 - src.util.llm_applier - INFO - raw: import json
+
+item_count = 1
+user_count = 2
+config_version = 3
+
+def calculate_total(item_prices, tax_rate):
+    total_price = 0
+    for item_price in item_prices:
+        total_price += item_price
+    total_price += (total_price * tax_rate)
+    return total_price
+
+calculate_total_v2 = calculate_total
+calculate_total_v3 = calculate_total
+
+def get_user_name(user):
+    if user['name'] == "":
+        return "unknown"
+    else:
+        return user['name']
+
+def get_user_email(user):
+    if user['email'] == "":
+        return "unknown"
+    else:
+        return user['email']
+
+def get_user_age(user):
+    if user['age'] is None:
+        return 0
+    else:
+        return user['age']
+
+class UserManager:
+    def __init__(self, users):
+        self.users = users
+        self.main_data = []
+        self.temporary_storage = []
+        self.processed_results = []
+
+    def get_all_users(self):
+        result = []
+        for user in self.users:
+            result.append(user)
+        return result
+
+    def get_active_users(self):
+        result = []
+        for user in self.users:
+            result.append(user)
+        return result
+
+    def get_inactive_users(self):
+        result = []
+        for user in self.users:
+            result.append(user)
+        return result
+
+    def normalize_user_fields(self, user):
+        name = ""
+        email = ""
+        age = 0
+        if user['name'] == "":
+            name = "unknown"
+        else:
+            name = user['name']
+        if user['email'] == "":
+            email = "unknown"
+        else:
+            email = user['email']
+        if user['age'] is None:
+            age = 0
+        else:
+            age = user['age']
+        return {'name': name, 'email': email, 'age': age}
+
+    def normalize_users_fields(self, users):
+        result = []
+        for user_dict in users:
+            name = ""
+            email = ""
+            age = 0
+            if user_dict['name'] == "":
+                name = "unknown"
+            else:
+                name = user_dict['name']
+            if user_dict['email'] == "":
+                email = "unknown"
+            else:
+                email = user_dict['email']
+            if user_dict['age'] is None:
+                age = 0
+            else:
+                age = user_dict['age']
+            result.append({'name': name, 'email': email, 'age': age})
+        return result
+
+def load_config(path):
+    with open(path, 'r') as config_file:
+        configuration = json.load(config_file)
+    return configuration
+
+load_config_v2 = load_config
+
+def save_config(path, config_data):
+    with open(path, 'w') as config_file:
+        json.dump(config_data, config_file)
+
+save_config_v2 = save_config
+
+add = lambda a, b: a + b
+multiply = lambda a, b: a * b
+subtract = lambda a, b: a - b
+
+ITEMS = []
+USERS = []
+CONFIG = {}
+DATA = []
+
+2026-03-06 21:41:26,347 - src.util.llm_applier - INFO - Applied suggestions to /Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/data/sample_bad_clean_code.py
+2026-03-06 21:41:26,348 - src.agents.clean_code_agent - INFO - File Successfully Read
+2026-03-06 21:41:41,598 - httpx - INFO - HTTP Request: POST https://litellm.oit.duke.edu/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-06 21:41:41,603 - src.util.llm_scanner - INFO - raw: [
+    {
+        "line": 1,
+        "message": "Unused import: 'json' is imported but not always used in all functions where it's referenced via explicit variable arguments, potentially showing poor module usage organization.",
+        "severity": "minor",
+        "rule_id": "unused-import",
+        "column": 1
+    },
+    {
+        "line": 10,
+        "message": "The function name 'calculate_total' is somewhat vague. Consider clarifying what is being totaled (e.g., 'calculate_cart_total', 'calculate_invoice_total').",
+        "severity": "minor",
+        "rule_id": "vague-function-name",
+        "column": 1
+    },
+    {
+        "line": 18,
+        "message": "The variable name 'user' lacks domain context in 'get_user_name', 'get_user_email', and 'get_user_age'. Consider more descriptive names (e.g., 'user_record', 'user_data').",
+        "severity": "minor",
+        "rule_id": "non-descriptive-variable-name",
+        "column": 18
+    },
+    {
+        "line": 23,
+        "message": "The variable name 'user' lacks domain context. Consider a more descriptive name (e.g., 'user_record', 'user_data').",
+        "severity": "minor",
+        "rule_id": "non-descriptive-variable-name",
+        "column": 23
+    },
+    {
+        "line": 28,
+        "message": "The variable name 'user' lacks domain context. Consider a more descriptive name (e.g., 'user_record', 'user_data').",
+        "severity": "minor",
+        "rule_id": "non-descriptive-variable-name",
+        "column": 28
+    },
+    {
+        "line": 33,
+        "message": "Class 'UserManager' violates the Single Responsibility Principle by handling user storage, normalization, and processing results, indicating too many responsibilities.",
+        "severity": "major",
+        "rule_id": "too-many-responsibilities",
+        "column": 7
+    },
+    {
+        "line": 43,
+        "message": "The method 'get_all_users' contains unnecessary code duplication as it simply copies 'self.users' into another list. Consider returning 'self.users' directly.",
+        "severity": "minor",
+        "rule_id": "duplicate-code",
+        "column": 9
+    },
+    {
+        "line": 47,
+        "message": "The method 'get_active_users' contains duplicate logic identical to 'get_all_users'. Extract shared functionality.",
+        "severity": "minor",
+        "rule_id": "duplicate-code",
+        "column": 9
+    },
+    {
+        "line": 52,
+        "message": "The method 'get_inactive_users' contains duplicate logic identical to 'get_all_users'. Extract shared functionality.",
+        "severity": "minor",
+        "rule_id": "duplicate-code",
+        "column": 9
+    },
+    {
+        "line": 57,
+        "message": "The method 'normalize_user_fields' reimplements logic present in 'get_user_name', 'get_user_email', and 'get_user_age', suggesting code duplication that can be extracted.",
+        "severity": "minor",
+        "rule_id": "duplicate-code",
+        "column": 9
+    },
+    {
+        "line": 71,
+        "message": "The method 'normalize_users_fields' contains duplicated logic similar to 'normalize_user_fields', suggesting the shared logic should be extracted.",
+        "severity": "minor",
+        "rule_id": "duplicate-code",
+        "column": 9
+    },
+    {
+        "line": 81,
+        "message": "Flag arguments are not present, but having many similar functions or lambdas like 'add', 'subtract', and 'multiply' littered at the module level without naming context lacks domain specificity.",
+        "severity": "info",
+        "rule_id": "non-descriptive-function-name",
+        "column": 1
+    },
+    {
+        "line": 86,
+        "message": "'DATA' is a vague name for a variable. Consider making it more descriptive to indicate its purpose in the domain.",
+        "severity": "minor",
+        "rule_id": "non-descriptive-variable-name",
+        "column": 1
+    }
+]
+2026-03-06 21:41:41,605 - src.util.llm_scanner - INFO - Parsed 13 issues from LLM response
+2026-03-06 21:41:41,608 - src.controller - INFO - Validation result: valid=False remaining_issues=13
+2026-03-06 21:41:41,608 - src.controller - INFO - - line 1:1 [minor] unused-import - Unused import: 'json' is imported but not always used in all functions where it's referenced via explicit variable arguments, potentially showing poor module usage organization.
+2026-03-06 21:41:41,608 - src.controller - INFO - - line 10:1 [minor] vague-function-name - The function name 'calculate_total' is somewhat vague. Consider clarifying what is being totaled (e.g., 'calculate_cart_total', 'calculate_invoice_total').
+2026-03-06 21:41:41,608 - src.controller - INFO - - line 18:18 [minor] non-descriptive-variable-name - The variable name 'user' lacks domain context in 'get_user_name', 'get_user_email', and 'get_user_age'. Consider more descriptive names (e.g., 'user_record', 'user_data').
+2026-03-06 21:41:41,609 - src.controller - INFO - - line 23:23 [minor] non-descriptive-variable-name - The variable name 'user' lacks domain context. Consider a more descriptive name (e.g., 'user_record', 'user_data').
+2026-03-06 21:41:41,609 - src.controller - INFO - - line 28:28 [minor] non-descriptive-variable-name - The variable name 'user' lacks domain context. Consider a more descriptive name (e.g., 'user_record', 'user_data').
+2026-03-06 21:41:41,609 - src.controller - INFO - - line 33:7 [major] too-many-responsibilities - Class 'UserManager' violates the Single Responsibility Principle by handling user storage, normalization, and processing results, indicating too many responsibilities.
+2026-03-06 21:41:41,609 - src.controller - INFO - - line 43:9 [minor] duplicate-code - The method 'get_all_users' contains unnecessary code duplication as it simply copies 'self.users' into another list. Consider returning 'self.users' directly.
+2026-03-06 21:41:41,609 - src.controller - INFO - - line 47:9 [minor] duplicate-code - The method 'get_active_users' contains duplicate logic identical to 'get_all_users'. Extract shared functionality.
+2026-03-06 21:41:41,609 - src.controller - INFO - - line 52:9 [minor] duplicate-code - The method 'get_inactive_users' contains duplicate logic identical to 'get_all_users'. Extract shared functionality.
+2026-03-06 21:41:41,611 - src.controller - INFO - - line 57:9 [minor] duplicate-code - The method 'normalize_user_fields' reimplements logic present in 'get_user_name', 'get_user_email', and 'get_user_age', suggesting code duplication that can be extracted.
+2026-03-06 21:41:41,611 - src.controller - INFO - - line 71:9 [minor] duplicate-code - The method 'normalize_users_fields' contains duplicated logic similar to 'normalize_user_fields', suggesting the shared logic should be extracted.
+2026-03-06 21:41:41,611 - src.controller - INFO - - line 81:1 [info] non-descriptive-function-name - Flag arguments are not present, but having many similar functions or lambdas like 'add', 'subtract', and 'multiply' littered at the module level without naming context lacks domain specificity.
+2026-03-06 21:41:41,611 - src.controller - INFO - - line 86:1 [minor] non-descriptive-variable-name - 'DATA' is a vague name for a variable. Consider making it more descriptive to indicate its purpose in the domain.
