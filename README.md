@@ -24,6 +24,10 @@ Phase 3 Deadline: Mar 6
 ### Tutorial, LLMs, and other Code used
 - GPT-5.3 Codex - suggestions about how to use Ruff
 - Claude Code (Sonnet 4.6) - help understand minimal Extension API and its capabilities, some testing
+- [Professor Duvall's example_chatbot starter code](https://coursework.cs.duke.edu/compsci590_2026spring/example_chatbot)
+- [Professor Duvall's example_docker starter code](https://coursework.cs.duke.edu/compsci590_2026spring/example_docker)
+- [Professor Duvall's example_pipeline starter code](https://coursework.cs.duke.edu/compsci590_2026spring/example_pipeline)
+
 
 ### Resource Attributions
 
