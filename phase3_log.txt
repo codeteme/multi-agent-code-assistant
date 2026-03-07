@@ -1,0 +1,1222 @@
+Output from running extension:
+
+AI Assistant extension activated.
+[2026-03-07T03:43:04.831Z] Scan Issue & Suggest Fixes (for all agents): sample_all_issues.py (1939 chars) → http://vcm-52409.vm.duke.edu:4003 [agent: ALL]
+Received 43 issue(s), 43 suggestion(s).
+
+--- Issues ---
+  [error] Line 3:1 (E401): Multiple imports on one line
+  [error] Line 3:11 (F401): `sys` imported but unused
+  [error] Line 4:8 (F811): Redefinition of unused `os` from line 3: `os` redefined here
+  [error] Line 4:8 (F401): `os` imported but unused
+  [error] Line 71:15 (E711): Comparison to `None` should be `cond is None`
+  [warning] Line 13:13 (use-enumerate): Use enumerate() instead of range(len(self.orders)) for iterating with index and value.
+  [warning] Line 21:13 (use-enumerate): Use enumerate() instead of range(len(lst)) for iterating with index and value.
+  [warning] Line 29:13 (use-enumerate): Use enumerate() instead of range(len(lst)) for iterating with index and value.
+  [error] Line 43:5 (missing-context-manager): File opened without a context manager (with statement); use 'with open(path) as f:' instead.
+  [warning] Line 49:5 (use-enumerate): Use enumerate() instead of range(len(items)) when iterating over list with index.
+  [warning] Line 52:1 (use-list-comprehension): Build list 'evens' using a list comprehension instead of a loop.
+  [warning] Line 58:12 (compare-to-none-is): Use 'is None' instead of '== None' when checking for None.
+  [error] Line 63:18 (mutable-default-argument): Do not use mutable default arguments like 'tags=[]'.
+  [warning] Line 69:1 (use-any): Use any() instead of a loop and flag to test if any score is >= 90.
+  [error] Line 6:0 (missing-test): Function 'calculate_discount' is not covered by any test.
+  [error] Line 10:0 (missing-test): Class 'orderProcessor' including methods '__init__' and 'getTotal' has no test coverage.
+  [warning] Line 18:0 (weak-test): Function 'p' has duplicated logic and is not tested; edge cases such as empty list or negative values are untested.
+  [warning] Line 24:0 (missing-test): Function 'p2' repeats logic from 'p' and is not tested; needs coverage for different input scenarios.
+  [error] Line 30:0 (missing-test): Function 'get_status' has multiple conditional branches and lacks testing for all possible code values including unknown codes.
+  [error] Line 39:0 (missing-test): Function 'read_data' interacts with file system and lacks tests for error handling like missing or unreadable files.
+  [warning] Line 50:0 (weak-test): Function 'is_empty' compares to None with '==' and is not tested; needs tests for other falsy values and types.
+  [warning] Line 54:0 (weak-test): Function 'append_tag' uses mutable default argument; needs tests for repeated calls and possible side effects.
+  [error] Line 59:0 (missing-test): Functions 'add', 'subtract', 'multiply', and 'divide' are not covered by any test; division by zero edge case is untested.
+  [info] Line 1:10 (unused-import): Unused imports detected: sys. Remove unused imports to keep dependencies clear.
+  [major] Line 11:7 (class-naming): Class name 'orderProcessor' uses incorrect casing and is not descriptive. Use CapWords (e.g., 'OrderProcessor') and ensure the name reflects its responsibility.
+  [minor] Line 12:24 (constructor-param-naming): Constructor argument 'orders' lacks domain context, consider a more descriptive name if possible (e.g., 'order_list').
+  [minor] Line 13:13 (attribute-naming): Instance variable 'orders' is vague. Prefer a more descriptive name like 'order_list' or 'order_records'.
+  [major] Line 15:9 (method-naming): Method name 'getTotal' does not follow snake_case and is not descriptive. Use 'get_total_amount' or similar.
+  [major] Line 24:5 (function-naming): Function 'p' has a non-descriptive name. Avoid single-letter names. Use a name that describes its purpose, e.g., 'sum_positive_values'.
+  [minor] Line 25:9 (variable-naming): Variable 'r' is not self-explanatory. Use a more descriptive name such as 'positive_sum'.
+  [minor] Line 27:24 (magic-number): Magic number '0' used for comparison and sum; consider giving it a named constant if domain-relevant.
+  [major] Line 31:5 (duplicate-code): Function 'p2' duplicates logic from function 'p'. Extract shared logic into a single function for maintainability.
+  [major] Line 31:5 (function-naming): Function 'p2' has a non-descriptive name. Avoid single-letter suffixes. Use a name that describes its differentiator.
+  [major] Line 38:22 (magic-number): Function 'get_status' contains magic numbers for status codes (1, 2, 3, 4). Replace with named constants or enumeration for clarity.
+  [minor] Line 38:5 (structure-improvement): Function 'get_status' is mapping codes to string statuses with if/elif. Consider using a dictionary for clarity and extensibility.
+  [minor] Line 50:5 (function-design): Function 'read_data' does multiple things (opening, reading, closing files). Should rely on context managers to keep responsibilities clear.
+  [minor] Line 61:5 (variable-naming): Variable 'i' in loop is non-descriptive. Use a domain-specific name, e.g., 'index', especially since this is not test/throwaway code.
+  [info] Line 62:5 (function-design): Directly using 'print(i, items[i])' inside loop, tightly binding I/O and iteration. Consider extracting to a function if used multiple times.
+  [minor] Line 66:5 (variable-naming): Variable 'n' is not self-explanatory in the context of even number calculation. Prefer a domain-relevant name.
+  [info] Line 72:5 (predicate-naming): Predicate function 'is_empty' properly uses 'is_' prefix. However, 'val == None' should use 'is None' for Python idiom. The naming and return are correct.
+  [critical] Line 76:5 (mutable-default-argument): Function 'append_tag' uses a mutable default argument 'tags=[]', which leads to unexpected shared state. Use None as default and assign inside.
+  [minor] Line 81:9 (variable-naming): Variable 's' is non-descriptive in the context of exam scores. Use 'score' instead.
+  [info] Line 97:5 (function-naming): Functions 'add', 'subtract', 'multiply', and 'divide' have very generic names and signatures. Consider including context in their names if part of a larger domain.
+
+--- Suggestions ---
+
+  Rule: E401 (Line 3)
+  Rationale: Fix E401: Multiple imports on one line
+  Confidence: 100%
+
+  Rule: F401 (Line 3)
+  Rationale: Fix F401: `sys` imported but unused
+  Confidence: 100%
+
+  Rule: F811 (Line 4)
+  Rationale: Fix F811: Redefinition of unused `os` from line 3: `os` redefined here
+  Confidence: 100%
+
+  Rule: F401 (Line 4)
+  Rationale: Fix F401: `os` imported but unused
+  Confidence: 100%
+
+  Rule: E711 (Line 71)
+  Rationale: Fix E711: Comparison to `None` should be `cond is None`
+  Confidence: 100%
+
+  Rule: use-enumerate (Line 49)
+  Rationale: Using direct iteration over list elements is more Pythonic and eliminates the need for indexing. This improves readability and reduces chances of off-by-one errors.
+  Confidence: 100%
+  Before: for i in range(len(self.orders)):
+    total=total+self.orders[i]['amount']
+  After:  for order in self.orders:
+    total += order['amount']
+
+  Rule: use-enumerate (Line 49)
+  Rationale: Directly iterating over list elements is preferred unless the index is needed, making code clearer and more concise.
+  Confidence: 100%
+  Before: for i in range(len(lst)):
+    if lst[i] > 0:
+        r = r + lst[i]
+  After:  for n in lst:
+    if n > 0:
+        r += n
+
+  Rule: use-enumerate (Line 49)
+  Rationale: Direct iteration simplifies the code when the index is not required, conforming to Python's best practices.
+  Confidence: 100%
+  Before: for i in range(len(lst)):
+    if lst[i] > 0:
+        r = r + lst[i]
+  After:  for n in lst:
+    if n > 0:
+        r += n
+
+  Rule: missing-context-manager (Line 43)
+  Rationale: The 'with' statement ensures the file is properly closed, even if exceptions occur. This is a recommended Python idiom for resource management.
+  Confidence: 100%
+  Before: f = open(path, 'r')
+data = f.read()
+f.close()
+return data
+  After:  with open(path, 'r') as f:
+    data = f.read()
+return data
+
+  Rule: use-enumerate (Line 49)
+  Rationale: enumerate() produces more readable code and is more idiomatic when both index and value are needed in a loop.
+  Confidence: 100%
+  Before: for i in range(len(items)):
+    print(i, items[i])
+  After:  for i, item in enumerate(items):
+    print(i, item)
+
+  Rule: use-list-comprehension (Line 52)
+  Rationale: List comprehensions are more concise and idiomatic when creating lists based on simple conditions.
+  Confidence: 100%
+  Before: evens = []
+for n in range(20):
+    if n % 2 == 0:
+        evens.append(n)
+  After:  evens = [n for n in range(20) if n % 2 == 0]
+
+  Rule: compare-to-none-is (Line 58)
+  Rationale: 'is None' is the preferred way to check for None, because it checks for identity, which is semantically correct and recommended in Python.
+  Confidence: 100%
+  Before: if val == None:
+  After:  if val is None:
+
+  Rule: mutable-default-argument (Line 63)
+  Rationale: Using None as a default argument and initializing the list inside the function avoids sharing mutable objects across calls.
+  Confidence: 100%
+  Before: def append_tag(tag, tags=[]):
+    tags.append(tag)
+    return tags
+  After:  def append_tag(tag, tags=None):
+    if tags is None:
+        tags = []
+    tags.append(tag)
+    return tags
+
+  Rule: use-any (Line 69)
+  Rationale: The any() function is the recommended idiom for checking if any value in an iterable meets a condition. It's more concise and efficient.
+  Confidence: 100%
+  Before: passed = False
+for s in scores:
+    if s >= 90:
+        passed = True
+        break
+  After:  passed = any(s >= 90 for s in scores)
+
+  Rule: missing-test (Line 59)
+  Rationale: This test checks normal cases, a zero discount, a full discount, and a zero price, ensuring correct coverage for edge input values.
+  Confidence: 98%
+  After:  def test_calculate_discount():
+    assert calculate_discount(100, 0.2) == 80
+    assert calculate_discount(50, 0) == 50
+    assert calculate_discount(200, 1) == 0
+    assert calculate_discount(0, 0.5) == 0
+
+  Rule: missing-test (Line 59)
+  Rationale: Covers normal and empty orders lists to ensure correct summation and class initialization.
+  Confidence: 97%
+  After:  def test_order_processor_get_total():
+    orders = [{'amount': 10}, {'amount': 20}, {'amount': 30}]
+    processor = orderProcessor(orders)
+    assert processor.getTotal() == 60
+
+    empty_processor = orderProcessor([])
+    assert empty_processor.getTotal() == 0
+
+  Rule: weak-test (Line 54)
+  Rationale: Ensures the logic handles positive, negative, empty, and zero-inclusive lists as intended.
+  Confidence: 98%
+  After:  def test_p():
+    assert p([1, 2, 3, -3]) == 6
+    assert p([-1, -2, -3]) == 0
+    assert p([]) == 0
+    assert p([0, 1]) == 1
+
+  Rule: missing-test (Line 59)
+  Rationale: Tests positive, negative, and empty list behaviors, matching scenarios tested for 'p'.
+  Confidence: 97%
+  After:  def test_p2():
+    assert p2([5, -2, 10, 0]) == 15
+    assert p2([-10, -5]) == 0
+    assert p2([]) == 0
+
+  Rule: missing-test (Line 59)
+  Rationale: Provides coverage for every branch in the conditional and multiple edge/unknown cases.
+  Confidence: 99%
+  After:  def test_get_status():
+    assert get_status(1) == "active"
+    assert get_status(2) == "inactive"
+    assert get_status(3) == "pending"
+    assert get_status(4) == "banned"
+    assert get_status(0) == "unknown"
+    assert get_status(-1) == "unknown"
+    assert get_status(99) == "unknown"
+
+  Rule: missing-test (Line 59)
+  Rationale: Covers both normal file reading and file-not-found error. Uses temporary file for isolation and pytest for error assertion.
+  Confidence: 98%
+  After:  import tempfile
+import os
+import pytest
+
+def test_read_data_success():
+    with tempfile.NamedTemporaryFile(delete=False, mode='w+') as tmp:
+        tmp.write('hello')
+        tmp_path = tmp.name
+    assert read_data(tmp_path) == 'hello'
+    os.remove(tmp_path)
+
+def test_read_data_file_not_found():
+    with pytest.raises(FileNotFoundError):
+        read_data('nonexistent_file_123456')
+
+  Rule: weak-test (Line 54)
+  Rationale: Covers the way is_empty treats None vs other common falsy values and types.
+  Confidence: 98%
+  After:  def test_is_empty():
+    assert is_empty(None) is True
+    assert is_empty('') is False
+    assert is_empty(0) is False
+    assert is_empty([]) is False
+    assert is_empty(False) is False
+
+  Rule: weak-test (Line 54)
+  Rationale: Tests both the use of a provided list and the mutable default argument behavior across calls.
+  Confidence: 98%
+  After:  def test_append_tag_basic():
+    result = append_tag('a', ['x'])
+    assert result == ['x', 'a']
+
+def test_append_tag_default():
+    first = append_tag('foo')
+    second = append_tag('bar')
+    assert first is not second
+    assert 'foo' in first
+    assert 'bar' in second
+
+  Rule: missing-test (Line 59)
+  Rationale: Covers regular operations and the division-by-zero edge case using exception assertion.
+  Confidence: 99%
+  After:  import pytest
+
+def test_add():
+    assert add(2, 3) == 5
+    assert add(-1, 1) == 0
+
+def test_subtract():
+    assert subtract(5, 3) == 2
+    assert subtract(0, 5) == -5
+
+def test_multiply():
+    assert multiply(4, 2) == 8
+    assert multiply(-1, 3) == -3
+
+def test_divide():
+    assert divide(10, 2) == 5
+    assert divide(9, 3) == 3
+    with pytest.raises(ZeroDivisionError):
+        divide(10, 0)
+
+  Rule: unused-import (Line 1)
+  Rationale: Removing unused imports helps keep code clean and reduces potential for confusion or accidental dependency bloat.
+  Confidence: 100%
+  Before: import os,sys
+  After:  import os
+
+  Rule: class-naming (Line 11)
+  Rationale: Class names should use CapWords to conform to PEP8 and be descriptive to clarify class purpose.
+  Confidence: 100%
+  Before: class   orderProcessor:
+  After:  class OrderProcessor:
+
+  Rule: constructor-param-naming (Line 12)
+  Rationale: Constructor parameters should be descriptive to document their purpose and content for maintainability.
+  Confidence: 90%
+  Before: def __init__(self,orders):
+  After:  def __init__(self, order_list):
+
+  Rule: attribute-naming (Line 13)
+  Rationale: Descriptive attribute names guide future maintainers and clarify usage context.
+  Confidence: 90%
+  Before: self.orders=orders
+  After:  self.order_list = order_list
+
+  Rule: method-naming (Line 15)
+  Rationale: Using snake_case for method names and being descriptive aligns with PEP8 and improves clarity.
+  Confidence: 100%
+  Before: def getTotal( self ):
+  After:  def get_total_amount(self):
+
+  Rule: function-naming (Line 97)
+  Rationale: Descriptive function names clarify intent and ease code navigation.
+  Confidence: 100%
+  Before: def p(lst):
+  After:  def sum_positive_values(lst):
+
+  Rule: variable-naming (Line 81)
+  Rationale: Descriptive variable names help understand the data flow and state management.
+  Confidence: 100%
+  Before: r=0
+  After:  positive_sum = 0
+
+  Rule: magic-number (Line 38)
+  Rationale: Defining a domain-meaningful constant clarifies intent, especially if zero has contextual significance.
+  Confidence: 85%
+  Before: if lst[i] > 0:
+  After:  ZERO = 0
+if lst[i] > ZERO:
+
+  Rule: duplicate-code (Line 31)
+  Rationale: Duplication leads to maintenance overhead and possible drift. A single function should capture shared logic.
+  Confidence: 100%
+  Before: def p2(lst):
+    r=0
+    for i in range(len(lst)):
+        if lst[i] > 0:
+            r = r + lst[i]
+    return r
+  After:  # p2 removed; use sum_positive_values instead.
+
+  Rule: function-naming (Line 97)
+  Rationale: If the function is differentiated, the name must convey purpose; else, it should delegate to the clearly-named one.
+  Confidence: 100%
+  Before: def p2(lst):
+  After:  # Function removed or refactored to use sum_positive_values.
+
+  Rule: magic-number (Line 38)
+  Rationale: Replacing magic numbers with named enumerations makes the code self-documenting and easier to update.
+  Confidence: 100%
+  Before: if code == 1:
+    return "active"
+elif code == 2:
+    return "inactive"
+elif code == 3:
+    return "pending"
+elif code == 4:
+    return "banned"
+else:
+    return "unknown"
+  After:  from enum import IntEnum
+class StatusCode(IntEnum):
+    ACTIVE = 1
+    INACTIVE = 2
+    PENDING = 3
+    BANNED = 4
+
+def get_status(code):
+    status_dict = {
+        StatusCode.ACTIVE: "active",
+        StatusCode.INACTIVE: "inactive",
+        StatusCode.PENDING: "pending",
+        StatusCode.BANNED: "banned"
+    }
+    return status_dict.get(code, "unknown")
+
+  Rule: structure-improvement (Line 38)
+  Rationale: A dictionary provides a data-driven and extensible structure for mapping codes to statuses.
+  Confidence: 95%
+  Before: if code == 1:
+    return "active"
+elif code == 2:
+    return "inactive"
+elif code == 3:
+    return "pending"
+elif code == 4:
+    return "banned"
+else:
+    return "unknown"
+  After:  status_dict = {
+    1: "active",
+    2: "inactive",
+    3: "pending",
+    4: "banned"
+}
+return status_dict.get(code, "unknown")
+
+  Rule: function-design (Line 62)
+  Rationale: A context manager ensures proper resource management and encapsulates file logic cleanly.
+  Confidence: 100%
+  Before: def read_data(path):
+    f = open(path, 'r')
+    data = f.read()
+    f.close()
+    return data
+  After:  def read_data(path):
+    with open(path, 'r') as f:
+        data = f.read()
+    return data
+
+  Rule: variable-naming (Line 81)
+  Rationale: More descriptive loop variable names aid in code readability and convey actual meaning.
+  Confidence: 95%
+  Before: for i in range(len(items)):
+    print(i, items[i])
+  After:  for index in range(len(items)):
+    print(index, items[index])
+
+  Rule: function-design (Line 62)
+  Rationale: Encapsulating print logic increases modularity and testability if the logic is reused.
+  Confidence: 90%
+  Before: for i in range(len(items)):
+    print(i, items[i])
+  After:  def print_indexed_items(items):
+    for index, item in enumerate(items):
+        print(index, item)
+# Usage:
+print_indexed_items(items)
+
+  Rule: variable-naming (Line 81)
+  Rationale: Using meaningful variable names reflects the problem domain and improves clarity.
+  Confidence: 95%
+  Before: for n in range(20):
+    if n % 2 == 0:
+        evens.append(n)
+  After:  for number in range(20):
+    if number % 2 == 0:
+        evens.append(number)
+
+  Rule: predicate-naming (Line 72)
+  Rationale: Using 'is None' rather than '== None' is the idiomatic and most robust way to check for None.
+  Confidence: 100%
+  Before: if val == None:
+    return True
+  After:  if val is None:
+    return True
+
+  Rule: mutable-default-argument (Line 76)
+  Rationale: Mutable default arguments can cause hard-to-track bugs due to shared state; use None to avoid this.
+  Confidence: 100%
+  Before: def append_tag(tag, tags=[]):
+    tags.append(tag)
+    return tags
+  After:  def append_tag(tag, tags=None):
+    if tags is None:
+        tags = []
+    tags.append(tag)
+    return tags
+
+  Rule: variable-naming (Line 81)
+  Rationale: Naming variables according to their meaning increases readability and maintainability.
+  Confidence: 100%
+  Before: for s in scores:
+    if s >= 90:
+        passed = True
+        break
+  After:  for score in scores:
+    if score >= 90:
+        passed = True
+        break
+
+  Rule: function-naming (Line 97)
+  Rationale: Adding contextual prefixes clarifies the utility and reduces ambiguity within larger codebases.
+  Confidence: 90%
+  Before: def add(a, b):
+    return a + b
+
+def subtract(a, b):
+    return a - b
+
+def multiply(a, b):
+    return a * b
+
+def divide(a, b):
+    return a / b
+  After:  def calculate_sum(a, b):
+    return a + b
+
+def calculate_difference(a, b):
+    return a - b
+
+def calculate_product(a, b):
+    return a * b
+
+def calculate_quotient(a, b):
+    return a / b
+
+[CODE_STYLE] Fixes applied. Remaining issues: 1
+
+--- Issues ---
+  [error] Line 73:15 (E711): Comparison to `None` should be `cond is None`
+
+[TESTS] Tests written to test_sample_all_issues.py.
+
+[CLEAN_CODE] Fixes applied. Remaining issues: 10
+
+--- Issues ---
+  [info] Line 13:14 (naming-readability): Variable 'i' used as a loop index; consider a more descriptive name or iterating directly over items for better readability.
+  [info] Line 17:8 (naming-readability): Variable 'total' is a vague accumulator name; consider a more domain-specific name to clarify intent.
+  [info] Line 26:18 (naming-readability): Function 'sum_positive_values' uses non-descriptive parameter name 'lst'; prefer a name describing its contents such as 'values' or 'numbers'.
+  [info] Line 27:8 (naming-readability): Variable 'i' used as a loop index; consider clearer naming or direct iteration.
+  [info] Line 28:12 (naming-readability): Variable 'positive_sum' is a vague name; consider clarifying meaning in the context.
+  [info] Line 44:5 (naming-readability): Function 'get_status' uses non-descriptive parameter name 'code'; consider naming it 'status_code' for clarity.
+  [info] Line 65:9 (naming-readability): Variable 'val' is non-descriptive in function 'is_empty'; prefer a name that clarifies its role (e.g. 'collection' or 'item').
+  [warning] Line 71:14 (function-design): Function 'append_tag' uses 'tags=None' as a mutable default argument; this can cause unexpected behavior. Use an immutable default and assign inside.
+  [info] Line 79:1 (function-design): Standalone code block for checking if any score passes threshold is present outside a function; consider encapsulating logic into a predicate function such as 'has_passing_score'.
+  [info] Line 90:5 (naming-readability): Functions 'calculate_sum', 'calculate_difference', 'calculate_product', and 'calculate_quotient' use parameter names 'a' and 'b', which lack domain specificity. Consider more descriptive names.
+
+  Log from CLI:
+  2026-03-06 22:47:55,047 - __main__ - INFO - Loaded environment variables from /Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/.env
+2026-03-06 22:47:56,666 - src.util.input - INFO - Read file: /Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/data/sample_bad_clean_code.py (2908 chars)
+2026-03-06 22:47:56,666 - src.controller - INFO - Parsed input: agent=CLEAN_CODE, file=/Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/data/sample_bad_clean_code.py, apply=True
+2026-03-06 22:47:56,666 - src.util.planner - INFO - User selected agent: CLEAN_CODE
+2026-03-06 22:47:56,666 - src.controller - INFO - Planner selected agent: CLEAN_CODE
+2026-03-06 22:47:56,666 - src.agents.clean_code_agent - INFO - File Successfully Read
+2026-03-06 22:48:23,649 - httpx - INFO - HTTP Request: POST https://litellm.oit.duke.edu/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-06 22:48:23,664 - src.util.llm_scanner - INFO - raw: [
+    {
+        "line": 1,
+        "message": "Unused imports: sys, math. Remove unused imports for clarity.",
+        "severity": "info",
+        "rule_id": "unused-import",
+        "column": 10
+    },
+    {
+        "line": 2,
+        "message": "Redundant import: os is imported twice, remove duplicate import.",
+        "severity": "info",
+        "rule_id": "duplicate-import",
+        "column": 1
+    },
+    {
+        "line": 6,
+        "message": "Variable 'x' is non-descriptive. Provide a more meaningful name.",
+        "severity": "warning",
+        "rule_id": "naming-nondescriptive",
+        "column": 1
+    },
+    {
+        "line": 7,
+        "message": "Variable 'y' is non-descriptive. Provide a more meaningful name.",
+        "severity": "warning",
+        "rule_id": "naming-nondescriptive",
+        "column": 1
+    },
+    {
+        "line": 8,
+        "message": "Variable 'z' is non-descriptive. Provide a more meaningful name.",
+        "severity": "warning",
+        "rule_id": "naming-nondescriptive",
+        "column": 1
+    },
+    {
+        "line": 10,
+        "message": "Variable names 'i' and 'items' in 'calculate_total' are too generic; rename to meaningful domain concepts.",
+        "severity": "warning",
+        "rule_id": "naming-nondescriptive",
+        "column": 5
+    },
+    {
+        "line": 18,
+        "message": "Duplicate code: calculate_total and calculate_total_v2 and calculate_total_v3 are almost identical. Extract common logic.",
+        "severity": "warning",
+        "rule_id": "duplicate-function",
+        "column": 1
+    },
+    {
+        "line": 26,
+        "message": "Parameter 'u' in get_user_name is non-descriptive. Use a more meaningful name.",
+        "severity": "warning",
+        "rule_id": "naming-nondescriptive",
+        "column": 18
+    },
+    {
+        "line": 31,
+        "message": "Parameter 'u' in get_user_email is non-descriptive. Use a more meaningful name.",
+        "severity": "warning",
+        "rule_id": "naming-nondescriptive",
+        "column": 20
+    },
+    {
+        "line": 36,
+        "message": "Parameter 'u' in get_user_age is non-descriptive. Use a more meaningful name.",
+        "severity": "warning",
+        "rule_id": "naming-nondescriptive",
+        "column": 18
+    },
+    {
+        "line": 41,
+        "message": "Class 'userManager' violates PascalCase naming convention and should be named 'UserManager'.",
+        "severity": "warning",
+        "rule_id": "naming-class-case",
+        "column": 7
+    },
+    {
+        "line": 43,
+        "message": "Class attribute names 'data', 'temp', and 'result' are too generic; use names reflecting their purposes.",
+        "severity": "warning",
+        "rule_id": "naming-nondescriptive",
+        "column": 13
+    },
+    {
+        "line": 47,
+        "message": "Variable 'i' and 'result' in getUsers are non-descriptive; provide meaningful names.",
+        "severity": "warning",
+        "rule_id": "naming-nondescriptive",
+        "column": 9
+    },
+    {
+        "line": 52,
+        "message": "Duplicate code: getUsers, getActiveUsers, getInactiveUsers contain identical bodies, indicating copy-paste issues.",
+        "severity": "warning",
+        "rule_id": "duplicate-function",
+        "column": 5
+    },
+    {
+        "line": 58,
+        "message": "Method name 'processUser' is vague. Use a more specific verb reflecting the processing being done.",
+        "severity": "warning",
+        "rule_id": "naming-vague-function",
+        "column": 9
+    },
+    {
+        "line": 59,
+        "message": "Local variables 'name', 'email', 'age' initialized to empty values and re-assigned in the next lines, consider simplifying.",
+        "severity": "info",
+        "rule_id": "structure-unnecessary-init",
+        "column": 13
+    },
+    {
+        "line": 75,
+        "message": "Method name 'processUsers' is vague. Use a more specific verb reflecting the processing being done.",
+        "severity": "warning",
+        "rule_id": "naming-vague-function",
+        "column": 9
+    },
+    {
+        "line": 76,
+        "message": "Local variables 'name', 'email', 'age' initialized to empty values and re-assigned in the next lines, consider simplifying.",
+        "severity": "info",
+        "rule_id": "structure-unnecessary-init",
+        "column": 13
+    },
+    {
+        "line": 89,
+        "message": "Function 'load_config' uses variable 'f' as a file handler without context manager. Also, 'data' is non-descriptive.",
+        "severity": "warning",
+        "rule_id": "naming-nondescriptive",
+        "column": 1
+    },
+    {
+        "line": 95,
+        "message": "Duplicate function: load_config_v2 identical to load_config. Extract common logic or remove duplication.",
+        "severity": "warning",
+        "rule_id": "duplicate-function",
+        "column": 1
+    },
+    {
+        "line": 101,
+        "message": "Function 'save_config' uses variable 'f' as a file handler without context manager. Also, 'data' is non-descriptive.",
+        "severity": "warning",
+        "rule_id": "naming-nondescriptive",
+        "column": 1
+    },
+    {
+        "line": 106,
+        "message": "Duplicate function: save_config_v2 identical to save_config. Extract common logic or remove duplication.",
+        "severity": "warning",
+        "rule_id": "duplicate-function",
+        "column": 1
+    },
+    {
+        "line": 109,
+        "message": "Lambda variables l, m, n are non-descriptive. Use meaningful names that indicate their purpose.",
+        "severity": "warning",
+        "rule_id": "naming-nondescriptive",
+        "column": 1
+    },
+    {
+        "line": 113,
+        "message": "Variables ITEMS, USERS, CONFIG, and DATA are non-descriptive or ambiguous in all caps. Prefer CamelCase for constants or descriptive names.",
+        "severity": "warning",
+        "rule_id": "naming-nondescriptive",
+        "column": 1
+    }
+]
+2026-03-06 22:48:23,665 - src.util.llm_scanner - INFO - Parsed 24 issues from LLM response
+2026-03-06 22:48:23,665 - src.controller - INFO - Found 24 issue(s).
+2026-03-06 22:48:23,666 - src.controller - INFO - - line 1:10 [info] unused-import - Unused imports: sys, math. Remove unused imports for clarity.
+2026-03-06 22:48:23,666 - src.controller - INFO - - line 2:1 [info] duplicate-import - Redundant import: os is imported twice, remove duplicate import.
+2026-03-06 22:48:23,666 - src.controller - INFO - - line 6:1 [warning] naming-nondescriptive - Variable 'x' is non-descriptive. Provide a more meaningful name.
+2026-03-06 22:48:23,666 - src.controller - INFO - - line 7:1 [warning] naming-nondescriptive - Variable 'y' is non-descriptive. Provide a more meaningful name.
+2026-03-06 22:48:23,670 - src.controller - INFO - - line 8:1 [warning] naming-nondescriptive - Variable 'z' is non-descriptive. Provide a more meaningful name.
+2026-03-06 22:48:23,670 - src.controller - INFO - - line 10:5 [warning] naming-nondescriptive - Variable names 'i' and 'items' in 'calculate_total' are too generic; rename to meaningful domain concepts.
+2026-03-06 22:48:23,670 - src.controller - INFO - - line 18:1 [warning] duplicate-function - Duplicate code: calculate_total and calculate_total_v2 and calculate_total_v3 are almost identical. Extract common logic.
+2026-03-06 22:48:23,670 - src.controller - INFO - - line 26:18 [warning] naming-nondescriptive - Parameter 'u' in get_user_name is non-descriptive. Use a more meaningful name.
+2026-03-06 22:48:23,670 - src.controller - INFO - - line 31:20 [warning] naming-nondescriptive - Parameter 'u' in get_user_email is non-descriptive. Use a more meaningful name.
+2026-03-06 22:48:23,670 - src.controller - INFO - - line 36:18 [warning] naming-nondescriptive - Parameter 'u' in get_user_age is non-descriptive. Use a more meaningful name.
+2026-03-06 22:48:23,670 - src.controller - INFO - - line 41:7 [warning] naming-class-case - Class 'userManager' violates PascalCase naming convention and should be named 'UserManager'.
+2026-03-06 22:48:23,670 - src.controller - INFO - - line 43:13 [warning] naming-nondescriptive - Class attribute names 'data', 'temp', and 'result' are too generic; use names reflecting their purposes.
+2026-03-06 22:48:23,671 - src.controller - INFO - - line 47:9 [warning] naming-nondescriptive - Variable 'i' and 'result' in getUsers are non-descriptive; provide meaningful names.
+2026-03-06 22:48:23,671 - src.controller - INFO - - line 52:5 [warning] duplicate-function - Duplicate code: getUsers, getActiveUsers, getInactiveUsers contain identical bodies, indicating copy-paste issues.
+2026-03-06 22:48:23,671 - src.controller - INFO - - line 58:9 [warning] naming-vague-function - Method name 'processUser' is vague. Use a more specific verb reflecting the processing being done.
+2026-03-06 22:48:23,671 - src.controller - INFO - - line 59:13 [info] structure-unnecessary-init - Local variables 'name', 'email', 'age' initialized to empty values and re-assigned in the next lines, consider simplifying.
+2026-03-06 22:48:23,671 - src.controller - INFO - - line 75:9 [warning] naming-vague-function - Method name 'processUsers' is vague. Use a more specific verb reflecting the processing being done.
+2026-03-06 22:48:23,671 - src.controller - INFO - - line 76:13 [info] structure-unnecessary-init - Local variables 'name', 'email', 'age' initialized to empty values and re-assigned in the next lines, consider simplifying.
+2026-03-06 22:48:23,672 - src.controller - INFO - - line 89:1 [warning] naming-nondescriptive - Function 'load_config' uses variable 'f' as a file handler without context manager. Also, 'data' is non-descriptive.
+2026-03-06 22:48:23,672 - src.controller - INFO - - line 95:1 [warning] duplicate-function - Duplicate function: load_config_v2 identical to load_config. Extract common logic or remove duplication.
+2026-03-06 22:48:23,672 - src.controller - INFO - - line 101:1 [warning] naming-nondescriptive - Function 'save_config' uses variable 'f' as a file handler without context manager. Also, 'data' is non-descriptive.
+2026-03-06 22:48:23,672 - src.controller - INFO - - line 106:1 [warning] duplicate-function - Duplicate function: save_config_v2 identical to save_config. Extract common logic or remove duplication.
+2026-03-06 22:48:23,672 - src.controller - INFO - - line 109:1 [warning] naming-nondescriptive - Lambda variables l, m, n are non-descriptive. Use meaningful names that indicate their purpose.
+2026-03-06 22:48:23,672 - src.controller - INFO - - line 113:1 [warning] naming-nondescriptive - Variables ITEMS, USERS, CONFIG, and DATA are non-descriptive or ambiguous in all caps. Prefer CamelCase for constants or descriptive names.
+2026-03-06 22:49:21,668 - httpx - INFO - HTTP Request: POST https://litellm.oit.duke.edu/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-06 22:49:21,674 - src.util.llm_generator - INFO - raw: [
+  {
+    "issue": {
+      "line": 1,
+      "message": "Unused imports: sys, math. Remove unused imports for clarity.",
+      "severity": "info",
+      "rule_id": "unused-import",
+      "column": 10
+    },
+    "original_code": "import os, sys, json\nimport os\nimport math",
+    "fixed_code": "import os\nimport json",
+    "rationale": "Removing unused imports reduces clutter and the potential for confusion, making dependencies more clear.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 2,
+      "message": "Redundant import: os is imported twice, remove duplicate import.",
+      "severity": "info",
+      "rule_id": "duplicate-import",
+      "column": 1
+    },
+    "original_code": "import os, sys, json\nimport os\nimport math",
+    "fixed_code": "import os\nimport json",
+    "rationale": "Redundant imports can confuse readers and should be avoided for clarity.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 6,
+      "message": "Variable 'x' is non-descriptive. Provide a more meaningful name.",
+      "severity": "warning",
+      "rule_id": "naming-nondescriptive",
+      "column": 1
+    },
+    "original_code": "x=1",
+    "fixed_code": "item_count = 1",
+    "rationale": "Variables should describe their content or purpose. 'item_count' suggests a count of items, which is more informative.",
+    "confidence": 0.9
+  },
+  {
+    "issue": {
+      "line": 7,
+      "message": "Variable 'y' is non-descriptive. Provide a more meaningful name.",
+      "severity": "warning",
+      "rule_id": "naming-nondescriptive",
+      "column": 1
+    },
+    "original_code": "y =2",
+    "fixed_code": "user_count = 2",
+    "rationale": "Meaningful variable names improve code readability. 'user_count' indicates it's counting users.",
+    "confidence": 0.9
+  },
+  {
+    "issue": {
+      "line": 8,
+      "message": "Variable 'z' is non-descriptive. Provide a more meaningful name.",
+      "severity": "warning",
+      "rule_id": "naming-nondescriptive",
+      "column": 1
+    },
+    "original_code": "z= 3",
+    "fixed_code": "config_version = 3",
+    "rationale": "Descriptive names clarify the variable's role. 'config_version' implies it's a version.",
+    "confidence": 0.9
+  },
+  {
+    "issue": {
+      "line": 10,
+      "message": "Variable names 'i' and 'items' in 'calculate_total' are too generic; rename to meaningful domain concepts.",
+      "severity": "warning",
+      "rule_id": "naming-nondescriptive",
+      "column": 5
+    },
+    "original_code": "def calculate_total( items,tax ):\n    total=0\n    for i in range(len(items)):\n        total=total+items[i]\n    total=total+(total*tax)\n    return total",
+    "fixed_code": "def calculate_total(purchase_amounts, tax_rate):\n    total = 0\n    for idx in range(len(purchase_amounts)):\n        total += purchase_amounts[idx]\n    total += total * tax_rate\n    return total",
+    "rationale": "Using descriptive names like 'purchase_amounts', 'tax_rate', and 'idx' makes the function purpose clearer.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 18,
+      "message": "Duplicate code: calculate_total and calculate_total_v2 and calculate_total_v3 are almost identical. Extract common logic.",
+      "severity": "warning",
+      "rule_id": "duplicate-function",
+      "column": 1
+    },
+    "original_code": "def calculate_total( items,tax ):\n    ...\ndef calculate_total_v2( items,tax ):\n    ...\ndef calculate_total_v3( items,tax ):\n    ...",
+    "fixed_code": "def calculate_total(purchase_amounts, tax_rate):\n    total = sum(purchase_amounts)\n    total += total * tax_rate\n    return total",
+    "rationale": "Removing duplication improves maintainability. Prefer reuse by having a single generic function.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 26,
+      "message": "Parameter 'u' in get_user_name is non-descriptive. Use a more meaningful name.",
+      "severity": "warning",
+      "rule_id": "naming-nondescriptive",
+      "column": 18
+    },
+    "original_code": "def get_user_name(u):",
+    "fixed_code": "def get_user_name(user):",
+    "rationale": "Using a clear parameter name like 'user' makes it obvious what the argument represents.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 31,
+      "message": "Parameter 'u' in get_user_email is non-descriptive. Use a more meaningful name.",
+      "severity": "warning",
+      "rule_id": "naming-nondescriptive",
+      "column": 20
+    },
+    "original_code": "def get_user_email(u):",
+    "fixed_code": "def get_user_email(user):",
+    "rationale": "A more descriptive parameter makes the function's expectation clearer.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 36,
+      "message": "Parameter 'u' in get_user_age is non-descriptive. Use a more meaningful name.",
+      "severity": "warning",
+      "rule_id": "naming-nondescriptive",
+      "column": 18
+    },
+    "original_code": "def get_user_age(u):",
+    "fixed_code": "def get_user_age(user):",
+    "rationale": "The improved parameter name 'user' enhances code clarity and purpose.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 41,
+      "message": "Class 'userManager' violates PascalCase naming convention and should be named 'UserManager'.",
+      "severity": "warning",
+      "rule_id": "naming-class-case",
+      "column": 7
+    },
+    "original_code": "class   userManager:",
+    "fixed_code": "class UserManager:",
+    "rationale": "Python class names should use PascalCase for standardization.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 43,
+      "message": "Class attribute names 'data', 'temp', and 'result' are too generic; use names reflecting their purposes.",
+      "severity": "warning",
+      "rule_id": "naming-nondescriptive",
+      "column": 13
+    },
+    "original_code": "self.data=[]\nself.temp=[]\nself.result=[]",
+    "fixed_code": "self.user_data = []\nself.temp_users = []\nself.result_users = []",
+    "rationale": "Clear attribute names convey their contents or roles in the class, improving maintainability.",
+    "confidence": 0.9
+  },
+  {
+    "issue": {
+      "line": 47,
+      "message": "Variable 'i' and 'result' in getUsers are non-descriptive; provide meaningful names.",
+      "severity": "warning",
+      "rule_id": "naming-nondescriptive",
+      "column": 9
+    },
+    "original_code": "result=[]\nfor i in range(len(self.users)):\n    result.append(self.users[i])\nreturn result",
+    "fixed_code": "user_list = []\nfor idx in range(len(self.users)):\n    user_list.append(self.users[idx])\nreturn user_list",
+    "rationale": "Descriptive local variable names help future developers (and your future self) understand code quickly.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 52,
+      "message": "Duplicate code: getUsers, getActiveUsers, getInactiveUsers contain identical bodies, indicating copy-paste issues.",
+      "severity": "warning",
+      "rule_id": "duplicate-function",
+      "column": 5
+    },
+    "original_code": "def getUsers(self):\n    ...\ndef getActiveUsers(self):\n    ...\ndef getInactiveUsers(self):\n    ...",
+    "fixed_code": "def get_users(self, status=None):\n    if status is None:\n        return list(self.users)\n    return [user for user in self.users if user['status'] == status]",
+    "rationale": "Combining similar methods into one makes the API DRY and easier to maintain.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 58,
+      "message": "Method name 'processUser' is vague. Use a more specific verb reflecting the processing being done.",
+      "severity": "warning",
+      "rule_id": "naming-vague-function",
+      "column": 9
+    },
+    "original_code": "def processUser(self,u):",
+    "fixed_code": "def normalize_user_record(self, user):",
+    "rationale": "A method name should state what it does; 'normalize_user_record' indicates user data normalization.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 59,
+      "message": "Local variables 'name', 'email', 'age' initialized to empty values and re-assigned in the next lines, consider simplifying.",
+      "severity": "info",
+      "rule_id": "structure-unnecessary-init",
+      "column": 13
+    },
+    "original_code": "name=\"\"\nemail=\"\"\nage=0\nif u['name']==\"\":\n    name=\"unknown\"\nelse:\n    name=u['name']\nif u['email']==\"\":\n    email=\"unknown\"\nelse:\n    email=u['email']\nif u['age']==None:\n    age=0\nelse:\n    age=u['age']\nreturn {'name':name,'email':email,'age':age}",
+    "fixed_code": "name = user['name'] if user['name'] else 'unknown'\nemail = user['email'] if user['email'] else 'unknown'\nage = user['age'] if user['age'] is not None else 0\nreturn {'name': name, 'email': email, 'age': age}",
+    "rationale": "Simpler initialization and assignment removes unnecessary lines and improves readability.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 75,
+      "message": "Method name 'processUsers' is vague. Use a more specific verb reflecting the processing being done.",
+      "severity": "warning",
+      "rule_id": "naming-vague-function",
+      "column": 9
+    },
+    "original_code": "def processUsers(self,users):",
+    "fixed_code": "def normalize_user_records(self, users):",
+    "rationale": "A more specific name reflects what the method is doing, which helps with maintainability.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 76,
+      "message": "Local variables 'name', 'email', 'age' initialized to empty values and re-assigned in the next lines, consider simplifying.",
+      "severity": "info",
+      "rule_id": "structure-unnecessary-init",
+      "column": 13
+    },
+    "original_code": "name=\"\"\nemail=\"\"\nage=0\nif users[i]['name']==\"\":\n    name=\"unknown\"\nelse:\n    name=users[i]['name']\nif users[i]['email']==\"\":\n    email=\"unknown\"\nelse:\n    email=users[i]['email']\nif users[i]['age']==None:\n    age=0\nelse:\n    age=users[i]['age']\nresult.append({'name':name,'email':email,'age':age})",
+    "fixed_code": "name = user['name'] if user['name'] else 'unknown'\nemail = user['email'] if user['email'] else 'unknown'\nage = user['age'] if user['age'] is not None else 0\nresult.append({'name': name, 'email': email, 'age': age})",
+    "rationale": "Inline assignments reduce code repetition and increase clarity.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 89,
+      "message": "Function 'load_config' uses variable 'f' as a file handler without context manager. Also, 'data' is non-descriptive.",
+      "severity": "warning",
+      "rule_id": "naming-nondescriptive",
+      "column": 1
+    },
+    "original_code": "def load_config(path):\n    f=open(path)\n    data=json.load(f)\n    f.close()\n    return data",
+    "fixed_code": "def load_config(path):\n    with open(path) as config_file:\n        config_data = json.load(config_file)\n    return config_data",
+    "rationale": "Using a context manager guarantees file closure, and descriptive variable names clarify their roles.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 95,
+      "message": "Duplicate function: load_config_v2 identical to load_config. Extract common logic or remove duplication.",
+      "severity": "warning",
+      "rule_id": "duplicate-function",
+      "column": 1
+    },
+    "original_code": "def load_config_v2(path):\n    f=open(path)\n    data=json.load(f)\n    f.close()\n    return data",
+    "fixed_code": "# Removed duplicate load_config_v2; use load_config instead.",
+    "rationale": "Duplicate code increases maintenance cost. Reuse 'load_config'.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 101,
+      "message": "Function 'save_config' uses variable 'f' as a file handler without context manager. Also, 'data' is non-descriptive.",
+      "severity": "warning",
+      "rule_id": "naming-nondescriptive",
+      "column": 1
+    },
+    "original_code": "def save_config(path,data):\n    f=open(path,'w')\n    json.dump(data,f)\n    f.close()",
+    "fixed_code": "def save_config(path, config_data):\n    with open(path, 'w') as config_file:\n        json.dump(config_data, config_file)",
+    "rationale": "Use context manager to ensure file is closed and use descriptive variable names.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 106,
+      "message": "Duplicate function: save_config_v2 identical to save_config. Extract common logic or remove duplication.",
+      "severity": "warning",
+      "rule_id": "duplicate-function",
+      "column": 1
+    },
+    "original_code": "def save_config_v2(path,data):\n    f=open(path,'w')\n    json.dump(data,f)\n    f.close()",
+    "fixed_code": "# Removed duplicate save_config_v2; use save_config instead.",
+    "rationale": "Eliminate duplication for maintainability; keep one implementation.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 109,
+      "message": "Lambda variables l, m, n are non-descriptive. Use meaningful names that indicate their purpose.",
+      "severity": "warning",
+      "rule_id": "naming-nondescriptive",
+      "column": 1
+    },
+    "original_code": "l = lambda x,y: x+y\nm = lambda x,y: x*y\nn = lambda x,y: x-y",
+    "fixed_code": "add_values = lambda a, b: a + b\nmultiply_values = lambda a, b: a * b\nsubtract_values = lambda a, b: a - b",
+    "rationale": "Naming lambdas clearly conveys the operation performed.",
+    "confidence": 1.0
+  },
+  {
+    "issue": {
+      "line": 113,
+      "message": "Variables ITEMS, USERS, CONFIG, and DATA are non-descriptive or ambiguous in all caps. Prefer CamelCase for constants or descriptive names.",
+      "severity": "warning",
+      "rule_id": "naming-nondescriptive",
+      "column": 1
+    },
+    "original_code": "ITEMS=[]\nUSERS=[]\nCONFIG={}\nDATA  =  []",
+    "fixed_code": "items_list = []\nusers_list = []\nconfig_dict = {}\ndata_records = []",
+    "rationale": "Clear, descriptive names (CamelCase for constants or lowercase for variables) clarify what each collection represents.",
+    "confidence": 1.0
+  }
+]
+2026-03-06 22:49:21,678 - src.util.llm_generator - INFO - Parsed 24 suggestions from LLM response
+2026-03-06 22:49:21,678 - src.controller - INFO - Generated 24 suggestion(s).
+2026-03-06 22:49:21,679 - src.controller - INFO - - line 1:10 [info] unused-import - Unused imports: sys, math. Remove unused imports for clarity.
+2026-03-06 22:49:21,679 - src.controller - INFO - - line 2:1 [info] duplicate-import - Redundant import: os is imported twice, remove duplicate import.
+2026-03-06 22:49:21,679 - src.controller - INFO - - line 113:1 [warning] naming-nondescriptive - Variables ITEMS, USERS, CONFIG, and DATA are non-descriptive or ambiguous in all caps. Prefer CamelCase for constants or descriptive names.
+2026-03-06 22:49:21,679 - src.controller - INFO - - line 113:1 [warning] naming-nondescriptive - Variables ITEMS, USERS, CONFIG, and DATA are non-descriptive or ambiguous in all caps. Prefer CamelCase for constants or descriptive names.
+2026-03-06 22:49:21,679 - src.controller - INFO - - line 113:1 [warning] naming-nondescriptive - Variables ITEMS, USERS, CONFIG, and DATA are non-descriptive or ambiguous in all caps. Prefer CamelCase for constants or descriptive names.
+2026-03-06 22:49:21,679 - src.controller - INFO - - line 113:1 [warning] naming-nondescriptive - Variables ITEMS, USERS, CONFIG, and DATA are non-descriptive or ambiguous in all caps. Prefer CamelCase for constants or descriptive names.
+2026-03-06 22:49:21,679 - src.controller - INFO - - line 106:1 [warning] duplicate-function - Duplicate function: save_config_v2 identical to save_config. Extract common logic or remove duplication.
+2026-03-06 22:49:21,679 - src.controller - INFO - - line 113:1 [warning] naming-nondescriptive - Variables ITEMS, USERS, CONFIG, and DATA are non-descriptive or ambiguous in all caps. Prefer CamelCase for constants or descriptive names.
+2026-03-06 22:49:21,679 - src.controller - INFO - - line 113:1 [warning] naming-nondescriptive - Variables ITEMS, USERS, CONFIG, and DATA are non-descriptive or ambiguous in all caps. Prefer CamelCase for constants or descriptive names.
+2026-03-06 22:49:21,679 - src.controller - INFO - - line 113:1 [warning] naming-nondescriptive - Variables ITEMS, USERS, CONFIG, and DATA are non-descriptive or ambiguous in all caps. Prefer CamelCase for constants or descriptive names.
+2026-03-06 22:49:21,679 - src.controller - INFO - - line 41:7 [warning] naming-class-case - Class 'userManager' violates PascalCase naming convention and should be named 'UserManager'.
+2026-03-06 22:49:21,679 - src.controller - INFO - - line 113:1 [warning] naming-nondescriptive - Variables ITEMS, USERS, CONFIG, and DATA are non-descriptive or ambiguous in all caps. Prefer CamelCase for constants or descriptive names.
+2026-03-06 22:49:21,679 - src.controller - INFO - - line 113:1 [warning] naming-nondescriptive - Variables ITEMS, USERS, CONFIG, and DATA are non-descriptive or ambiguous in all caps. Prefer CamelCase for constants or descriptive names.
+2026-03-06 22:49:21,679 - src.controller - INFO - - line 106:1 [warning] duplicate-function - Duplicate function: save_config_v2 identical to save_config. Extract common logic or remove duplication.
+2026-03-06 22:49:21,679 - src.controller - INFO - - line 75:9 [warning] naming-vague-function - Method name 'processUsers' is vague. Use a more specific verb reflecting the processing being done.
+2026-03-06 22:49:21,679 - src.controller - INFO - - line 76:13 [info] structure-unnecessary-init - Local variables 'name', 'email', 'age' initialized to empty values and re-assigned in the next lines, consider simplifying.
+2026-03-06 22:49:21,679 - src.controller - INFO - - line 75:9 [warning] naming-vague-function - Method name 'processUsers' is vague. Use a more specific verb reflecting the processing being done.
+2026-03-06 22:49:21,680 - src.controller - INFO - - line 76:13 [info] structure-unnecessary-init - Local variables 'name', 'email', 'age' initialized to empty values and re-assigned in the next lines, consider simplifying.
+2026-03-06 22:49:21,680 - src.controller - INFO - - line 113:1 [warning] naming-nondescriptive - Variables ITEMS, USERS, CONFIG, and DATA are non-descriptive or ambiguous in all caps. Prefer CamelCase for constants or descriptive names.
+2026-03-06 22:49:21,680 - src.controller - INFO - - line 106:1 [warning] duplicate-function - Duplicate function: save_config_v2 identical to save_config. Extract common logic or remove duplication.
+2026-03-06 22:49:21,680 - src.controller - INFO - - line 113:1 [warning] naming-nondescriptive - Variables ITEMS, USERS, CONFIG, and DATA are non-descriptive or ambiguous in all caps. Prefer CamelCase for constants or descriptive names.
+2026-03-06 22:49:21,680 - src.controller - INFO - - line 106:1 [warning] duplicate-function - Duplicate function: save_config_v2 identical to save_config. Extract common logic or remove duplication.
+2026-03-06 22:49:21,680 - src.controller - INFO - - line 113:1 [warning] naming-nondescriptive - Variables ITEMS, USERS, CONFIG, and DATA are non-descriptive or ambiguous in all caps. Prefer CamelCase for constants or descriptive names.
+2026-03-06 22:49:21,680 - src.controller - INFO - - line 113:1 [warning] naming-nondescriptive - Variables ITEMS, USERS, CONFIG, and DATA are non-descriptive or ambiguous in all caps. Prefer CamelCase for constants or descriptive names.
+2026-03-06 22:49:21,680 - src.controller - INFO - Applying auto-fixes
+2026-03-06 22:49:21,715 - src.agents.clean_code_agent - INFO - File Successfully Read
+2026-03-06 22:49:29,147 - httpx - INFO - HTTP Request: POST https://litellm.oit.duke.edu/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-06 22:49:29,149 - src.util.llm_applier - INFO - raw: import os
+import json
+
+item_count = 1
+user_count = 2
+config_version = 3
+
+def calculate_total(purchase_amounts, tax_rate):
+    total = sum(purchase_amounts)
+    total += total * tax_rate
+    return total
+
+def get_user_name(user):
+    if user['name'] == "":
+        return "unknown"
+    else:
+        return user['name']
+
+def get_user_email(user):
+    if user['email'] == "":
+        return "unknown"
+    else:
+        return user['email']
+
+def get_user_age(user):
+    if user['age'] is None:
+        return 0
+    else:
+        return user['age']
+
+class UserManager:
+    def __init__(self, users):
+        self.users = users
+        self.user_data = []
+        self.temp_users = []
+        self.result_users = []
+
+    def get_users(self, status=None):
+        if status is None:
+            return list(self.users)
+        return [user for user in self.users if user['status'] == status]
+
+    def normalize_user_record(self, user):
+        name = user['name'] if user['name'] else 'unknown'
+        email = user['email'] if user['email'] else 'unknown'
+        age = user['age'] if user['age'] is not None else 0
+        return {'name': name, 'email': email, 'age': age}
+
+    def normalize_user_records(self, users):
+        result = []
+        for user in users:
+            name = user['name'] if user['name'] else 'unknown'
+            email = user['email'] if user['email'] else 'unknown'
+            age = user['age'] if user['age'] is not None else 0
+            result.append({'name': name, 'email': email, 'age': age})
+        return result
+
+def load_config(path):
+    with open(path) as config_file:
+        config_data = json.load(config_file)
+    return config_data
+
+# Removed duplicate load_config_v2; use load_config instead.
+
+def save_config(path, config_data):
+    with open(path, 'w') as config_file:
+        json.dump(config_data, config_file)
+
+# Removed duplicate save_config_v2; use save_config instead.
+
+add_values = lambda a, b: a + b
+multiply_values = lambda a, b: a * b
+subtract_values = lambda a, b: a - b
+
+items_list = []
+users_list = []
+config_dict = {}
+data_records = []
+
+2026-03-06 22:49:29,150 - src.util.llm_applier - INFO - Applied suggestions to /Users/iuriibeliaev/Code/Duke_classes/CS590/ai_assistant_team02/data/sample_bad_clean_code.py
+2026-03-06 22:49:29,150 - src.agents.clean_code_agent - INFO - File Successfully Read
+2026-03-06 22:49:38,687 - httpx - INFO - HTTP Request: POST https://litellm.oit.duke.edu/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-06 22:49:38,689 - src.util.llm_scanner - INFO - raw: [
+    {
+        "line": 2,
+        "message": "Unused import: 'os' is imported but not used anywhere in the code.",
+        "severity": "minor",
+        "rule_id": "unused-import",
+        "column": 1
+    },
+    {
+        "line": 5,
+        "message": "Non-descriptive variable name: 'item_count' does not specify what items it refers to.",
+        "severity": "minor",
+        "rule_id": "naming-non-descriptive",
+        "column": 1
+    },
+    {
+        "line": 6,
+        "message": "Non-descriptive variable name: 'user_count' does not specify if it is active users, total users, etc.",
+        "severity": "minor",
+        "rule_id": "naming-non-descriptive",
+        "column": 1
+    },
+    {
+        "line": 7,
+        "message": "Non-descriptive variable name: 'config_version' does not specify what configuration.",
+        "severity": "minor",
+        "rule_id": "naming-non-descriptive",
+        "column": 1
+    },
+    {
+        "line": 10,
+        "message": "Parameter and variable names 'purchase_amounts' and 'tax_rate' may not fully describe the context (e.g., currency, type of purchases).",
+        "severity": "minor",
+        "rule_id": "naming-non-descriptive",
+        "column": 22
+    },
+    {
+        "line": 13,
+        "message": "Non-descriptive parameter name: 'user' does not specify if it's a dictionary, object, or another structure.",
+        "severity": "minor",
+        "rule_id": "naming-non-descriptive",
+        "column": 26
+    },
+    {
+        "line": 32,
+        "message": "Class 'UserManager' holds too many responsibilities with 'users', 'user_data', 'temp_users', and 'result_users', potentially violating Single Responsibility Principle.",
+        "severity": "major",
+        "rule_id": "class-too-many-responsibilities",
+        "column": 1
+    },
+    {
+        "line": 41,
+        "message": "Duplicate code block for normalizing user dictionary structure found in both 'normalize_user_record' and 'normalize_user_records'; consider extracting to a shared function.",
+        "severity": "major",
+        "rule_id": "duplicate-code",
+        "column": 5
+    },
+    {
+        "line": 54,
+        "message": "Non-descriptive variable names 'add_values', 'multiply_values', 'subtract_values'; consider using more domain-specific names.",
+        "severity": "minor",
+        "rule_id": "naming-non-descriptive",
+        "column": 1
+    },
+    {
+        "line": 59,
+        "message": "Non-descriptive variable names: 'items_list', 'users_list', and 'data_records' lack contextual specificity.",
+        "severity": "minor",
+        "rule_id": "naming-non-descriptive",
+        "column": 1
+    }
+]
+2026-03-06 22:49:38,690 - src.util.llm_scanner - INFO - Parsed 10 issues from LLM response
+2026-03-06 22:49:38,690 - src.controller - INFO - Validation result: valid=False remaining_issues=10
+2026-03-06 22:49:38,690 - src.controller - INFO - - line 2:1 [minor] unused-import - Unused import: 'os' is imported but not used anywhere in the code.
+2026-03-06 22:49:38,690 - src.controller - INFO - - line 5:1 [minor] naming-non-descriptive - Non-descriptive variable name: 'item_count' does not specify what items it refers to.
+2026-03-06 22:49:38,690 - src.controller - INFO - - line 6:1 [minor] naming-non-descriptive - Non-descriptive variable name: 'user_count' does not specify if it is active users, total users, etc.
+2026-03-06 22:49:38,690 - src.controller - INFO - - line 7:1 [minor] naming-non-descriptive - Non-descriptive variable name: 'config_version' does not specify what configuration.
+2026-03-06 22:49:38,690 - src.controller - INFO - - line 10:22 [minor] naming-non-descriptive - Parameter and variable names 'purchase_amounts' and 'tax_rate' may not fully describe the context (e.g., currency, type of purchases).
+2026-03-06 22:49:38,690 - src.controller - INFO - - line 13:26 [minor] naming-non-descriptive - Non-descriptive parameter name: 'user' does not specify if it's a dictionary, object, or another structure.
+2026-03-06 22:49:38,690 - src.controller - INFO - - line 32:1 [major] class-too-many-responsibilities - Class 'UserManager' holds too many responsibilities with 'users', 'user_data', 'temp_users', and 'result_users', potentially violating Single Responsibility Principle.
+2026-03-06 22:49:38,690 - src.controller - INFO - - line 41:5 [major] duplicate-code - Duplicate code block for normalizing user dictionary structure found in both 'normalize_user_record' and 'normalize_user_records'; consider extracting to a shared function.
+2026-03-06 22:49:38,690 - src.controller - INFO - - line 54:1 [minor] naming-non-descriptive - Non-descriptive variable names 'add_values', 'multiply_values', 'subtract_values'; consider using more domain-specific names.
+2026-03-06 22:49:38,690 - src.controller - INFO - - line 59:1 [minor] naming-non-descriptive - Non-descriptive variable names: 'items_list', 'users_list', and 'data_records' lack contextual specificity.
