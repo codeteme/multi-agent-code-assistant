@@ -1,0 +1,507 @@
+Output from running extension:
+
+AI Assistant extension activated.
+[2026-03-07T03:43:04.831Z] Scan Issue & Suggest Fixes (for all agents): sample_all_issues.py (1939 chars) → http://vcm-52409.vm.duke.edu:4003 [agent: ALL]
+Received 43 issue(s), 43 suggestion(s).
+
+--- Issues ---
+  [error] Line 3:1 (E401): Multiple imports on one line
+  [error] Line 3:11 (F401): `sys` imported but unused
+  [error] Line 4:8 (F811): Redefinition of unused `os` from line 3: `os` redefined here
+  [error] Line 4:8 (F401): `os` imported but unused
+  [error] Line 71:15 (E711): Comparison to `None` should be `cond is None`
+  [warning] Line 13:13 (use-enumerate): Use enumerate() instead of range(len(self.orders)) for iterating with index and value.
+  [warning] Line 21:13 (use-enumerate): Use enumerate() instead of range(len(lst)) for iterating with index and value.
+  [warning] Line 29:13 (use-enumerate): Use enumerate() instead of range(len(lst)) for iterating with index and value.
+  [error] Line 43:5 (missing-context-manager): File opened without a context manager (with statement); use 'with open(path) as f:' instead.
+  [warning] Line 49:5 (use-enumerate): Use enumerate() instead of range(len(items)) when iterating over list with index.
+  [warning] Line 52:1 (use-list-comprehension): Build list 'evens' using a list comprehension instead of a loop.
+  [warning] Line 58:12 (compare-to-none-is): Use 'is None' instead of '== None' when checking for None.
+  [error] Line 63:18 (mutable-default-argument): Do not use mutable default arguments like 'tags=[]'.
+  [warning] Line 69:1 (use-any): Use any() instead of a loop and flag to test if any score is >= 90.
+  [error] Line 6:0 (missing-test): Function 'calculate_discount' is not covered by any test.
+  [error] Line 10:0 (missing-test): Class 'orderProcessor' including methods '__init__' and 'getTotal' has no test coverage.
+  [warning] Line 18:0 (weak-test): Function 'p' has duplicated logic and is not tested; edge cases such as empty list or negative values are untested.
+  [warning] Line 24:0 (missing-test): Function 'p2' repeats logic from 'p' and is not tested; needs coverage for different input scenarios.
+  [error] Line 30:0 (missing-test): Function 'get_status' has multiple conditional branches and lacks testing for all possible code values including unknown codes.
+  [error] Line 39:0 (missing-test): Function 'read_data' interacts with file system and lacks tests for error handling like missing or unreadable files.
+  [warning] Line 50:0 (weak-test): Function 'is_empty' compares to None with '==' and is not tested; needs tests for other falsy values and types.
+  [warning] Line 54:0 (weak-test): Function 'append_tag' uses mutable default argument; needs tests for repeated calls and possible side effects.
+  [error] Line 59:0 (missing-test): Functions 'add', 'subtract', 'multiply', and 'divide' are not covered by any test; division by zero edge case is untested.
+  [info] Line 1:10 (unused-import): Unused imports detected: sys. Remove unused imports to keep dependencies clear.
+  [major] Line 11:7 (class-naming): Class name 'orderProcessor' uses incorrect casing and is not descriptive. Use CapWords (e.g., 'OrderProcessor') and ensure the name reflects its responsibility.
+  [minor] Line 12:24 (constructor-param-naming): Constructor argument 'orders' lacks domain context, consider a more descriptive name if possible (e.g., 'order_list').
+  [minor] Line 13:13 (attribute-naming): Instance variable 'orders' is vague. Prefer a more descriptive name like 'order_list' or 'order_records'.
+  [major] Line 15:9 (method-naming): Method name 'getTotal' does not follow snake_case and is not descriptive. Use 'get_total_amount' or similar.
+  [major] Line 24:5 (function-naming): Function 'p' has a non-descriptive name. Avoid single-letter names. Use a name that describes its purpose, e.g., 'sum_positive_values'.
+  [minor] Line 25:9 (variable-naming): Variable 'r' is not self-explanatory. Use a more descriptive name such as 'positive_sum'.
+  [minor] Line 27:24 (magic-number): Magic number '0' used for comparison and sum; consider giving it a named constant if domain-relevant.
+  [major] Line 31:5 (duplicate-code): Function 'p2' duplicates logic from function 'p'. Extract shared logic into a single function for maintainability.
+  [major] Line 31:5 (function-naming): Function 'p2' has a non-descriptive name. Avoid single-letter suffixes. Use a name that describes its differentiator.
+  [major] Line 38:22 (magic-number): Function 'get_status' contains magic numbers for status codes (1, 2, 3, 4). Replace with named constants or enumeration for clarity.
+  [minor] Line 38:5 (structure-improvement): Function 'get_status' is mapping codes to string statuses with if/elif. Consider using a dictionary for clarity and extensibility.
+  [minor] Line 50:5 (function-design): Function 'read_data' does multiple things (opening, reading, closing files). Should rely on context managers to keep responsibilities clear.
+  [minor] Line 61:5 (variable-naming): Variable 'i' in loop is non-descriptive. Use a domain-specific name, e.g., 'index', especially since this is not test/throwaway code.
+  [info] Line 62:5 (function-design): Directly using 'print(i, items[i])' inside loop, tightly binding I/O and iteration. Consider extracting to a function if used multiple times.
+  [minor] Line 66:5 (variable-naming): Variable 'n' is not self-explanatory in the context of even number calculation. Prefer a domain-relevant name.
+  [info] Line 72:5 (predicate-naming): Predicate function 'is_empty' properly uses 'is_' prefix. However, 'val == None' should use 'is None' for Python idiom. The naming and return are correct.
+  [critical] Line 76:5 (mutable-default-argument): Function 'append_tag' uses a mutable default argument 'tags=[]', which leads to unexpected shared state. Use None as default and assign inside.
+  [minor] Line 81:9 (variable-naming): Variable 's' is non-descriptive in the context of exam scores. Use 'score' instead.
+  [info] Line 97:5 (function-naming): Functions 'add', 'subtract', 'multiply', and 'divide' have very generic names and signatures. Consider including context in their names if part of a larger domain.
+
+--- Suggestions ---
+
+  Rule: E401 (Line 3)
+  Rationale: Fix E401: Multiple imports on one line
+  Confidence: 100%
+
+  Rule: F401 (Line 3)
+  Rationale: Fix F401: `sys` imported but unused
+  Confidence: 100%
+
+  Rule: F811 (Line 4)
+  Rationale: Fix F811: Redefinition of unused `os` from line 3: `os` redefined here
+  Confidence: 100%
+
+  Rule: F401 (Line 4)
+  Rationale: Fix F401: `os` imported but unused
+  Confidence: 100%
+
+  Rule: E711 (Line 71)
+  Rationale: Fix E711: Comparison to `None` should be `cond is None`
+  Confidence: 100%
+
+  Rule: use-enumerate (Line 49)
+  Rationale: Using direct iteration over list elements is more Pythonic and eliminates the need for indexing. This improves readability and reduces chances of off-by-one errors.
+  Confidence: 100%
+  Before: for i in range(len(self.orders)):
+    total=total+self.orders[i]['amount']
+  After:  for order in self.orders:
+    total += order['amount']
+
+  Rule: use-enumerate (Line 49)
+  Rationale: Directly iterating over list elements is preferred unless the index is needed, making code clearer and more concise.
+  Confidence: 100%
+  Before: for i in range(len(lst)):
+    if lst[i] > 0:
+        r = r + lst[i]
+  After:  for n in lst:
+    if n > 0:
+        r += n
+
+  Rule: use-enumerate (Line 49)
+  Rationale: Direct iteration simplifies the code when the index is not required, conforming to Python's best practices.
+  Confidence: 100%
+  Before: for i in range(len(lst)):
+    if lst[i] > 0:
+        r = r + lst[i]
+  After:  for n in lst:
+    if n > 0:
+        r += n
+
+  Rule: missing-context-manager (Line 43)
+  Rationale: The 'with' statement ensures the file is properly closed, even if exceptions occur. This is a recommended Python idiom for resource management.
+  Confidence: 100%
+  Before: f = open(path, 'r')
+data = f.read()
+f.close()
+return data
+  After:  with open(path, 'r') as f:
+    data = f.read()
+return data
+
+  Rule: use-enumerate (Line 49)
+  Rationale: enumerate() produces more readable code and is more idiomatic when both index and value are needed in a loop.
+  Confidence: 100%
+  Before: for i in range(len(items)):
+    print(i, items[i])
+  After:  for i, item in enumerate(items):
+    print(i, item)
+
+  Rule: use-list-comprehension (Line 52)
+  Rationale: List comprehensions are more concise and idiomatic when creating lists based on simple conditions.
+  Confidence: 100%
+  Before: evens = []
+for n in range(20):
+    if n % 2 == 0:
+        evens.append(n)
+  After:  evens = [n for n in range(20) if n % 2 == 0]
+
+  Rule: compare-to-none-is (Line 58)
+  Rationale: 'is None' is the preferred way to check for None, because it checks for identity, which is semantically correct and recommended in Python.
+  Confidence: 100%
+  Before: if val == None:
+  After:  if val is None:
+
+  Rule: mutable-default-argument (Line 63)
+  Rationale: Using None as a default argument and initializing the list inside the function avoids sharing mutable objects across calls.
+  Confidence: 100%
+  Before: def append_tag(tag, tags=[]):
+    tags.append(tag)
+    return tags
+  After:  def append_tag(tag, tags=None):
+    if tags is None:
+        tags = []
+    tags.append(tag)
+    return tags
+
+  Rule: use-any (Line 69)
+  Rationale: The any() function is the recommended idiom for checking if any value in an iterable meets a condition. It's more concise and efficient.
+  Confidence: 100%
+  Before: passed = False
+for s in scores:
+    if s >= 90:
+        passed = True
+        break
+  After:  passed = any(s >= 90 for s in scores)
+
+  Rule: missing-test (Line 59)
+  Rationale: This test checks normal cases, a zero discount, a full discount, and a zero price, ensuring correct coverage for edge input values.
+  Confidence: 98%
+  After:  def test_calculate_discount():
+    assert calculate_discount(100, 0.2) == 80
+    assert calculate_discount(50, 0) == 50
+    assert calculate_discount(200, 1) == 0
+    assert calculate_discount(0, 0.5) == 0
+
+  Rule: missing-test (Line 59)
+  Rationale: Covers normal and empty orders lists to ensure correct summation and class initialization.
+  Confidence: 97%
+  After:  def test_order_processor_get_total():
+    orders = [{'amount': 10}, {'amount': 20}, {'amount': 30}]
+    processor = orderProcessor(orders)
+    assert processor.getTotal() == 60
+
+    empty_processor = orderProcessor([])
+    assert empty_processor.getTotal() == 0
+
+  Rule: weak-test (Line 54)
+  Rationale: Ensures the logic handles positive, negative, empty, and zero-inclusive lists as intended.
+  Confidence: 98%
+  After:  def test_p():
+    assert p([1, 2, 3, -3]) == 6
+    assert p([-1, -2, -3]) == 0
+    assert p([]) == 0
+    assert p([0, 1]) == 1
+
+  Rule: missing-test (Line 59)
+  Rationale: Tests positive, negative, and empty list behaviors, matching scenarios tested for 'p'.
+  Confidence: 97%
+  After:  def test_p2():
+    assert p2([5, -2, 10, 0]) == 15
+    assert p2([-10, -5]) == 0
+    assert p2([]) == 0
+
+  Rule: missing-test (Line 59)
+  Rationale: Provides coverage for every branch in the conditional and multiple edge/unknown cases.
+  Confidence: 99%
+  After:  def test_get_status():
+    assert get_status(1) == "active"
+    assert get_status(2) == "inactive"
+    assert get_status(3) == "pending"
+    assert get_status(4) == "banned"
+    assert get_status(0) == "unknown"
+    assert get_status(-1) == "unknown"
+    assert get_status(99) == "unknown"
+
+  Rule: missing-test (Line 59)
+  Rationale: Covers both normal file reading and file-not-found error. Uses temporary file for isolation and pytest for error assertion.
+  Confidence: 98%
+  After:  import tempfile
+import os
+import pytest
+
+def test_read_data_success():
+    with tempfile.NamedTemporaryFile(delete=False, mode='w+') as tmp:
+        tmp.write('hello')
+        tmp_path = tmp.name
+    assert read_data(tmp_path) == 'hello'
+    os.remove(tmp_path)
+
+def test_read_data_file_not_found():
+    with pytest.raises(FileNotFoundError):
+        read_data('nonexistent_file_123456')
+
+  Rule: weak-test (Line 54)
+  Rationale: Covers the way is_empty treats None vs other common falsy values and types.
+  Confidence: 98%
+  After:  def test_is_empty():
+    assert is_empty(None) is True
+    assert is_empty('') is False
+    assert is_empty(0) is False
+    assert is_empty([]) is False
+    assert is_empty(False) is False
+
+  Rule: weak-test (Line 54)
+  Rationale: Tests both the use of a provided list and the mutable default argument behavior across calls.
+  Confidence: 98%
+  After:  def test_append_tag_basic():
+    result = append_tag('a', ['x'])
+    assert result == ['x', 'a']
+
+def test_append_tag_default():
+    first = append_tag('foo')
+    second = append_tag('bar')
+    assert first is not second
+    assert 'foo' in first
+    assert 'bar' in second
+
+  Rule: missing-test (Line 59)
+  Rationale: Covers regular operations and the division-by-zero edge case using exception assertion.
+  Confidence: 99%
+  After:  import pytest
+
+def test_add():
+    assert add(2, 3) == 5
+    assert add(-1, 1) == 0
+
+def test_subtract():
+    assert subtract(5, 3) == 2
+    assert subtract(0, 5) == -5
+
+def test_multiply():
+    assert multiply(4, 2) == 8
+    assert multiply(-1, 3) == -3
+
+def test_divide():
+    assert divide(10, 2) == 5
+    assert divide(9, 3) == 3
+    with pytest.raises(ZeroDivisionError):
+        divide(10, 0)
+
+  Rule: unused-import (Line 1)
+  Rationale: Removing unused imports helps keep code clean and reduces potential for confusion or accidental dependency bloat.
+  Confidence: 100%
+  Before: import os,sys
+  After:  import os
+
+  Rule: class-naming (Line 11)
+  Rationale: Class names should use CapWords to conform to PEP8 and be descriptive to clarify class purpose.
+  Confidence: 100%
+  Before: class   orderProcessor:
+  After:  class OrderProcessor:
+
+  Rule: constructor-param-naming (Line 12)
+  Rationale: Constructor parameters should be descriptive to document their purpose and content for maintainability.
+  Confidence: 90%
+  Before: def __init__(self,orders):
+  After:  def __init__(self, order_list):
+
+  Rule: attribute-naming (Line 13)
+  Rationale: Descriptive attribute names guide future maintainers and clarify usage context.
+  Confidence: 90%
+  Before: self.orders=orders
+  After:  self.order_list = order_list
+
+  Rule: method-naming (Line 15)
+  Rationale: Using snake_case for method names and being descriptive aligns with PEP8 and improves clarity.
+  Confidence: 100%
+  Before: def getTotal( self ):
+  After:  def get_total_amount(self):
+
+  Rule: function-naming (Line 97)
+  Rationale: Descriptive function names clarify intent and ease code navigation.
+  Confidence: 100%
+  Before: def p(lst):
+  After:  def sum_positive_values(lst):
+
+  Rule: variable-naming (Line 81)
+  Rationale: Descriptive variable names help understand the data flow and state management.
+  Confidence: 100%
+  Before: r=0
+  After:  positive_sum = 0
+
+  Rule: magic-number (Line 38)
+  Rationale: Defining a domain-meaningful constant clarifies intent, especially if zero has contextual significance.
+  Confidence: 85%
+  Before: if lst[i] > 0:
+  After:  ZERO = 0
+if lst[i] > ZERO:
+
+  Rule: duplicate-code (Line 31)
+  Rationale: Duplication leads to maintenance overhead and possible drift. A single function should capture shared logic.
+  Confidence: 100%
+  Before: def p2(lst):
+    r=0
+    for i in range(len(lst)):
+        if lst[i] > 0:
+            r = r + lst[i]
+    return r
+  After:  # p2 removed; use sum_positive_values instead.
+
+  Rule: function-naming (Line 97)
+  Rationale: If the function is differentiated, the name must convey purpose; else, it should delegate to the clearly-named one.
+  Confidence: 100%
+  Before: def p2(lst):
+  After:  # Function removed or refactored to use sum_positive_values.
+
+  Rule: magic-number (Line 38)
+  Rationale: Replacing magic numbers with named enumerations makes the code self-documenting and easier to update.
+  Confidence: 100%
+  Before: if code == 1:
+    return "active"
+elif code == 2:
+    return "inactive"
+elif code == 3:
+    return "pending"
+elif code == 4:
+    return "banned"
+else:
+    return "unknown"
+  After:  from enum import IntEnum
+class StatusCode(IntEnum):
+    ACTIVE = 1
+    INACTIVE = 2
+    PENDING = 3
+    BANNED = 4
+
+def get_status(code):
+    status_dict = {
+        StatusCode.ACTIVE: "active",
+        StatusCode.INACTIVE: "inactive",
+        StatusCode.PENDING: "pending",
+        StatusCode.BANNED: "banned"
+    }
+    return status_dict.get(code, "unknown")
+
+  Rule: structure-improvement (Line 38)
+  Rationale: A dictionary provides a data-driven and extensible structure for mapping codes to statuses.
+  Confidence: 95%
+  Before: if code == 1:
+    return "active"
+elif code == 2:
+    return "inactive"
+elif code == 3:
+    return "pending"
+elif code == 4:
+    return "banned"
+else:
+    return "unknown"
+  After:  status_dict = {
+    1: "active",
+    2: "inactive",
+    3: "pending",
+    4: "banned"
+}
+return status_dict.get(code, "unknown")
+
+  Rule: function-design (Line 62)
+  Rationale: A context manager ensures proper resource management and encapsulates file logic cleanly.
+  Confidence: 100%
+  Before: def read_data(path):
+    f = open(path, 'r')
+    data = f.read()
+    f.close()
+    return data
+  After:  def read_data(path):
+    with open(path, 'r') as f:
+        data = f.read()
+    return data
+
+  Rule: variable-naming (Line 81)
+  Rationale: More descriptive loop variable names aid in code readability and convey actual meaning.
+  Confidence: 95%
+  Before: for i in range(len(items)):
+    print(i, items[i])
+  After:  for index in range(len(items)):
+    print(index, items[index])
+
+  Rule: function-design (Line 62)
+  Rationale: Encapsulating print logic increases modularity and testability if the logic is reused.
+  Confidence: 90%
+  Before: for i in range(len(items)):
+    print(i, items[i])
+  After:  def print_indexed_items(items):
+    for index, item in enumerate(items):
+        print(index, item)
+# Usage:
+print_indexed_items(items)
+
+  Rule: variable-naming (Line 81)
+  Rationale: Using meaningful variable names reflects the problem domain and improves clarity.
+  Confidence: 95%
+  Before: for n in range(20):
+    if n % 2 == 0:
+        evens.append(n)
+  After:  for number in range(20):
+    if number % 2 == 0:
+        evens.append(number)
+
+  Rule: predicate-naming (Line 72)
+  Rationale: Using 'is None' rather than '== None' is the idiomatic and most robust way to check for None.
+  Confidence: 100%
+  Before: if val == None:
+    return True
+  After:  if val is None:
+    return True
+
+  Rule: mutable-default-argument (Line 76)
+  Rationale: Mutable default arguments can cause hard-to-track bugs due to shared state; use None to avoid this.
+  Confidence: 100%
+  Before: def append_tag(tag, tags=[]):
+    tags.append(tag)
+    return tags
+  After:  def append_tag(tag, tags=None):
+    if tags is None:
+        tags = []
+    tags.append(tag)
+    return tags
+
+  Rule: variable-naming (Line 81)
+  Rationale: Naming variables according to their meaning increases readability and maintainability.
+  Confidence: 100%
+  Before: for s in scores:
+    if s >= 90:
+        passed = True
+        break
+  After:  for score in scores:
+    if score >= 90:
+        passed = True
+        break
+
+  Rule: function-naming (Line 97)
+  Rationale: Adding contextual prefixes clarifies the utility and reduces ambiguity within larger codebases.
+  Confidence: 90%
+  Before: def add(a, b):
+    return a + b
+
+def subtract(a, b):
+    return a - b
+
+def multiply(a, b):
+    return a * b
+
+def divide(a, b):
+    return a / b
+  After:  def calculate_sum(a, b):
+    return a + b
+
+def calculate_difference(a, b):
+    return a - b
+
+def calculate_product(a, b):
+    return a * b
+
+def calculate_quotient(a, b):
+    return a / b
+
+[CODE_STYLE] Fixes applied. Remaining issues: 1
+
+--- Issues ---
+  [error] Line 73:15 (E711): Comparison to `None` should be `cond is None`
+
+[TESTS] Tests written to test_sample_all_issues.py.
+
+[CLEAN_CODE] Fixes applied. Remaining issues: 10
+
+--- Issues ---
+  [info] Line 13:14 (naming-readability): Variable 'i' used as a loop index; consider a more descriptive name or iterating directly over items for better readability.
+  [info] Line 17:8 (naming-readability): Variable 'total' is a vague accumulator name; consider a more domain-specific name to clarify intent.
+  [info] Line 26:18 (naming-readability): Function 'sum_positive_values' uses non-descriptive parameter name 'lst'; prefer a name describing its contents such as 'values' or 'numbers'.
+  [info] Line 27:8 (naming-readability): Variable 'i' used as a loop index; consider clearer naming or direct iteration.
+  [info] Line 28:12 (naming-readability): Variable 'positive_sum' is a vague name; consider clarifying meaning in the context.
+  [info] Line 44:5 (naming-readability): Function 'get_status' uses non-descriptive parameter name 'code'; consider naming it 'status_code' for clarity.
+  [info] Line 65:9 (naming-readability): Variable 'val' is non-descriptive in function 'is_empty'; prefer a name that clarifies its role (e.g. 'collection' or 'item').
+  [warning] Line 71:14 (function-design): Function 'append_tag' uses 'tags=None' as a mutable default argument; this can cause unexpected behavior. Use an immutable default and assign inside.
+  [info] Line 79:1 (function-design): Standalone code block for checking if any score passes threshold is present outside a function; consider encapsulating logic into a predicate function such as 'has_passing_score'.
+  [info] Line 90:5 (naming-readability): Functions 'calculate_sum', 'calculate_difference', 'calculate_product', and 'calculate_quotient' use parameter names 'a' and 'b', which lack domain specificity. Consider more descriptive names.
