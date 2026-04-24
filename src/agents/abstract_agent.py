@@ -19,10 +19,11 @@ class BaseAgent(ABC):
         pass
 
     @abstractmethod
-    def validate(self, suggestion: Suggestion) -> bool:
-        """Validate a suggestion"""
+    def validate(self, issues: list[Issue]) -> bool:
+        """Return True if no blocking issues remain."""
         pass
 
+    @abstractmethod
     def apply(self, suggestions: list[Suggestion], file_path: str) -> None:
-        """Apply suggestion to file"""
+        """Apply suggestions to the file."""
         pass
