@@ -3,6 +3,7 @@
 import json
 import logging
 import os
+import subprocess
 
 from openai import OpenAI
 
@@ -13,22 +14,18 @@ from src.util.llm_scanner import LLMScanner
 from src.util.prompt_registry import PromptRegistry
 from src.util.suggestion import Suggestion
 from src.util.testing_applier import Applier
-from src.util.testing_validator import Validator
 
 logger = logging.getLogger(__name__)
-
-LLM_TOKEN = os.getenv("LITELLM_TOKEN")
-LLM_API_URL = os.getenv("LLM_API_URL", "https://litellm.oit.duke.edu/v1")
 
 
 class TestingAgent(BaseAgent):
     """Agent that identifies missing or weak tests and suggests improvements."""
 
-    # Prevents pytest from trying to collect this class as a test suite
     __test__ = False
 
     def __init__(self) -> None:
         super().__init__("Testing")
+        self._last_test_file_path = None
 
     def _get_client(self) -> OpenAI:
         token = os.getenv("LITELLM_TOKEN")
@@ -36,7 +33,6 @@ class TestingAgent(BaseAgent):
             raise RuntimeError(
                 "Missing LITELLM_TOKEN. Put it in .env at project root or export it."
             )
-
         base_url = os.getenv("LLM_API_URL", "https://litellm.oit.duke.edu/v1")
         return OpenAI(api_key=token, base_url=base_url)
 
@@ -45,14 +41,15 @@ class TestingAgent(BaseAgent):
 
     def scan(self, file_path: str) -> list[Issue]:
         """Scan source and test files for missing or insufficient tests."""
+        self._last_test_file_path = self._get_test_file_path(file_path)
+
         content = self._read_file(file_path)
-        test_file_path = self._get_test_file_path(file_path)
-        test_content = self._read_file(test_file_path)
+        test_content = self._read_file(self._last_test_file_path)
         client = self._get_client()
         model = self._get_model()
 
         if not test_content:
-            logger.info("No existing test file found at %s", test_file_path)
+            logger.info("No existing test file found at %s", self._last_test_file_path)
 
         llm_scanner = LLMScanner(
             client=client, model=model, prompt_registry=PromptRegistry()
@@ -66,7 +63,7 @@ class TestingAgent(BaseAgent):
         return llm_scanner.scan(prompt_name="testing.scan", context=context)
 
     def get_suggestions(self, issues: list[Issue], code: str) -> list[Suggestion]:
-        """Provide suggestions based on the scanned file and identified issues"""
+        """Provide suggestions based on the scanned file and identified issues."""
         client = self._get_client()
         model = self._get_model()
 
@@ -85,14 +82,34 @@ class TestingAgent(BaseAgent):
             prompt_name="testing.generate_suggestions", context=context, issues=issues
         )
 
-    def validate(self, suggestion) -> bool:
-        validator = Validator(suggestion)
-        return validator.validate()
+    def validate(self, issues: list[Issue]) -> bool:
+        """Run the generated test file and return True if all tests pass."""
+        if not self._last_test_file_path:
+            logger.warning("[Testing] No test file path recorded, skipping validation.")
+            return True
+
+        result = subprocess.run(
+            ["python", "-m", "pytest", self._last_test_file_path, "-v", "--tb=short"],
+            capture_output=True,
+            text=True,
+        )
+
+        passed = result.returncode == 0
+        logger.info("[Testing] pytest returncode=%d", result.returncode)
+
+        if not passed:
+            logger.warning("[Testing] Tests failed:\n%s", result.stdout[-500:])
+
+        return passed
 
     def apply(self, suggestions: list[Suggestion], file_path: str) -> None:
+        """Write suggested tests to the test file."""
         applier = Applier()
-        test_file_path = self._get_test_file_path(file_path)
-        applier.apply(suggestions, test_file_path=test_file_path)
+        applier.apply(
+            suggestions,
+            test_file_path=self._last_test_file_path,
+            source_file_path=file_path,
+        )
 
     def _read_file(self, file_path: str) -> str:
         """Read and return file contents."""
@@ -111,9 +128,9 @@ class TestingAgent(BaseAgent):
         Example: src/agents/idioms_agent.py -> tests/agents/test_idioms_agent.py
         """
         if "src/" in source_path:
-            source_path = source_path[source_path.index("src/") :]
+            source_path = source_path[source_path.index("src/"):]
         elif "data/" in source_path:
-            source_path = source_path[source_path.index("data/") :]
+            source_path = source_path[source_path.index("data/"):]
 
         directory = source_path.rsplit("/", 1)[0]
         filename = source_path.rsplit("/", 1)[1]

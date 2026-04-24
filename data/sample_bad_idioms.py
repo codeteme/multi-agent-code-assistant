@@ -1,5 +1,3 @@
-# ruff: noqa
-
 # Bad: using range(len()) instead of enumerate
 names = ["Alice", "Bob", "Charlie"]
 for i in range(len(names)):

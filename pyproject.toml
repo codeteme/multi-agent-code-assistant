@@ -5,14 +5,10 @@ target-version = "py311"
 [tool.ruff.lint]
 select = ["E", "F", "I", "W"]
 ignore = [
-    "E501", # Line too long
-    "W291", # Trailing whitespace
-    "W293", # Blank line whitespace
+    "E501",  # Line too long
+    "W291",  # Trailing whitespace
+    "W293",  # Blank line whitespace
 ]
-
-[tool.ruff.lint.extend-per-file-ignores]
-# Ignore ALL errors in your 'data' folder since it's for bad code samples
-"data/*.py" = ["ALL"]
 
 [tool.ruff.format]
 quote-style = "double"

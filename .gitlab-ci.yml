@@ -16,7 +16,7 @@ lint:
   before_script:
     - pip install ruff --quiet
   script:
-    - ruff check src/
+    - ruff check src/ tests/
 
 test:
   stage: test
