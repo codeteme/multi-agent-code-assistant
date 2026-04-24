@@ -5,6 +5,8 @@ from src.util.issue import Issue
 from src.util.planner import plan
 from src.util.suggestion import Suggestion
 from src.agents.registry import AGENT_REGISTRY
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
 
 logger = logging.getLogger(__name__)
 
@@ -17,12 +19,20 @@ class Controller:
         agent_names, planned_input = plan(parsed_input)
         logger.info("Planner selected agents: %s", agent_names)
 
-        for agent_name in agent_names:
-            if agent_name not in AGENT_REGISTRY:
-                raise ValueError(f"Unknown agent: {agent_name}")
-            agent = AGENT_REGISTRY[agent_name]()
-            self._run_agent(agent, planned_input)
+        agents = [AGENT_REGISTRY[name]() for name in agent_names
+                if name in AGENT_REGISTRY]
 
+        with ThreadPoolExecutor(max_workers=len(agents)) as executor:
+            futures = {
+                executor.submit(self._run_agent, agent, planned_input): agent.agent_name
+                for agent in agents
+            }
+            for future in as_completed(futures):
+                agent_name = futures[future]
+                try:
+                    future.result()
+                except Exception as e:
+                    logger.error("[%s] Agent failed: %s", agent_name, e)
     def _run_agent(self, agent, planned_input):
         logger.info("Running agent: %s", agent.agent_name)
 
