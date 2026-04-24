@@ -1,22 +1,16 @@
 import logging
 
-from src.util.input import AGENTS, ParsedInput
+from src.util.input import ParsedInput
 
 logger = logging.getLogger(__name__)
 
-# Place holder for future agent selection logic
-DEFAULT_AGENT = "CODE_STYLE"
+AGENT_ORDER = ["CODE_STYLE", "IDIOMS", "CLEAN_CODE", "TESTS"]
 
 
-def plan(parsed_input: ParsedInput):
+def plan(parsed_input: ParsedInput) -> tuple[list[str], ParsedInput]:
     if parsed_input.agent:
-        agent_name = parsed_input.agent
-        logger.info("User selected agent: %s", agent_name)
-    else:
-        agent_name = DEFAULT_AGENT
-        logger.info("No agent specified, defaulting to: %s", agent_name)
+        logger.info("User selected agent: %s", parsed_input.agent)
+        return [parsed_input.agent], parsed_input
 
-    if agent_name not in AGENTS:
-        raise ValueError(f"Unknown agent: {agent_name}")
-
-    return agent_name, parsed_input
+    logger.info("No agent specified, running all agents in order: %s", AGENT_ORDER)
+    return AGENT_ORDER, parsed_input

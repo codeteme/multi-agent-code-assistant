@@ -1,59 +1,87 @@
 import logging
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
-from src.agents.clean_code_agent import CleanCodeAgent
-from src.agents.code_style_agent import StyleAgent
-from src.agents.idioms_agent import IdiomsAgent
-from src.agents.testing_agent import TestingAgent
+from src.agents.registry import AGENT_REGISTRY
 from src.util.input import ParsedInput, parse_input
-from src.util.planner import plan
 from src.util.issue import Issue
+from src.util.planner import plan
 from src.util.suggestion import Suggestion
 
 logger = logging.getLogger(__name__)
 
 
 class Controller:
+    MAX_RETRIES = 3
+
     def run(self, args=None):
         parsed_input = parse_input(args)
         self._log_parsed_input(parsed_input)
 
-        agent_name, planned_input = plan(parsed_input)
-        self._log_agent_selection(agent_name)
+        agent_names, planned_input = plan(parsed_input)
+        logger.info("Planner selected agents: %s", agent_names)
 
-        if agent_name == "CODE_STYLE":
-            agent = StyleAgent()
-        elif agent_name == "IDIOMS":
-            agent = IdiomsAgent()
-        elif agent_name == "TESTS":
-            agent = TestingAgent()
-        elif agent_name == "CLEAN_CODE":
-            agent = CleanCodeAgent()
-        else:
-            raise ValueError(f"Unknown agent: {agent_name}")
+        # All agents run sequentially — they share a file
+        for name in agent_names:
+            if name not in AGENT_REGISTRY:
+                raise ValueError(f"Unknown agent: {name}")
+            agent = AGENT_REGISTRY[name]()
+            try:
+                self._run_agent(agent, planned_input)
+            except Exception as e:
+                logger.error("[%s] Agent failed: %s", name, e)
+
+    def _run_parallel(self, agents, planned_input):
+        if not agents:
+            return
+        with ThreadPoolExecutor(max_workers=len(agents)) as executor:
+            futures = {
+                executor.submit(self._run_agent, agent, planned_input): agent.agent_name
+                for agent in agents
+            }
+            for future in as_completed(futures):
+                agent_name = futures[future]
+                try:
+                    future.result()
+                except Exception as e:
+                    logger.error("[%s] Agent failed: %s", agent_name, e)
+
+    def _run_agent(self, agent, planned_input):
+        logger.info("Running agent: %s", agent.agent_name)
 
         issues = agent.scan(planned_input.file_path)
-        logger.info("Found %d issue(s).", len(issues))
-        self._log_issues(issues)
+        logger.info("[%s] Found %d issue(s).", agent.agent_name, len(issues))
 
-        suggestions = agent.get_suggestions(issues, planned_input.file_content)
-        logger.info("Generated %d suggestion(s).", len(suggestions))
-        self._log_suggestions(suggestions)
+        if not issues:
+            logger.info("[%s] No issues found, skipping.", agent.agent_name)
+            return
 
-        if planned_input.apply:
-            logger.info("Applying auto-fixes")
+        # Re-read file — a previous agent may have modified it
+        with open(planned_input.file_path, encoding="utf-8") as f:
+            current_content = f.read()
+
+        suggestions = agent.get_suggestions(issues, current_content)
+        logger.info("[%s] Generated %d suggestion(s).", agent.agent_name, len(suggestions))
+
+        if not planned_input.apply:
+            return
+
+        for attempt in range(1, self.MAX_RETRIES + 1):
             agent.apply(suggestions, planned_input.file_path)
-            issues = agent.scan(planned_input.file_path)  # rescan current state only
 
-        is_valid = agent.validate(issues)
+            with open(planned_input.file_path, encoding="utf-8") as f:
+                current_content = f.read()
 
-        logger.info(
-            "Validation result: valid=%s remaining_issues=%d",
-            is_valid,
-            len(issues),
-        )
+            issues = agent.scan(planned_input.file_path)
 
-        self._log_issues(issues)
+            if agent.validate(issues):
+                logger.info("[%s] Validated on attempt %d.", agent.agent_name, attempt)
+                return
 
+            logger.warning("[%s] Attempt %d failed, %d issue(s) remain.",
+                        agent.agent_name, attempt, len(issues))
+            suggestions = agent.get_suggestions(issues, current_content)
+
+        logger.error("[%s] Did not converge after %d attempts.", agent.agent_name, self.MAX_RETRIES)
     def _log_issues(self, issues: list[Issue]):
         if issues:
             for issue in issues:
@@ -85,6 +113,3 @@ class Controller:
             parsed_input.file_path,
             parsed_input.apply,
         )
-
-    def _log_agent_selection(self, agent_name: str):
-        logger.info("Planner selected agent: %s", agent_name)
