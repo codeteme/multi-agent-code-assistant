@@ -33,31 +33,37 @@ class Controller:
                     future.result()
                 except Exception as e:
                     logger.error("[%s] Agent failed: %s", agent_name, e)
+    MAX_RETRIES = 3
+
     def _run_agent(self, agent, planned_input):
         logger.info("Running agent: %s", agent.agent_name)
 
         issues = agent.scan(planned_input.file_path)
         logger.info("[%s] Found %d issue(s).", agent.agent_name, len(issues))
-        self._log_issues(issues)
 
         if not issues:
+            logger.info("[%s] No issues found, skipping.", agent.agent_name)
             return
 
         suggestions = agent.get_suggestions(issues, planned_input.file_content)
         logger.info("[%s] Generated %d suggestion(s).", agent.agent_name, len(suggestions))
-        self._log_suggestions(suggestions)
 
-        if planned_input.apply:
-            logger.info("[%s] Applying auto-fixes", agent.agent_name)
+        if not planned_input.apply:
+            return
+
+        for attempt in range(1, MAX_RETRIES + 1):
             agent.apply(suggestions, planned_input.file_path)
             issues = agent.scan(planned_input.file_path)
 
-        is_valid = agent.validate(issues)
-        logger.info(
-            "[%s] Validation result: valid=%s remaining_issues=%d",
-            agent.agent_name, is_valid, len(issues),
-        )
-        self._log_issues(issues)
+            if agent.validate(issues):
+                logger.info("[%s] Validated on attempt %d.", agent.agent_name, attempt)
+                return
+
+            logger.warning("[%s] Attempt %d failed, %d issue(s) remain.",
+                        agent.agent_name, attempt, len(issues))
+            suggestions = agent.get_suggestions(issues, planned_input.file_content)
+
+        logger.error("[%s] Did not converge after %d attempts.", agent.agent_name, MAX_RETRIES)
 
     def _log_issues(self, issues: list[Issue]):
         if issues:
