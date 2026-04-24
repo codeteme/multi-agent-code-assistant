@@ -1,9 +1,5 @@
 import logging
 
-from src.agents.clean_code_agent import CleanCodeAgent
-from src.agents.code_style_agent import StyleAgent
-from src.agents.idioms_agent import IdiomsAgent
-from src.agents.testing_agent import TestingAgent
 from src.util.input import ParsedInput, parse_input
 from src.util.issue import Issue
 from src.util.planner import plan
@@ -18,35 +14,39 @@ class Controller:
         parsed_input = parse_input(args)
         self._log_parsed_input(parsed_input)
 
-        agent_name, planned_input = plan(parsed_input)
-        self._log_agent_selection(agent_name)
+        agent_names, planned_input = plan(parsed_input)
+        logger.info("Planner selected agents: %s", agent_names)
 
-        if agent_name in AGENT_REGISTRY: 
-            agent = AGENT_REGISTRY[agent_name]
-        else:
-            raise ValueError(f"Unknown agent: {agent_name}")
+        for agent_name in agent_names:
+            if agent_name not in AGENT_REGISTRY:
+                raise ValueError(f"Unknown agent: {agent_name}")
+            agent = AGENT_REGISTRY[agent_name]()
+            self._run_agent(agent, planned_input)
+
+    def _run_agent(self, agent, planned_input):
+        logger.info("Running agent: %s", agent.agent_name)
 
         issues = agent.scan(planned_input.file_path)
-        logger.info("Found %d issue(s).", len(issues))
+        logger.info("[%s] Found %d issue(s).", agent.agent_name, len(issues))
         self._log_issues(issues)
 
+        if not issues:
+            return
+
         suggestions = agent.get_suggestions(issues, planned_input.file_content)
-        logger.info("Generated %d suggestion(s).", len(suggestions))
+        logger.info("[%s] Generated %d suggestion(s).", agent.agent_name, len(suggestions))
         self._log_suggestions(suggestions)
 
         if planned_input.apply:
-            logger.info("Applying auto-fixes")
+            logger.info("[%s] Applying auto-fixes", agent.agent_name)
             agent.apply(suggestions, planned_input.file_path)
-            issues = agent.scan(planned_input.file_path)  # rescan current state only
+            issues = agent.scan(planned_input.file_path)
 
         is_valid = agent.validate(issues)
-
         logger.info(
-            "Validation result: valid=%s remaining_issues=%d",
-            is_valid,
-            len(issues),
+            "[%s] Validation result: valid=%s remaining_issues=%d",
+            agent.agent_name, is_valid, len(issues),
         )
-
         self._log_issues(issues)
 
     def _log_issues(self, issues: list[Issue]):
@@ -80,6 +80,3 @@ class Controller:
             parsed_input.file_path,
             parsed_input.apply,
         )
-
-    def _log_agent_selection(self, agent_name: str):
-        logger.info("Planner selected agent: %s", agent_name)
