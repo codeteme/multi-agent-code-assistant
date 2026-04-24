@@ -1,5 +1,3 @@
-# ruff: noqa
-
 import os,sys
 import os
 
