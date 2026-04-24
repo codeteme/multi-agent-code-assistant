@@ -105,7 +105,11 @@ class TestingAgent(BaseAgent):
     def apply(self, suggestions: list[Suggestion], file_path: str) -> None:
         """Write suggested tests to the test file."""
         applier = Applier()
-        applier.apply(suggestions, test_file_path=self._last_test_file_path)
+        applier.apply(
+            suggestions,
+            test_file_path=self._last_test_file_path,
+            source_file_path=file_path,
+        )
 
     def _read_file(self, file_path: str) -> str:
         """Read and return file contents."""

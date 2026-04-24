@@ -233,3 +233,4 @@ extension/**/.DS_Store
 .DS_Store
 # gitlab-ci-local
 .gitlab-ci-local
+tests/data/test_sample_bad_code_style.py

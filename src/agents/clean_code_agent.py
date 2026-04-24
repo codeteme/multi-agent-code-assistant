@@ -11,6 +11,9 @@ from src.util.llm_generator import LLMGenerator
 from src.util.llm_scanner import LLMScanner
 from src.util.prompt_registry import PromptRegistry
 from src.util.validator import Validator
+from src.util.text_applier import TextApplier
+from src.util.suggestion import Suggestion
+
 
 logger = logging.getLogger(__name__)
 
@@ -72,28 +75,8 @@ class CleanCodeAgent(BaseAgent):
         validator = Validator(issues)
         return validator.validate()
 
-    def apply(self, suggestions, file_path):
-        """
-        Suggestion contains an issue with original code and fixed code.
-        This functions aggregates these suggestions and provides updated code.
-        """
-        client = self._get_client()
-        model = self._get_model()
-
-        llm_applier = LLMApplier(
-            client=client, model=model, prompt_registry=PromptRegistry()
-        )
-
-        context = {
-            "code": self._read_file(file_path),
-            "suggestions_json": json.dumps(
-                [s.model_dump() for s in suggestions], indent=2
-            ),
-        }
-
-        return llm_applier.apply(
-            prompt_name="cleancode.apply", context=context, file_path=file_path
-        )
+    def apply(self, suggestions: list[Suggestion], file_path: str) -> None:
+        TextApplier().apply(suggestions, file_path)
 
     def _read_file(self, file_path: str) -> str:
         with open(file_path, "r") as file:
