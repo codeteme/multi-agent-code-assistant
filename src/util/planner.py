@@ -8,6 +8,5 @@ def plan(parsed_input: ParsedInput) -> tuple[list[str], ParsedInput]:
     if parsed_input.agent:
         logger.info("User selected agent: %s", parsed_input.agent)
         return [parsed_input.agent], parsed_input
-    
-    logger.info("No agent specified, defaulting to: %s", parsed_input.agent)
-    return list(AGENTS), parsed_input  # all agents by default
+    logger.info("No agent specified, running all agents: %s", list(AGENTS))
+    return list(AGENTS), parsed_input
