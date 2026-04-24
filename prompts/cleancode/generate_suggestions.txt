@@ -9,6 +9,10 @@ Each element must have:
 - "fixed_code": string
 - "rationale": string
 - "confidence": float 0.0-1.0
+- original_code must be the exact snippet from the file that needs changing
+- fixed_code must be ONLY the replacement for that exact snippet
+- Do NOT wrap fixed_code in a class or function definition unless the original_code itself was a class or function definition
+- To add a module-level constant, original_code should be the line above where it should go, and fixed_code should be that same line plus the new constant below it
 
 Code to fix:
 {{ code }}
