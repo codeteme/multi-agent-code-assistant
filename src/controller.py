@@ -8,6 +8,7 @@ from src.util.input import ParsedInput, parse_input
 from src.util.issue import Issue
 from src.util.planner import plan
 from src.util.suggestion import Suggestion
+from src.agents.registry import AGENT_REGISTRY
 
 logger = logging.getLogger(__name__)
 
@@ -20,14 +21,8 @@ class Controller:
         agent_name, planned_input = plan(parsed_input)
         self._log_agent_selection(agent_name)
 
-        if agent_name == "CODE_STYLE":
-            agent = StyleAgent()
-        elif agent_name == "IDIOMS":
-            agent = IdiomsAgent()
-        elif agent_name == "TESTS":
-            agent = TestingAgent()
-        elif agent_name == "CLEAN_CODE":
-            agent = CleanCodeAgent()
+        if agent_name in AGENT_REGISTRY: 
+            agent = AGENT_REGISTRY[agent_name]
         else:
             raise ValueError(f"Unknown agent: {agent_name}")
 
