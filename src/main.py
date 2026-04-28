@@ -1,4 +1,5 @@
 import logging
+import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -6,7 +7,7 @@ from dotenv import load_dotenv
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    handlers=[logging.StreamHandler(), logging.FileHandler("phase2_log.txt")],
+    handlers=[logging.StreamHandler(), logging.FileHandler("app.log")],
 )
 
 logger = logging.getLogger(__name__)
@@ -20,6 +21,13 @@ def main():
     logger.info("Loaded environment variables from %s", ENV_PATH)
 
     from src.controller import Controller
+    from src.util.input import parse_input
+
+    parsed_input = parse_input()
+
+    if not parsed_input.file_path.endswith(".py"):
+        logger.error("Unsupported file type: %s. Only Python files are supported.", parsed_input.file_path)
+        sys.exit(1)
 
     controller = Controller()
     controller.run()

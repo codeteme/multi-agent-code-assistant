@@ -234,3 +234,4 @@ extension/**/.DS_Store
 # gitlab-ci-local
 .gitlab-ci-local
 tests/data/test_sample_bad_code_style.py
+.refactor_memory/

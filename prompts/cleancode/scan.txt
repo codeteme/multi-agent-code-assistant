@@ -13,7 +13,6 @@ Function design:
 
 Structure & complexity:
 - Nesting deeper than 3 levels
-- Magic numbers or magic strings (hardcoded literals with no named constant)
 - Duplicate code blocks that could be extracted into a shared function
 
 Comments:
