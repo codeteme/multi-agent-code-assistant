@@ -10,4 +10,5 @@ httpx
 openai
 python-dotenv
 requests
+chromadb
 

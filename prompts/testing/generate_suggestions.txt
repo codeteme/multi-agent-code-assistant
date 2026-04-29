@@ -19,6 +19,9 @@ Each element must have:
 - "rationale": string
 - "confidence": float 0.0-1.0
 
+Here are examples of how this project writes tests — follow these patterns and conventions:
+{{ retrieved_examples }}
+
 Source file (use ONLY the names defined here):
 {{ code }}
 
