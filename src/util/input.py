@@ -13,7 +13,8 @@ class ParsedInput:
     agent: str | None
     file_path: str
     file_content: str
-    apply: bool  # determine whether or not to apply the suggestions
+    apply: bool
+    agentic: bool = False
 
 
 def parse_input(args=None):
@@ -26,6 +27,11 @@ def parse_input(args=None):
         "--apply",
         action="store_true",
         help="Apply auto-fixes to the file",
+    )
+    parser.add_argument(
+        "--agentic",
+        action="store_true",
+        help="Use the agentic (LLM-driven) controller instead of the rigid pipeline",
     )
     parsed = parser.parse_args(args)
 
@@ -43,4 +49,5 @@ def parse_input(args=None):
         file_path=file_path,
         file_content=file_content,
         apply=parsed.apply,
+        agentic=parsed.agentic,
     )
