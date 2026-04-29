@@ -20,6 +20,9 @@ Each element must have:
     - rule_id (str): short identifier like "missing-test" or "weak-test"
     - column (int): use 0
 
+Here are examples of how this project writes tests — follow these patterns and conventions:
+{{ retrieved_examples }}
+
 Source file:
 {{ content }}
 

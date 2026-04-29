@@ -13,6 +13,7 @@ from src.util.llm_generator import LLMGenerator
 from src.util.llm_scanner import LLMScanner
 from src.util.prompt_registry import PromptRegistry
 from src.util.suggestion import Suggestion
+from src.util.test_store import retrieve
 from src.util.testing_applier import Applier
 
 logger = logging.getLogger(__name__)
@@ -58,6 +59,7 @@ class TestingAgent(BaseAgent):
         context = {
             "content": content,
             "test_content": test_content,
+            "retrieved_examples": retrieve(content),
         }
 
         return llm_scanner.scan(prompt_name="testing.scan", context=context)
@@ -76,6 +78,7 @@ class TestingAgent(BaseAgent):
             "issues_json": json.dumps(
                 [issue.model_dump() for issue in issues], indent=2
             ),
+            "retrieved_examples": retrieve(code),
         }
 
         return llm_generator.generate_suggestions(
